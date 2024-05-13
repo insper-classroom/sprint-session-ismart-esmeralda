@@ -10,6 +10,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ("email", "name", "concurso")
 
 
+
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
