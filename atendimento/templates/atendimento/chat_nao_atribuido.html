@@ -1,0 +1,49 @@
+{% extends "atendimento/base.html" %}
+{%load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/inscricao.css' %}">
+</head>
+<body>
+    <header>
+        <div class ='imagem'>
+            <a href="/">
+                <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+            </a>
+    </header>
+    <div class="titulo">
+        <p>Inscrição</p>
+    <div class="subtitulo">
+        <p></p>
+    </div>
+    <div class="blocos">
+        <!-- Bloco 1 -->
+        <div class="bloco1">
+            <div class="block">
+                <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                </div>
+            </div>
+        </div>
+        <!-- Bloco 2 -->
+        <div class="bloco2">
+            <div class="block">
+                <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
