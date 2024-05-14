@@ -1,0 +1,10 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="email">Email:</label>
+    <input id = "email" type = "text" name = "email" placeholder = "Email" required>
+
+    <label for="password">Password:</label>
+    <input id = "password" type = "password" name = "password" placeholder = "Password" required>
+
+    <button type="submit">Login</button>
+</form>

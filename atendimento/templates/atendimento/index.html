@@ -1,9 +1,58 @@
 {% extends "atendimento/base.html" %}
-
+{%load static%}
 {% block content %}
-<h1>Heloworld</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <!-- Logo -->
+        <div class ='imagem'>
+            <a href="/">
+                <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+            </a>
+        </div>
+        <!-- Botão de acesso geral -->
+        <div class="botaoheader_acessar">
+            <button class="botao-tipo1 montserrat-3">Acessar</button>
+        </div>
+    </header>
+    <!-- Texto 1 -->
+    <div class="texto1 montserrat-2 text-ism-dark-blue">
+        <p>O Ismart oferece acesso à educação de excelência em programas de modalidade presencial e online, que incluem bolsa de estudos e acompanhamento individual com foco em desenvolvimento acadêmico e pessoal.</p>
+    </div>
+    <!-- Texto 2 -->
+    <div class="texto2 montserrat-3 text-ism-darker-blue">
+        <p>Você é ou conhece um jovem de família baixa renda do 7º e 9º ano do ensino fundamental? Inscreva-se no Processo Seletivo Ismart através do acesso abaixo!</p>
+    </div>
+    <div class="blocos">
+        <!-- Bloco 1 -->
+        <div class="bloco1">
+            <div class="block">
+                <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                </div>
+            </div>
+        </div>
+        <!-- Bloco 2 -->
+        <div class="bloco2">
+            <div class="block">
+                <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-<ul>
- <li>AAAAAAAAAAAAAAAAA</li>
-</ul>
 {% endblock %}
