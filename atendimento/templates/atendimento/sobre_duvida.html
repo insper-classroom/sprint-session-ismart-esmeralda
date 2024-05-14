@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site em Django</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/css.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="{% static 'atendimento/img/logosmart.png' %}" alt="Logo" class="logo">
+            <button class="btn-top-right">Botão Direito</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="question-block">
+            <h2>Sobre o que é a sua dúvida</h2>
+            <div class="button-group">
+                <button>Botão 1</button>
+                <button>Botão 2</button>
+                <button>Botão 3</button>
+                <button>Botão 4</button>
+                <button>Botão 5</button>
+            </div>
+        </div>
+        <section>
+            <button class="btn-center">Ser Atendido</button>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Meu Site em Django</p>
+        </div>
+    </footer>
+</body>
+</html>
+

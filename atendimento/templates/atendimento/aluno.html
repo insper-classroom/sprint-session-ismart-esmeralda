@@ -1,0 +1,51 @@
+{% extends "atendimento/base.html" %}
+
+{%load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/aluno.css' %}">
+</head>
+<body>
+    <header>
+        <!-- Logo -->
+        <div class ='imagem'>
+            <a href="/">
+                <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+            </a>
+                <img class="user" src="{% static 'atendimento/img/usuario.svg' %}" alt="Ícone do usuário">
+        </div>
+        <div class="nome">
+            {% comment %} Local para colocar o nome do usuário {% endcomment %}
+        </div>
+    </header>
+
+    <div class="blocos">
+        <!-- Bloco 1 -->
+        <div class="bloco1">
+            <div class="block">
+                <h1> Edital do processo seletivo</h1>
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Abrir</button>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Bloco 2 -->
+        <div class="bloco2">
+            <div class="block">
+                <h1> Tirar dúvida</h1>
+                <div class="button-container">
+                    <button class="botao-tipo1 montserrat-3">Atendimento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %} 
