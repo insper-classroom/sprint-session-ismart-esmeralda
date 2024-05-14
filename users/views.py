@@ -23,7 +23,7 @@ def sign_up(request):
             user.save()
             messages.success(request, 'Usuário registrado com sucesso!')
             login(request, user)
-            return redirect('index')
+            return redirect('aluno')
         #se o formulario for invalido ele volta pro formulario
         else:
             return render(request, 'register.html', {'form': form})
@@ -47,10 +47,14 @@ def sign_in(request):
             if user:
                 login(request, user)
                 messages.success(request, f'Logado com sucesso')
-                return redirect('index')
+                return redirect('aluno')
         #se o login der errado, faz isso
         messages.error(request, f'usuario ou senhas invalidos')
         return render(request,'login.html',{'form': form})
 
+def sign_out(request):
+    logout(request)
+    messages.success(request, 'Deslogado com sucesso')
+    return redirect('index')
 
 

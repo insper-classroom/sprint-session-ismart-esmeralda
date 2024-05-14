@@ -13,17 +13,24 @@
 <body>
     <header>
         <!-- Logo -->
+    </div>
+    
+    {% if user.is_authenticated %}
+    <span> HI {{request.user.username | title}}</span>
+    <form method="post" action = "{% url 'logout' %}">
+        {% csrf_token %}
+
+        <button type = "submit">Logout</button>
+    </form>
+    {% endif %}
         <div class ='imagem'>
             <a href="/">
                 <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
             </a>
                 <img class="user" src="{% static 'atendimento/img/usuario.svg' %}" alt="Ícone do usuário">
-        </div>
-        <div class="nome">
-            {% comment %} Local para colocar o nome do usuário {% endcomment %}
-        </div>
-    </header>
 
+    </header>
+    
     <div class="blocos">
         <!-- Bloco 1 -->
         <div class="bloco1">

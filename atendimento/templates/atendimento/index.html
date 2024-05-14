@@ -19,7 +19,7 @@
         </div>
         <!-- Botão de acesso geral - POPPUP LOGIN -->
         <div class="botaoheader_acessar">
-            <a href="#abrirpopuplogin"><button class="botao-tipo1 montserrat-3">Acessar</button></a>
+            <a href="{% url 'login' %}"><button class="botao-tipo1 montserrat-3">Acessar</button></a>
         </div>
     </header>
     <!-- Background -->
@@ -56,8 +56,12 @@
                 <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
                 <p class="text-ism-darker-blue montserrat-4">Sou Candidato(a)</p>
                 <div class="button-container">
-                    <button class="botao-tipo1 montserrat-3">Acessar</button>
-                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                    <a href="{% url 'login' %}">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    </a>
+                    <a href="{% url 'register' %}">
+                        <button class="botao-tipo1 montserrat-3">INSCREVA-SE</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -67,7 +71,8 @@
                 <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
                 <p class="text-ism-darker-blue montserrat-4">Sou Colaborador(a)</p>
                 <div class="button-container">
-                    <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    <a href="{% url 'login' %}">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
                 </div>
             </div>
         </div>
