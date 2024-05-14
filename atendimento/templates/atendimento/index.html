@@ -17,24 +17,44 @@
                 <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
             </a>
         </div>
-        <!-- Botão de acesso geral -->
+        <!-- Botão de acesso geral - POPPUP LOGIN -->
         <div class="botaoheader_acessar">
-            <button class="botao-tipo1 montserrat-3">Acessar</button>
+            <a href="#abrirpopuplogin"><button class="botao-tipo1 montserrat-3">Acessar</button></a>
         </div>
     </header>
+    <!-- Background -->
+    <figure>
+        <img src="{% static 'atendimento\img\ismart-fancy-bg.954b8532.svg' %}" class="backgroundindex1" alt="backgroundimage1">
+        <img src="{% static 'atendimento\img\ismart-fancy-bg.954b8532.svg' %}" class="backgroundindex2" alt="backgroundimage2">
+    </figure>
     <!-- Texto 1 -->
     <div class="texto1 montserrat-2 text-ism-dark-blue">
-        <p>O Ismart oferece acesso à educação de excelência em programas de modalidade presencial e online, que incluem bolsa de estudos e acompanhamento individual com foco em desenvolvimento acadêmico e pessoal.</p>
+        <a>O Ismart oferece acesso à educação de excelência em programas de modalidade presencial e online,</a><br>
+        <a>que incluem bolsa de estudos e acompanhamento individual com foco em desenvolvimento acadêmico e pessoal.</a>
     </div>
     <!-- Texto 2 -->
     <div class="texto2 montserrat-3 text-ism-darker-blue">
-        <p>Você é ou conhece um jovem de família baixa renda do 7º e 9º ano do ensino fundamental? Inscreva-se no Processo Seletivo Ismart através do acesso abaixo!</p>
+        <a>Você tem alguma dúvida sobre o processo seletivo? Faça login e entre em contato!</a>
+    </div>
+    <!-- Popup Login -->
+    <div id="abrirpopuplogin" class="popuplogin">
+        <div>
+            <a href="/" title="Close" class="close">X</a>
+            <h2>LOGIN</h2>
+            <form>
+                <input type="email" name="email" class="montserrat-3" placeholder="Email"/>
+                <input type="password" name="senha" class="montserrat-3" placeholder="Senha"/>
+                <input type="submit" value="Entrar" class="montserrat-3">
+                <a href="/" title="Recuperar Senha" class="text-ism-darker-blue montserrat-1">Recuperar Senha</a>
+            </form>
+        </div>
     </div>
     <div class="blocos">
         <!-- Bloco 1 -->
         <div class="bloco1">
             <div class="block">
                 <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
+                <p class="text-ism-darker-blue montserrat-4">Sou Candidato(a)</p>
                 <div class="button-container">
                     <button class="botao-tipo1 montserrat-3">Acessar</button>
                     <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
@@ -45,9 +65,9 @@
         <div class="bloco2">
             <div class="block">
                 <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
+                <p class="text-ism-darker-blue montserrat-4">Sou Colaborador(a)</p>
                 <div class="button-container">
                     <button class="botao-tipo1 montserrat-3">Acessar</button>
-                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
                 </div>
             </div>
         </div>
