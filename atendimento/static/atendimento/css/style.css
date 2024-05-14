@@ -1,0 +1,162 @@
+
+.montserrat-1 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-2 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.montserrat-3 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.montserrat-4 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.montserrat-5 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.text-ism-dark-blue {
+    --tw-text-opacity: 1;
+    color: rgba(0, 142, 212, var(--tw-text-opacity));
+}
+
+.text-ism-darker-blue {
+    --tw-text-opacity: 1;
+    color: rgba(0, 37, 97, var(--tw-text-opacity));
+}
+
+body {
+    font-family: "Montserrat", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.logo {
+    width: 100px; 
+    height: 100px;
+}
+
+.botaoheader_acessar {
+    text-align: right;
+    margin-right: 30px;
+    
+}
+
+.texto1, .texto2 {
+    text-align: center; 
+    margin-top: 20px;
+}
+
+.bloco1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 50vh ;
+    background-color: white;
+    background-color: white; 
+    padding: 10px;
+
+}
+
+.bloco2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 50vh ;
+    background-color: white; 
+    background-color: white; 
+    padding: 10px;
+}
+
+.block {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.block img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    
+}
+
+.button-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;   
+}
+
+.button-container button {
+    margin-bottom: 25px;
+}
+
+.blocos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    margin: 20px;
+}
+
+.blocos > div {
+    margin: 80px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.botao-tipo1 {
+    background-color: white;
+    color: rgb(0, 189, 242);
+    border: 2px solid rgb(0, 189, 242);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.botao-tipo1:hover {
+    background-color: rgb(0, 189, 242);
+    color: white;
+}
+
+.botao-tipo2 {
+    background-color: rgb(0, 189, 242);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
