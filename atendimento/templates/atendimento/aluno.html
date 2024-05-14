@@ -1,0 +1,28 @@
+{% extends "atendimento/base.html" %}
+
+{%load static%}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ismart</title>
+    <link rel='stylesheet' href="{%static 'atendimento/style/aluno.css'%}">
+</head>
+
+<body>
+
+    <header>
+        <div class='images'>
+        <img src='{% static 'atendimento/img/ismartlogo.svg' %}' id='logo' height='120px'>
+        <img src='{% static 'atendimento/img/usuario.svg' %}' id='user' height='60px'>
+        </div>
+    </header>
+
+    <div class='container'>
+        <h1> CSS não funciona </h1>
+    </div>
+    
+
+</body>
+{% endblock %}
