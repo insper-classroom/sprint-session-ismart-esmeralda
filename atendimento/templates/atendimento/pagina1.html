@@ -1,0 +1,45 @@
+{% extends "atendimento/base.html" %}
+{%load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/css/pagina1.css' %}">
+</head>
+<body>
+    <header>
+        <div class ='imagem'>
+            <img class ='logo' src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+        </div>
+        <div class="buttons-right">
+            <button>Inscreva-se</button>
+            <button>Entrar</button>
+        </div>
+    </header>
+    <div class="blocos">
+        <div class="bloco1">
+            <div class="block">
+                <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
+                <div class="button-container">
+                    <button>Bloco 1 - Botão 1</button>
+                    <button>Bloco 1 - Botão 2</button>
+                </div>
+            </div>
+        </div>
+        <div class="bloco2">
+            <div class="block">
+                <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
+                <div class="button-container">
+                    <button>Bloco 2 - Botão 1</button>
+                    <button>Bloco 2 - Botão 2</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
