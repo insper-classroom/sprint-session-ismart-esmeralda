@@ -8,10 +8,10 @@ from .forms import LoginForm, RegisterForm
 from django.http import HttpResponse
 
 def sign_up(request):
-    #
+    #renderiza a pagina de registro se for um GET
     if request.method == 'GET':
         form = RegisterForm()
-        return render(request, 'register.html', { 'form': form})   
+        return render(request, 'autenticacao/register.html', { 'form': form})   
 
     #se for um post ele vai validar o formulario e registrar o usuario no BD 
     if request.method == 'POST':
@@ -26,13 +26,13 @@ def sign_up(request):
             return redirect('aluno')
         #se o formulario for invalido ele volta pro formulario
         else:
-            return render(request, 'register.html', {'form': form})
+            return render(request, 'autenticacao/register.html', {'form': form})
 
 def sign_in(request):
     #se for um get renderiza o formulario
     if request.method == 'GET':
         form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'autenticacao/login.html', {'form': form})
 
     #se for um post ele vai validar o formulario
     elif request.method == 'POST':
@@ -50,7 +50,7 @@ def sign_in(request):
                 return redirect('aluno')
         #se o login der errado, faz isso
         messages.error(request, f'usuario ou senhas invalidos')
-        return render(request,'login.html',{'form': form})
+        return render(request,'autenticacao/login.html',{'form': form})
 
 def sign_out(request):
     logout(request)
