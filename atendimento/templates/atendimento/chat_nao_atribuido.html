@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="{% static 'atendimento/style/chat_nao_atribuido.css' %}">
 </head>
 <body>
+    <div class="top-header">
+        <div class="photo-container">
+            <img src="{% static 'atendimento/img/hand.png' %}" alt="Foto do Usuário" class="hand">
+        </div>
+        <div class="text-container">
+            <p>Não atribuido</p>
+        </div>
+    </div>
     <header>
         <div class="imagens-header">
             <div class="img1">
@@ -81,11 +89,14 @@
             </div>
         </div>
         <div class="colaboradores">
-            <div class="colaboradores">
+            <div class="colaboradores-header">
                 <p>Colaboradores</p>
                 <button>
                     <img src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="colaboradores Icon 1" class="colaboradores-icon">
                 </button>
+            </div>
+            <div class="online">
+                <p>Online</p>
             </div>
         </div>
     </div>

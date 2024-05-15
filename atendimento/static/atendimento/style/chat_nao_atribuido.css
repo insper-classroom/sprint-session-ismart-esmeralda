@@ -14,6 +14,21 @@ header {
     border-right: 1px solid black;
 }
 
+.top-header {
+    display: flex;
+    align-items: center;
+    background-color: #002561;
+    color: white;
+    padding: 10px;
+    position: fixed; 
+    top: 0; 
+    left: 289px; 
+    width: calc(100% - 200px);
+    height: 70px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black ;
+}
+
 .imagens-header {
     display: flex;
     flex-direction: column;
@@ -39,7 +54,7 @@ header {
     margin-top: 30px;
 }
 .img5 {
-    margin-top: 500px;
+    margin-top: 160px;
 }
 .img6 {
     margin-top: 30px;
@@ -51,6 +66,7 @@ header {
     color: white;
     padding: 20px;
     box-sizing: border-box;
+    border-right: 1px solid black ;
 }
 
 .inbox-header {
@@ -128,8 +144,9 @@ header {
 }
 
 button {
-    background: white;
+    background: transparent;
     border: white;
+    cursor: pointer;
 }
 
 
@@ -142,4 +159,19 @@ button {
     color: white;
     font-size: 20px;
 
+}
+.online p {
+    font-size: 13px; 
+    margin-left: 20px; 
+    margin-top: -30px;
+}
+
+.hand{
+    width: 50px;
+    height: 50px;
+    margin-right: 30px;
+}
+
+.text-container{
+    font-size: 30px; 
 }
