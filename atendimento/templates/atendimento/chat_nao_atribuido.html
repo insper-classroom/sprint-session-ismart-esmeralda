@@ -1,5 +1,5 @@
 {% extends "atendimento/base.html" %}
-{%load static%}
+{% load static %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,29 +13,81 @@
     <header>
         <div class="imagens-header">
             <div class="img1">
-                <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
+                <button>
+                    <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
+                </button>
             </div>
             <div class="img2">
-                <img src="{% static 'atendimento/img/house-solid.svg' %}" alt="Logo 2">
+                <button>
+                    <img src="{% static 'atendimento/img/house-solid.svg' %}" alt="Logo 2">
+                </button>
             </div>
             <div class="img3">
-                <img src="{% static 'atendimento/img/calendar-regular.svg' %}" alt="Logo 3">
+                <button>
+                    <img src="{% static 'atendimento/img/calendar-regular.svg' %}" alt="Logo 3">
+                </button>
             </div>
             <div class="img4">
-                <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 4">
+                <button>
+                    <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 4">
+                </button>
             </div>
             <div class="img5">
-                <img src="{% static 'atendimento/img/gear-solid.svg' %}" alt="Logo 5">
+                <button>
+                    <img src="{% static 'atendimento/img/gear-solid.svg' %}" alt="Logo 5">
+                </button>
             </div>
             <div class="img6">
-                <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Logo 6">
+                <button>
+                    <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Logo 6">
+                </button>
             </div>
         </div>
     </header>
     <div class="sidebar">
-            <div class ="inbox">
-                <p>Inbox</p>
+        <div class="inbox-header">
+            <p>Inbox</p>
+            <button>
+                <img src="{% static 'atendimento/img/search.svg' %}" alt="Inbox Icon 1" class="inbox-icon">
+            </button>
+            <button>
+                <img src="{% static 'atendimento/img/arrow-up-right-from-square-solid.svg' %}" alt="Inbox Icon 2" class="inbox-icon">
+            </button>
+        </div>
+        <div class="conversa">
+            <div class="conversa-header">
+                <p>Conversas</p>
+                <button>
+                    <img src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="Conversa Icon 1" class="conversa-icon">
+                </button>
             </div>
+            <div class="nao_atribuido">
+                <button>
+                    <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
+                </button>
+                <p>Não atribuido</p>
+            </div>
+            <div class="minhas_conversas">
+                <button>
+                    <img src="{% static 'atendimento/img/correio.png' %}" alt="Conversa Icon 1" class="minhas_conversas-icon">
+                </button>
+                <p>Minhas conversas</p>
+            </div>
+            <div class="resolvidos">
+                <button>
+                    <img src="{% static 'atendimento/img/checkverde.png' %}" alt="Conversa Icon 1" class="resolvidos-icon">
+                </button>
+                <p>Resolvidos</p>
+            </div>
+        </div>
+        <div class="colaboradores">
+            <div class="colaboradores">
+                <p>Colaboradores</p>
+                <button>
+                    <img src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="colaboradores Icon 1" class="colaboradores-icon">
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="content">
@@ -43,5 +95,4 @@
     </div>
 </body>
 </html>
-
 {% endblock %}

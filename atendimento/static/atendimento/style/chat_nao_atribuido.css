@@ -7,11 +7,11 @@ body {
 header {
     background-color: #002561;
     color: white;
-    width: 80px; 
-    min-height: 100vh; 
+    width: 80px;
+    min-height: 100vh;
     padding: 10px;
     box-sizing: border-box;
-    border-right: 1px solid black; /
+    border-right: 1px solid black;
 }
 
 .imagens-header {
@@ -26,45 +26,120 @@ header {
     margin-bottom: 10px;
 }
 
-.content {
-    flex: 1; 
-    padding: 20px;
-}
-
-.img1{
+.img1 {
     margin-top: 10px;
-
 }
-.img2{
+.img2 {
     margin-top: 30px;
-    
-    }
-.img3{
-    margin-top: 30px;
-        
-    }
-.img4{
-    margin-top: 30px;
-
 }
-.img5{
-    margin-top: 180px;
-    
-    }
-.img6{
+.img3 {
     margin-top: 30px;
-        
-    }
+}
+.img4 {
+    margin-top: 30px;
+}
+.img5 {
+    margin-top: 500px;
+}
+.img6 {
+    margin-top: 30px;
+}
 
 .sidebar {
-    flex: 0; 
-    background-color: #002561; 
+    flex: 0 0 200px;
+    background-color: #002561;
     color: white;
-    padding: 100px;
-    box-sizing: border-box; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.inbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #4091DC;
+    font-size: 35px;
+}
+
+.inbox-header p {
+    margin: 0;
+}
+
+.inbox-header img {
+    width: 30px;
+    height: 30px;
 }
 
 .content {
-    flex: 2; 
+    flex: 1;
     padding: 20px;
+}
+
+.conversa-icon{
+    color:red ;
+}
+
+.conversa{
+    gap: 0px;
+    color: white;
+    font-size: 20px;
+
+}
+.nao_atribuido {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 15px;
+    margin-top: -50px;
+    padding-left: 25px;
+}
+.nao_atribuido-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.minhas_conversas {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 15px;
+    margin-top: -20px; 
+    padding-left: 25px;
+}
+.minhas_conversas-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.resolvidos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 15px;
+    margin-top: -13px; 
+    padding-left: 25px;
+}
+.resolvidos-icon {
+    width: 20px;
+    height: 20px;
+}
+
+button {
+    background: white;
+    border: white;
+}
+
+
+.colaboradores-icon{
+    color: white;
+}
+
+.colaboradores{
+    gap: 0px;
+    color: white;
+    font-size: 20px;
+
 }
