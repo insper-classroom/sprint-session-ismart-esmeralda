@@ -8,7 +8,7 @@ from .forms import LoginForm, RegisterForm
 from django.http import HttpResponse
 
 def sign_up(request):
-    #
+    #renderiza a pagina de registro se for um GET
     if request.method == 'GET':
         form = RegisterForm()
         return render(request, 'register.html', { 'form': form})   
