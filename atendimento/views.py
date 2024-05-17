@@ -41,7 +41,7 @@ def colaborador_conversas(request, colaborador_id):
     Mensagem.objects.create(conversa=conversa, sender=collaborator, content='Hi, Alice!')
     conversa2 = Conversa.objects.create(usuarios = user, colaboradores = collaborator)
     Mensagem.objects.create(conversa = conversa2, sender = user, content = 'hell imakmfr')
-    Mensagem.objects.create(conversa = conversa2, sender = collaborator, content = 'hi imakmfr')
+    Mensagem.objects.create(conversa = conversa2, sender = collaborator, content = 'hi imakmfr') 
 
     for mensagem in conversa.mensagens.all():
         print(mensagem.content)
