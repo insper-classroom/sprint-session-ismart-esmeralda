@@ -175,3 +175,88 @@ button {
 .text-container{
     font-size: 30px; 
 }
+
+.users {
+    display: flex; 
+    align-items: center; 
+}
+.users p{
+    font-size: 12px; 
+    font-weight:bold;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+
+
+.users img {
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    margin-left: 10px;
+    margin-top: 5px;
+
+}
+
+
+.info-section {
+    background-color: #002561; /* Azul */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    width: 28%; /* Um terço da largura disponível */
+    height: calc(100vh - 90px); /* Altura total menos a altura do top-header */
+    position: absolute;
+    top: 89px; /* Abaixo do top-header */
+    left: 289px; /* Alinhado à direita */
+    box-sizing: border-box;
+    border-left: 1px solid black;
+    
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: row;
+        border: 1px solid #000; 
+        border-radius: 10px;
+        padding: 10px; 
+        width: 300px;
+        height: 40px;
+    }
+    
+    .usuario {
+        width: 30px; 
+        height: 30px;
+        margin-right: 10px;
+    }
+    .mensagem-img {
+        width: 15px; 
+        height: 15px;
+        margin-right: 10px;
+        margin-top: 12px;
+
+    }
+    
+    .texto {
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+    
+    .user  {
+        color: #4091DC;
+        font-size: 17px;
+        text-align: left; 
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .mensagem  {
+        color: white;
+        font-size: 12px;
+        text-align: left; 
+        margin-top: -9px;
+        margin-left: 10px;
+    }
