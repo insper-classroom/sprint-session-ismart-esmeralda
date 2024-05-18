@@ -51,4 +51,6 @@ def colaborador_conversas(request, colaborador_id):
     conversas = Conversa.objects.filter(colaboradores = colaborador)
     return render(request, 'atendimento/testconversas.html', {'colaborador': colaborador, 'conversas': conversas})
 
-
+#views pra mandar pra url do chatbot c as informacoes do usuario na url
+def chatbot(request, username, userid):
+    return redirect(f'http://localhost:8501/?username={username}&userid={userid}')
