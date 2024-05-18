@@ -9,7 +9,8 @@ urlpatterns = [
     path('testchat/', views.testchat, name='testchat'),
     path('colaborador/<int:colaborador_id>/conversas/', views.colaborador_conversas, name='colaborador_conversas'),
     path('testeregistro/', views.testeregistro, name='testeregistro'),
-    path('chatbot/<str:username>/<int:userid>/', views.chatbot, name='chatbot')
+    path('chatbot/<str:username>/<int:userid>/', views.chatbot, name='chatbot'),
+    path('sendzap/<str:username>/<int:userid>/<str:tag>/', views.sendzap, name='sendzap')
 
     
 ]

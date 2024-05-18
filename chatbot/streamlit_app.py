@@ -2,7 +2,10 @@ import streamlit as st
 import numpy as np
 import openai
 from raglogic import get_prompt
+from classificador import classifier
 import urllib.parse
+import webbrowser
+
 
 st.title('Chatbot basico')
 
@@ -25,6 +28,19 @@ if "messages" not in st.session_state:
 
 #mensagem inicial do bot, c o nome do usuario
 st.session_state.messages.append({'role': 'assistant', 'content': f'Olá, {username}! Sou a coruja, assistente virtual aqui do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'})
+
+if st.button('Ser atendido'):
+    tresmensagens = [message['content'] for message in st.session_state.messages if message['role'] == 'user']
+    concatenated_messages = ' '.join(tresmensagens)
+    tag = classifier(concatenated_messages)[0]
+
+    encoded_tags = urllib.parse.quote(tag)
+    
+    #redirect to the url of the chatbot
+    webbrowser.open_new_tab(url = f'http://localhost:8000/sendzap/{username}/{userid}/{encoded_tags}')
+   
+
+
 
 #mostra as mensagens guardadas na variavel state messages
 for message in st.session_state.messages:
