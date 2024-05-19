@@ -1,0 +1,78 @@
+body {
+    font-family: "Montserrat", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: rgba(0, 37, 97, 1);
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container form input[type="submit"] {
+    background-color: rgba(0, 189, 242, 1);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container form input[type="submit"]:hover {
+    background-color: rgba(0, 165, 242, 1);
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+    border: 1px solid rgba(0, 189, 242, 1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.login-container a {
+    color: rgba(0, 37, 97, 1);
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+.logo-container {
+    position: relative; /* Adiciona posicionamento relativo ao container */
+    margin-top: 20px; /* Adiciona um espaçamento entre a logo e o container do login */
+}
+
+.logo {
+    position: absolute; /* Adiciona posicionamento absoluto para a logo */
+    top: -400px; /* Alinha a logo no topo do container */
+    left: 100px; /* Alinha a logo no lado esquerdo do container */
+    width: 150px; /* ajuste conforme necessário */
+    height: auto;
+}

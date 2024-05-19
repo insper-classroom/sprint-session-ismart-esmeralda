@@ -1,0 +1,88 @@
+body {
+    font-family: "Montserrat", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
+    font-size: 13px;
+}
+
+.register-container {
+    background: #fff;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 400px;
+}
+
+.register-container h2 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: rgba(0, 37, 97, 1);
+    text-align: left;
+}
+
+.register-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-container form input[type="submit"] {
+    background-color: rgba(0, 189, 242, 1);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-container form input[type="submit"]:hover {
+    background-color: rgba(0, 165, 242, 1);
+}
+
+.register-container form input[type="text"],
+.register-container form input[type="password"],
+.register-container form input[type="email"] {
+    border: 1px solid rgba(0, 189, 242, 1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.register-container .helptext {
+    font-size: 12px;
+    margin-top: 1em;
+    display: block;
+}
+
+.helptext {
+    display: none; /* Oculta todas as mensagens de ajuda */
+}
+
+.logo-container {
+    position: relative; /* Adiciona posicionamento relativo ao container */
+    margin-top: 20px; /* Adiciona um espaçamento entre a logo e o container do login */
+}
+
+.logo {
+    position: absolute; /* Adiciona posicionamento absoluto para a logo */
+    top: -150px; /* Alinha a logo no topo do container */
+    left: -300px; /* Alinha a logo no lado esquerdo do container */
+    width: 150px; /* ajuste conforme necessário */
+    height: auto;
+}

@@ -41,11 +41,11 @@
         <div>
             <a href="/" title="Close" class="close">X</a>
             <h2>LOGIN</h2>
-            <form>
-                <input type="email" name="email" class="montserrat-3" placeholder="Email"/>
-                <input type="password" name="senha" class="montserrat-3" placeholder="Senha"/>
+            <form method="POST" action="{% url 'login' %}" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
                 <input type="submit" value="Entrar" class="montserrat-3">
-                <a href="/" title="Recuperar Senha" class="text-ism-darker-blue montserrat-1">Recuperar Senha</a>
+                <a href="{% url 'register' %}" title="Recuperar Senha" class="text-ism-darker-blue montserrat-1">Recuperar Senha</a>
             </form>
         </div>
     </div>

@@ -1,10 +1,31 @@
+{% extends "atendimento/base.html" %}
+{% load static %}
+
 {% block content %}
-
-<form method="POST" novalidate>
-	{% csrf_token %}
-	<h2>Sign Up</h2>
-	{{ form.as_p }}		
-	<input type="submit" value="Register" />
-</form>
-
-{% endblock content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/register.css' %}">
+</head>
+<body>
+	<header class="header">
+        <div class="logo-container">
+            <a href="/">
+                <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+            </a>
+        </div>
+    </header>
+    <div class="register-container">
+        <h2>Sign Up</h2>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}        
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
