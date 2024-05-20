@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from twilio.rest import Client
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Colaborador, Conversa, Usuario, Mensagem
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
+import redis
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
 
 
 
@@ -18,9 +22,11 @@ def duvidas(request):
 
 @login_required
 def aluno(request):
+    print(request.user.uuid)
     return render(request, 'atendimento/aluno.html')
 
 
+#APENAS PARA FINS DE TESTE
 def testchat(request):
     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
@@ -29,11 +35,15 @@ def testchat(request):
     messages.reverse()
     return render(request, 'atendimento/testchat.html', {'messages': messages})
 
+
+#APENAS PARA FINS DE TESTE
 def testeregistro(request):
     user = Usuario.objects.create(nome='Alice')
     collaborator = Colaborador.objects.create(nome='Bob')
     return HttpResponse('Usuário e colaborador criados com sucesso!')
 
+
+#APENAS PARA FINS DE TESTE
 def colaborador_conversas(request, colaborador_id):
     user = Usuario.objects.get(pk=1)
     collaborator = Colaborador.objects.get(pk=colaborador_id)
@@ -55,8 +65,18 @@ def colaborador_conversas(request, colaborador_id):
     return render(request, 'atendimento/testconversas.html', {'colaborador': colaborador, 'conversas': conversas})
 
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
-def chatbot(request, username, userid):
-    return redirect(f'http://localhost:8501/?username={username}&userid={userid}')
+def chatbot(request, username, useruuid):
+    #pega o token desse usuario 
+    #passa o token como parametro da url
+    
+    return redirect(f'http://localhost:8501/?username={username}&useruuid={useruuid}')
+
+# @api_view(['POST', 'GET'])
+# def api_senduser(request):
+
+#         username = request.user.username
+#         userid = request.user.id
+#         return JsonResponse({"username": username, "userid": userid})
 
 def sendzap(request, username, userid, tag):
     print(f'olá. {username} tem dúvida sobre {tag}')

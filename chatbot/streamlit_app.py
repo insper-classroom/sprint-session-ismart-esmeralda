@@ -5,6 +5,7 @@ from raglogic import get_prompt
 from classificador import classifier
 import urllib.parse
 import webbrowser
+from streamlit.web.server.websocket_headers import _get_websocket_headers
 
 
 st.title('Chatbot basico')
