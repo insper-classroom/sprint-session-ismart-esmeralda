@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -133,4 +135,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'guatavovictor22@gmail.com'
 EMAIL_HOST_PASSWORD = 'nsnm phof qyxz ksvo'
+AUTH_USER_MODEL = 'users.CustomUser'
 

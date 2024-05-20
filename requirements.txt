@@ -7,3 +7,6 @@ openai
 langchain-community
 faiss-cpu
 tiktoken
+djangorestframework
+markdown
+django-filter
