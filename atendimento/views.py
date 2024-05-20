@@ -1,13 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from twilio.rest import Client
 from django.http import HttpResponse, JsonResponse
 from .models import Colaborador, Conversa, Usuario, Mensagem
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
-import redis
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 
 
@@ -69,7 +65,7 @@ def chatbot(request, username, useruuid):
     #pega o token desse usuario 
     #passa o token como parametro da url
     
-    return redirect(f'http://localhost:8501/?username={username}&useruuid={useruuid}')
+    return redirect(f'http://localhost:8502/?username={username}&useruuid={useruuid}')
 
 # @api_view(['POST', 'GET'])
 # def api_senduser(request):
