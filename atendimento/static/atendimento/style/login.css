@@ -65,14 +65,16 @@ body {
 }
 
 .logo-container {
-    position: relative; /* Adiciona posicionamento relativo ao container */
-    margin-top: 20px; /* Adiciona um espaçamento entre a logo e o container do login */
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .logo {
-    position: absolute; /* Adiciona posicionamento absoluto para a logo */
-    top: -400px; /* Alinha a logo no topo do container */
-    left: 100px; /* Alinha a logo no lado esquerdo do container */
-    width: 150px; /* ajuste conforme necessário */
+    position: absolute;
+    top: -320px;
+    left: 140px;
+    width: 80px;
     height: auto;
 }
