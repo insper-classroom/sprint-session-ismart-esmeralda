@@ -10,6 +10,7 @@ class Conversa(models.Model):
     usuarios = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario')
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='colaborador')
     tag = models.TextField()
+    resolved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Conversa {self.id}"

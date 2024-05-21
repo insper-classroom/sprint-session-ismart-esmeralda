@@ -36,6 +36,19 @@ def cria_conversas(request):
     return HttpResponse('Conversa criada com sucesso!')
 
 
+@staff_member_required
+def mostra_conversas(request):
+    conversas = Conversa.objects.all()
+    filteredconversas = conversas.filter(assigned_to=None, resolved=False)
+    return render(request, 'atendimento/tela_colaborador.html', {'conversas': filteredconversas})
+
+def resolve(request, conversa_id):
+    conversa = Conversa.objects.get(pk=conversa_id)
+    conversa.resolved = True
+    conversa.save()
+    return redirect('tela_colaborador')
+
+
 #APENAS PARA FINS DE TESTE
 # def testchat(request):
 #     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'

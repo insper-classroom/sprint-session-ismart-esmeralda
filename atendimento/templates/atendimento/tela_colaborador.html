@@ -8,6 +8,10 @@
     <ul>
         {% for conversa in conversas %}
             <li>
+                <form method = "post" action = 'resolve/{{conversa.id}}/'>
+                    {% csrf_token %}
+                    <input type="submit" value="Resolver conversa">
+                </form>
                 <strong>Conversa {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
                 <ul>
                     {% for mensagem in conversa.mensagens.all %}
