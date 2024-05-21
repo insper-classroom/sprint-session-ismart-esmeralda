@@ -6,13 +6,17 @@
 </head>
 <body>
     <ul>
-        {% for conversa in conversas %}
+        {% for conversa in notassigned %}
             <li>
+                <form method="POST" action="assign_conversa/{{conversa.id}}/">                    
+                {% csrf_token %}
+                    <button type="submit">Assign to me</button>
+                </form>
                 <form method = "post" action = 'resolve/{{conversa.id}}/'>
                     {% csrf_token %}
                     <input type="submit" value="Resolver conversa">
                 </form>
-                <strong>Conversa {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <strong>NOT ASSIGNED {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
                 <ul>
                     {% for mensagem in conversa.mensagens.all %}
                         <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
@@ -21,5 +25,27 @@
             </li>
         {% endfor %}
     </ul>
+
+    <ul>
+        {% for conversa in yours %}
+            <li>
+                <form method = "post" action = 'resolve/{{conversa.id}}/'>
+                    {% csrf_token %}
+                    <input type="submit" value="Resolver conversa">
+                </form>
+                <strong>YOURS {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <ul>
+                    {% for mensagem in conversa.mensagens.all %}
+                        <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    {% for mensagem in mensagens %}
+        <p>{{ mensagem.sender }}: {{ mensagem.content }}</p>
+    {% endfor %}
 </body>
 </html>

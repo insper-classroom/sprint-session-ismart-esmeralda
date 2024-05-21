@@ -6,7 +6,9 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from .forms import LoginForm, RegisterForm
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def sign_up(request):
     #renderiza a pagina de registro se for um GET
     if request.method == 'GET':
@@ -28,6 +30,7 @@ def sign_up(request):
         else:
             return render(request, 'autenticacao/register.html', {'form': form})
 
+@csrf_exempt
 def sign_in(request):
     #se for um get renderiza o formulario
     if request.method == 'GET':
@@ -43,15 +46,18 @@ def sign_in(request):
             password = form.cleaned_data['password']
 
             user = authenticate(request, username = username, password = password)
-            #se o login der certo, faz isso
             if user:
                 login(request, user)
-                messages.success(request, f'Logado com sucesso')
-                return redirect('aluno')
+                if user.is_staff:
+                    return redirect('tela_colaborador')
+                else:
+                    return redirect('aluno')
+            
         #se o login der errado, faz isso
         messages.error(request, f'usuario ou senhas invalidos')
         return render(request,'autenticacao/login.html',{'form': form})
 
+@csrf_exempt
 def sign_out(request):
     logout(request)
     messages.success(request, 'Deslogado com sucesso')

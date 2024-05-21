@@ -6,6 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
 from users.models import CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -23,83 +25,48 @@ def aluno(request):
     return render(request, 'atendimento/aluno.html')
 
 
-
-def tela_colaborador(request):
-
-    return render(request, 'atendimento/tela_colaborador.html')
-
-
-def cria_conversas(request):
-    user = CustomUser.objects.first()
-    c1 = Conversa.objects.create(usuarios=user, tag='online')
-    Mensagem.objects.create(conversa=c1, sender=user, content='Hello, Bob!')
-    return HttpResponse('Conversa criada com sucesso!')
-
-
+#Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
 @staff_member_required
 def mostra_conversas(request):
+    colab = request.user.id
     conversas = Conversa.objects.all()
-    filteredconversas = conversas.filter(assigned_to=None, resolved=False)
-    return render(request, 'atendimento/tela_colaborador.html', {'conversas': filteredconversas})
+    notassigned = conversas.filter(assigned_to=None, resolved=False)
+    yours = conversas.filter(assigned_to=colab, resolved=False)
+    return render(request, 'atendimento/tela_colaborador.html', {'notassigned': notassigned, 'yours': yours})
 
+#view pro colaborador atribuir uma nao atribuida a ele
+@staff_member_required
+def assign_conversa(request, conversa_id):
+    conversa = Conversa.objects.get(id = conversa_id)
+    conversa.assigned_to = request.user
+    conversa.save()
+    return redirect('tela_colaborador')
+
+#view pro colaborador marcar uma conversa como resolvida
+@staff_member_required
 def resolve(request, conversa_id):
     conversa = Conversa.objects.get(pk=conversa_id)
     conversa.resolved = True
     conversa.save()
     return redirect('tela_colaborador')
 
-
-#APENAS PARA FINS DE TESTE
-# def testchat(request):
-#     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
-#     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
-#     client = Client(account_sid, auth_token)
-#     messages = client.messages.list()
-#     messages.reverse()
-#     return render(request, 'atendimento/testchat.html', {'messages': messages})
-
-
-# #APENAS PARA FINS DE TESTE
-# def testeregistro(request):
-#     user = Usuario.objects.create(nome='Alice')
-#     collaborator = Colaborador.objects.create(nome='Bob')
-#     return HttpResponse('Usuário e colaborador criados com sucesso!')
-
-
-# #APENAS PARA FINS DE TESTE
-# def colaborador_conversas(request, colaborador_id):
-#     user = Usuario.objects.get(pk=1)
-#     collaborator = Colaborador.objects.get(pk=colaborador_id)
-#     conversa = Conversa.objects.create(usuarios=user, colaboradores=collaborator)
-#     # conversa.set_tag(classifier(('online')))
-#     # print(conversa.get_tag())
-#     Mensagem.objects.create(conversa=conversa, sender=user, content='Hello, Bob!')
-#     Mensagem.objects.create(conversa=conversa, sender=collaborator, content='Hi, Alice!')
-#     conversa2 = Conversa.objects.create(usuarios = user, colaboradores = collaborator)
-#     Mensagem.objects.create(conversa = conversa2, sender = user, content = 'hell imakmfr')
-#     Mensagem.objects.create(conversa = conversa2, sender = collaborator, content = 'hi imakmfr') 
-
-#     for mensagem in conversa.mensagens.all():
-#         print(mensagem.content)
-
+#view pra receber a mensagem do zap e salvar no banco
+@csrf_exempt
+def receber_zap(request):
+    if request.method == 'POST':
+        data = request.POST
+        user = CustomUser.objects.first()
+        c1 = Conversa.objects.create(usuarios=user, tag='online')
+        Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
+        return redirect('tela_colaborador')
+    else:
+        return redirect('tela_colaborador')
     
-#     colaborador = Colaborador.objects.get(pk = colaborador_id)
-#     conversas = Conversa.objects.filter(colaboradores = colaborador)
-#     return render(request, 'atendimento/testconversas.html', {'colaborador': colaborador, 'conversas': conversas})
-
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
 def chatbot(request, username, useruuid):
-    #pega o token desse usuario 
-    #passa o token como parametro da url
     
     return redirect(f'http://localhost:8502/?username={username}&useruuid={useruuid}')
 
-# @api_view(['POST', 'GET'])
-# def api_senduser(request):
-
-#         username = request.user.username
-#         userid = request.user.id
-#         return JsonResponse({"username": username, "userid": userid})
 
 def sendzap(request, username, userid, tag):
     print(f'olá. {username} tem dúvida sobre {tag}')
