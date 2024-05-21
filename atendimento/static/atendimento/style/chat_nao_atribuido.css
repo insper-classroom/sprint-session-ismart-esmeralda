@@ -15,6 +15,9 @@ header {
     box-sizing: border-box;
     border-right: 1px solid black;
     flex-shrink: 0;
+    position: fixed; 
+    top: 0; 
+    bottom: 0;
 }
 
 .top-header {
@@ -46,17 +49,35 @@ header {
     height: 30px;
 }
 
-.img1, .img2, .img3, .img4, .img5, .img6 {
-    margin-top: 10%;
+.img1 {
+    margin-bottom: -80%; 
+}
+.img2 {
+    margin-bottom: -80%; 
+}
+.img2 {
+    margin-top: -500%; 
+}
+.img3 {
+    margin-bottom: -80%; 
+}
+.img3 {
+    margin-top: -500%; 
+}
+.img4 {
+    margin-top: -500%; 
 }
 
-.img1 {
-    margin-top: 5%;
+.img5 {
+    margin-top:100%; 
 }
 .img5 {
-    margin-top: 5%;
+    margin-bottom: -520%;
 }
 
+.img6 {
+    margin-top: -100%; 
+}
 .sidebar {
     width: 200px;
     background-color: #002561;
@@ -69,6 +90,7 @@ header {
     left: 80px;
     bottom: 0;
     overflow-y: auto;
+    margin-top: -4%;
 }
 
 .inbox-header {
@@ -96,8 +118,16 @@ header {
     overflow-y: auto;
 }
 
-.conversa-icon {
-    color: red;
+.conversa-header button {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+}
+.conversa-icon{
+    width: 15%;
+    height: 15%;
+    margin-left: 10%;
 }
 
 .conversa {
@@ -106,14 +136,15 @@ header {
     font-size: 18px;
 }
 
-.nao_atribuido, .minhas_conversas, .resolvidos {
+.nao_atribuido button, .minhas_conversas button, .resolvidos button {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5%;
     color: white;
     font-size: 15px;
-    padding-left: 25px;
-    margin-top: 10px;
+    padding-left: 8%;
+    margin-top: -5%;
+    white-space: nowrap;
 }
 
 .nao_atribuido-icon, .minhas_conversas-icon, .resolvidos-icon {
@@ -127,8 +158,16 @@ button {
     cursor: pointer;
 }
 
-.colaboradores-icon {
+.colaboradores-header button{
+    display: flex;
+    align-items: center;
     color: white;
+    font-size: 18px;
+}
+.colaboradores-icon {
+    width: 15%;
+    height: 15%;
+    margin-left: 10%;
 }
 
 .colaboradores {
@@ -138,8 +177,9 @@ button {
 }
 
 .online p {
-    font-size: 13px;
-    margin-left: 20px;
+    font-size: 15px;
+    margin-left: 5%;
+    margin-top: auto;
 }
 
 .hand {
@@ -150,6 +190,7 @@ button {
 
 .text-container {
     font-size: 24px;
+    font-weight: bold;
 }
 
 .users {
@@ -158,15 +199,15 @@ button {
 }
 
 .users p {
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 5px;
+    font-size: 15px;
+    margin-left: 5%;
+    margin-top: 10%;
 }
 
 .users img {
     width: 22px;
     height: 22px;
-    margin-right: 10px;
+    margin-right: 5%;
 }
 
 .info-section {
@@ -190,9 +231,9 @@ button {
     flex-direction: row;
     border: 1px solid #000;
     border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 10px;
+    padding: 2%;
+    width: 90%;
+    margin-top: 5%;
 }
 
 .usuario {
