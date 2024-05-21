@@ -4,9 +4,9 @@ from django.http import HttpResponse, JsonResponse
 from .models import Conversa, Mensagem
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
-from users.models import CustomUser
-from django.contrib.admin.views.decorators import staff_member_required
-from django.views.decorators.csrf import csrf_exempt
+import redis
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 
 

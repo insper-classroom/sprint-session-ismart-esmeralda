@@ -13,7 +13,13 @@ urlpatterns = [
     path('tela_colaborador/resolve/<int:conversa_id>/', views.resolve, name='resolve'),
     path('tela_colaborador/assign_conversa/<int:conversa_id>/', views.assign_conversa, name='assign_conversa'),
 
+<<<<<<< HEAD
     
 
     
+=======
+
+    # path('sendzap/<str:username>/<int:userid>/<str:tag>/', views.sendzap, name='sendzap')
+ 
+>>>>>>> Matheus3
 ]
