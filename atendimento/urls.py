@@ -15,6 +15,5 @@ urlpatterns = [
 
 
     # path('sendzap/<str:username>/<int:userid>/<str:tag>/', views.sendzap, name='sendzap')
-
-    
+ 
 ]

@@ -5,7 +5,6 @@ from django.http import HttpResponse, JsonResponse
 from .models import Colaborador, Conversa, Usuario, Mensagem
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
-import redis
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
