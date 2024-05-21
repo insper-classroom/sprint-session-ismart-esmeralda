@@ -12,21 +12,19 @@
 </head>
 
 <body>
-    <header class="header">
+    <div class="login-container montserrat-2">
         <div class="logo-container">
             <a href="/">
                 <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
             </a>
         </div>
-    </header>
-    <div class="login-container">
         <h2>Login</h2>
         <form method="POST" novalidate>
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Login" class="montserrat-3">
-            <a href="{% url 'register' %}" class="text-ism-darker-blue montserrat-1">Registro</a>
-            <a href="{% url 'reset_password' %}" class="forgot-password montserrat-1">Esqueci minha senha</a>
+            <a href="{% url 'register' %}" class="text-ism-darker-blue montserrat-2">Registro</a>
+            <a href="{% url 'reset_password' %}" class="forgot-password montserrat-2">Esqueci minha senha</a>
         </form>
     </div>
 </body>
