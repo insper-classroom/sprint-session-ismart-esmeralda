@@ -4,5 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     pass
-    uuid = models.UUIDField(primary_key= True, default=uuid.uuid4, editable=False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    is_colaborador = models.BooleanField(default=False)
 # Create your models here.

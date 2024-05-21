@@ -1,30 +1,16 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from users.models import CustomUser as User
 import json
+import uuid
 
-class Usuario(models.Model):
-    nome = models.TextField()
-
-    def __str__(self):
-        return self.nome
-
-class Colaborador(models.Model):
-    nome = models.TextField()
-
-    def __str__(self):
-        return self.nome
 
 class Conversa(models.Model):
-    usuarios = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    colaboradores = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
+    usuarios = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='colaborador')
     tag = models.TextField()
-
-    def set_tag(self, x):
-        self.tag = json.dumps(x) # No lugare de definir conversa.tag usa conversa.tag a variavel q o classificador retorna q eh um tuple 
-
-    def get_tag(self):
-        return json.loads(self.tag) ## retorna uma tuple c as duas tagas
+    resolved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Conversa {self.id}"
