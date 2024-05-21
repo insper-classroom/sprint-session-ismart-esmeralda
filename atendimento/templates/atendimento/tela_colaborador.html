@@ -1,0 +1,21 @@
+<!-- templates/colaborador_conversas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <ul>
+        {% for conversa in conversas %}
+            <li>
+                <strong>Conversa {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <ul>
+                    {% for mensagem in conversa.mensagens.all %}
+                        <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
