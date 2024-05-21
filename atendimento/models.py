@@ -12,6 +12,7 @@ class Conversa(models.Model):
     tag = models.TextField()
     resolved = models.BooleanField(default=False)
 
+
     def __str__(self):
         return f"Conversa {self.id}"
 
