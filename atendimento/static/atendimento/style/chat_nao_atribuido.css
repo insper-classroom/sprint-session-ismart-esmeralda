@@ -35,13 +35,45 @@ header {
     border-left: 1px solid black;
     z-index: 1;
 }
+.right-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.326);
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: auto; /* Ajuste de posicionamento */
+    margin-right: 10px; /* Espaçamento do lado direito */
+    height: 80%; 
+    width: 20%;
+}
 
+.button-container {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.button-container img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px; /* Espaçamento entre a imagem e o texto */
+}
+
+.button-container p {
+    margin: 0;
+    font-size: 20px;
+    color: white;
+}
 .imagens-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .imagens-header img {
@@ -53,42 +85,30 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-
-}
-
-
-
-
-
-/* .img1 {
-    margin-bottom: -80%; 
+    margin-top: 10%;
+    }
+.img1 {
+    margin-bottom: 90%; 
 }
 .img2 {
-    margin-bottom: -80%; 
+    margin-bottom: 90%; 
 }
-.img2 {
-    margin-top: -500%; 
-}
+
 .img3 {
-    margin-bottom: -80%; 
+    margin-bottom: 90%; 
 }
-.img3 {
-    margin-top: -500%; 
-}
+
 .img4 {
-    margin-top: -500%; 
+    margin-bottom: 90%; 
 }
 
 .img5 {
-    margin-top:100%; 
-}
-.img5 {
-    margin-bottom: -520%;
+    margin-bottom: 90%;
 }
 
 .img6 {
-    margin-top: -100%; 
-} */
+    margin-top: 90%; 
+}
 .sidebar {
     width: 200px;
     background-color: #002561;
@@ -97,11 +117,10 @@ header {
     box-sizing: border-box;
     border-right: 1px solid black;
     position: fixed;
-    top: 70px;
+    height: 100vh;
     left: 80px;
     bottom: 0;
     overflow-y: auto;
-    margin-top: -7vh;
 }
 
 .inbox-header {
@@ -284,28 +303,52 @@ button {
 
 .empty-section {
     display: flex;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
-    width: 58vw;
-    height: 32vh;
-    padding-top: 10%;
+    justify-content: start;
+    height: 100vh;
+    width: 100%;
+    border-bottom: 10%;
     background-color: white;
+    margin-bottom: 10%;
+    top: 15%;
+    left: calc(280px + 28%);
+    position: fixed;
+    margin-left: 2%;
+    margin-top: 3%;
+}
+
+.header-empty{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
 }
 
 .imagem-user {
     width: 40px;
     height: auto;
-    margin-right: 20px;
+    margin-left: 10%;
 }
 
 .nome-user {
-    font-size: 20px;
-    margin-left: 20px;
+    font-size: 30px;
+    margin-top: 8%;
+    margin-left: 10%;
     color: #4091DC;
-    margin-bottom: 13px;
+    margin-bottom: auto;
+}
+.line {
+    width: 10%;
+     
+    height: 10%;
+    background-color: black;
+    margin-top: 20px; 
 }
 
 .linha {
+    display: flex;
+    flex-direction: row;
     border-bottom: 1px solid #002561;
     width: 100%;
     height: 2px;
