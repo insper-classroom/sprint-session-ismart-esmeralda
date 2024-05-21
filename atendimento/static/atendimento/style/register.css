@@ -1,37 +1,89 @@
-body {
-    font-family: "Montserrat", Arial, sans-serif;
+
+/* FONTES */
+
+.montserrat-1 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .montserrat-2 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+  }
+  
+  .montserrat-3 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+  }
+  
+  .montserrat-4 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+  }
+  
+  .montserrat-5 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+  }
+  
+  /* COR FONTE */
+  
+  .text-ism-dark-blue {
+      --tw-text-opacity: 1;
+      color: rgba(0, 142, 212, var(--tw-text-opacity));
+  }
+  
+  .text-ism-darker-blue {
+      --tw-text-opacity: 1;
+      color: rgba(0, 37, 97, var(--tw-text-opacity));
+  }
+  
+  /* PRINCIPAL */
+  
+  body {
+    font-family: "Montserrat", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
 }
 
 ::marker {
-    unicode-bidi: isolate;
     font-variant-numeric: tabular-nums;
     text-transform: none;
-    text-indent: 0px !important;
-    text-align: start !important;
-    text-align-last: start !important;
-    font-size: 13px;
+    text-indent: 0px;
+    text-align: start;
+    text-align-last: start;
+    font-size: 100%;
 }
 
 .register-container {
     background: #fff;
-    padding: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 3%;
+    padding: 1%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    width: 400px;
+    width: 22%;
 }
 
 .register-container h2 {
-    margin-bottom: 20px;
+    margin-bottom: 3%;
     font-weight: 700;
     color: rgba(0, 37, 97, 1);
-    text-align: left;
+    text-align: center;
 }
 
 .register-container form {
@@ -45,7 +97,7 @@ body {
     border: none;
     border-radius: 5px;
     padding: 10px 0;
-    font-size: 16px;
+    font-size: 100%;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -58,31 +110,32 @@ body {
 .register-container form input[type="password"],
 .register-container form input[type="email"] {
     border: 1px solid rgba(0, 189, 242, 1);
-    padding: 10px;
+    padding: 2%;
     border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
-.register-container .helptext {
-    font-size: 12px;
-    margin-top: 1em;
-    display: block;
-}
-
-.helptext {
-    display: none; /* Oculta todas as mensagens de ajuda */
-}
-
-.logo-container {
-    position: relative; /* Adiciona posicionamento relativo ao container */
-    margin-top: 20px; /* Adiciona um espaçamento entre a logo e o container do login */
+    margin-bottom: 1%;
+    font-size: 100%;
 }
 
 .logo {
-    position: absolute; /* Adiciona posicionamento absoluto para a logo */
-    top: -150px; /* Alinha a logo no topo do container */
-    left: -300px; /* Alinha a logo no lado esquerdo do container */
-    width: 150px; /* ajuste conforme necessário */
+    position: relative;
+    top: 10px;
+    left: -100px;
+    width: 100px;
     height: auto;
+}
+
+/* HELP TEXT */
+
+.register-container .helptext {
+    font-size: 80%;
+    margin-top: -3%;
+    text-align: center;
+}
+
+.helptext {
+    display: none;
+}
+
+li{
+    font-size: 80%; 
 }
