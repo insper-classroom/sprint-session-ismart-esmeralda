@@ -8,6 +8,7 @@ from users.models import CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
 import json
+from chatbot.classificador import classifier
 
 
 
@@ -50,7 +51,16 @@ def assign_conversa(request, conversa_id):
 @csrf_exempt
 @staff_member_required
 def resolve(request, conversa_id):
+    msgs = ''
     conversa = Conversa.objects.get(pk=conversa_id)
+    #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
+    mensagens = conversa.mensagens.all().order_by('id')[:3]
+    #concatena essas tres mensagens em uma string
+    for mensagem in mensagens:
+        msgs += mensagem.content
+
+    conversa.tag = classifier(msgs)
+    
     conversa.resolved = True
     conversa.delete()
     return redirect('tela_colaborador')
