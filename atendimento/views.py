@@ -9,6 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
 import json
 from chatbot.classificador import classifier
+from twilio.rest import Client
 
 
 
@@ -30,7 +31,6 @@ def aluno(request):
 #Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
 
 @csrf_exempt
-@staff_member_required
 def mostra_conversas(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
@@ -44,6 +44,28 @@ def mostra_conversas(request):
 def assign_conversa(request, conversa_id):
     conversa = Conversa.objects.get(id = conversa_id)
     conversa.assigned_to = request.user
+    conversa.save()
+    return redirect('tela_colaborador')
+
+@csrf_exempt
+@staff_member_required
+def send_msg(request, telefone, conversa_id):
+    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
+    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+    client = Client(account_sid, auth_token)
+
+    mensagem = request.POST['mensagem']
+
+    message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body=mensagem,
+        to=f'whatsapp:+55{telefone}'
+    )
+
+    Mensagem.objects.create(conversa=Conversa.objects.get(pk = conversa_id), sender=request.user, content=mensagem)
+
+    conversa = Conversa.objects.get(id = conversa_id)
+
     conversa.save()
     return redirect('tela_colaborador')
 
@@ -84,6 +106,8 @@ def resolve(request, conversa_id):
     return redirect('tela_colaborador')
 
 
+
+
 #recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
 
 
@@ -106,6 +130,7 @@ def receber_zap(request):
             c1 = Conversa.objects.create(usuarios=user, tag='online')   
 
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
+        return redirect('tela_colaborador')
     else:
         return redirect('tela_colaborador')
 

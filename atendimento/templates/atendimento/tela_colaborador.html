@@ -1,4 +1,3 @@
-<!-- templates/colaborador_conversas.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +8,19 @@
         {% for conversa in notassigned %}
             <li>
                 <form method="POST" action="assign_conversa/{{conversa.id}}/">                    
-                {% csrf_token %}
+                    {% csrf_token %}
                     <button type="submit">Assign to me</button>
                 </form>
-                <form method = "post" action = 'resolve/{{conversa.id}}/'>
+                <form method="post" action='resolve/{{conversa.id}}/'>
                     {% csrf_token %}
                     <input type="submit" value="Resolver conversa">
                 </form>
-                <strong>NOT ASSIGNED {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <form method="post" action="sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
+                    {% csrf_token %}
+                    <textarea name="mensagem" placeholder="Digite sua mensagem"></textarea>
+                    <input type="submit" value="Enviar mensagem">
+                </form>
+                <strong>NOT ASSIGNED {{ conversa.id }}</strong> with {{ conversa.usuarios.username }}
                 <ul>
                     {% for mensagem in conversa.mensagens.all %}
                         <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
@@ -25,15 +29,19 @@
             </li>
         {% endfor %}
     </ul>
-
     <ul>
         {% for conversa in yours %}
             <li>
-                <form method = "post" action = 'resolve/{{conversa.id}}/'>
+                <form method="post" action="sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
+                    {% csrf_token %}
+                    <textarea name="mensagem" placeholder="Digite sua mensagem"></textarea>
+                    <input type="submit" value="Enviar mensagem">
+                </form>
+                <form method="post" action='resolve/{{conversa.id}}/'>
                     {% csrf_token %}
                     <input type="submit" value="Resolver conversa">
                 </form>
-                <strong>YOURS {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <strong>YOURS {{ conversa.id }}</strong> with {{ conversa.usuarios.username }}
                 <ul>
                     {% for mensagem in conversa.mensagens.all %}
                         <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
@@ -42,11 +50,10 @@
             </li>
         {% endfor %}
     </ul>
-
     <ul>
         {% for conversa in resolved %}
             <li>
-                <strong>RESOLVED {{ conversa.id }}</strong> with {{ conversa.usuarios.username}}
+                <strong>RESOLVED {{ conversa.id }}</strong> with {{ conversa.usuarios.username }}
                 <ul>
                     {% for mensagem in conversa.mensagens.all %}
                         <li>{{ mensagem.sender }}: {{ mensagem.content }}</li>
@@ -54,12 +61,6 @@
                 </ul>
             </li>
         {% endfor %}
-
-
-
-
-    {% for mensagem in mensagens %}
-        <p>{{ mensagem.sender }}: {{ mensagem.content }}</p>
-    {% endfor %}
+    </ul>
 </body>
 </html>
