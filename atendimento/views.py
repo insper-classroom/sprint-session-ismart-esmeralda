@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from .models import Conversa, Mensagem
+from .models import Conversa, Mensagem, Stats
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
 from users.models import CustomUser
@@ -59,7 +59,25 @@ def resolve(request, conversa_id):
     for mensagem in mensagens:
         msgs += mensagem.content
 
-    conversa.tag = classifier(msgs)
+    tag = classifier(msgs)
+    #atualiza as estatisticas
+    stats = Stats.objects.first()
+    if stats is None:
+        stats = Stats.objects.create()
+    else:
+        if tag == 'Sobre o Ismart':
+            stats.sobreosismart += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Ismart online':
+            stats.ismartonline += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Processo seletivo':
+            stats.processoseletivo += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Bolsas de estudo':
+            stats.bolsasdeestudo += 1
+            stats.totalresolvidos += 1
+        stats.save()
     
     conversa.resolved = True
     conversa.delete()
