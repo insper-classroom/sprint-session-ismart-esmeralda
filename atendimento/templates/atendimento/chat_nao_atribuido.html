@@ -115,28 +115,41 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="info-section">
-            <div class="info-item">
-                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-                <img class="mensagem-img" src="{% static 'atendimento/img/message-regular.svg' %}" alt="Imagem 2">
-                <div class="texto">
-                    <p class="user">Usuário</p>
-                    <p class="mensagem">Mensagem...</p>
-                </div>
+
+    <div class="info-section">
+        <div class="info-item">
+            <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+            <img class="mensagem-img" src="{% static 'atendimento/img/message-regular.svg' %}" alt="Imagem 2">
+            <div class="texto">
+                <p class="user">Usuário</p>
+                <p class="mensagem">Mensagem...</p>
             </div>
         </div>
     </div>
     <div class="empty-section">
         <div class="header-empty">
             <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
-            <p class="nome-user">Usuário</p>  
-            <hr class = "line" />
-            
+            <p class="nome-user">Usuário</p>              
         </div>
-        <hr>
+        <div class="line"></div>
+        <div class="green-box">
+            <p>Mensagem...</p>
+        </div>
+        <div class="grey-box">
+            <p>Resposta...</p>
+        </div>
+        <div class="escrever">
+            <button>
+                <img src="{% static 'atendimento/img/file-solid(1).svg' %}" alt="Imagem de Exemplo" class="imagem-midia">
+            </button>
+            <div class="box-escrever">
+                <input type="text" class="input-escrever" placeholder="Escreva uma mensagem...">
+            </div>
+            <button>
+                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
+            </button>
+        </div>
     </div>
-
 </body>
 </html>
 {% endblock %}
