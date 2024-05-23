@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Conversa, Mensagem, Stats
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
@@ -116,7 +116,6 @@ def resolve(request, conversa_id):
 def receber_zap(request):
     if request.method == 'POST':
         data = request.POST
-        print(data)
         if CustomUser.objects.filter(telefone=data['From'][12:]).exists():
             user = CustomUser.objects.get(telefone=data['From'][12:])
         else:
@@ -130,13 +129,14 @@ def receber_zap(request):
             c1 = Conversa.objects.create(usuarios=user, tag='online')   
 
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
-        return redirect('tela_colaborador')
+        return JsonResponse({'status': 'ok', 'message': 'message received'})
     else:
         return redirect('tela_colaborador')
 
 
-
-
+@csrf_exempt
+def reloadview(request):
+    return redirect('tela_colaborador')
 
     
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
