@@ -248,6 +248,7 @@ button {
     left: 280px;
     box-sizing: border-box;
     border-left: 1px solid black;
+    overflow-y:auto;
 }
 
 .info-item {
@@ -295,22 +296,6 @@ button {
     margin-left: 10px;
 }
 
-.empty-section {
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-    justify-content: start;
-    height: 100vh;
-    width: 100%;
-    border-bottom: 10%;
-    background-color: white;
-    margin-bottom: 10%;
-    top: 15%;
-    left: calc(280px + 28%);
-    position: fixed;
-    margin-left: 2%;
-    margin-top: 3%;
-}
 
 .header-empty{
     display: flex;
@@ -341,50 +326,78 @@ button {
 }
 
 
-.horizontaldiv {
+
+
+.empty-section {
     display: flex;
-    flex-direction: row;
-    justify-content: left;
+    align-items: start;
+    flex-direction: column;
+    justify-content: start;
+    height: 100vh;
     width: 100%;
+    border-bottom: 10%;
+    background-color: white;
+    margin-bottom: 10%;
+    top: 15%;
+    left: calc(280px + 28%);
+    position: fixed;
+    margin-left: 2%;
+    margin-top: 3%;
+}
+.conversas {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 10%;
+    background-color: white;
+    margin-bottom: 10%;
+    top: 40%;
+    left: calc(280px + 28%);
+    position: fixed;
+    margin-left: 2%;
+    margin-bottom: 10%;
+    width: 45%;
+    height: 1%;
+
+
 }
 
 .green-box {
+    display: block;
+    justify-content: flex-start;
     background-color: green;
     border-radius: 10px;
     padding: 1%;
     margin-top: 1%;
     width: auto;
-    max-width: 45%; 
     text-align: left;
     height: auto;
-    word-wrap: break-word;
+    margin-right: auto;
 }
 
 .green-box p {
     color: white;
     margin-top: 1%;
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word;
     word-wrap: break-word;
     white-space: normal;
 }
 
 .grey-box {
-    display: flex;
+    display: block;
+    justify-content: flex-end;
     background-color: grey;
     border-radius: 10px;
+    margin-top: 3%;
     padding: 1%;
-    margin-top: 1%;
+    margin-left: auto;
     width: auto;
-    max-width: 45%; 
     height: auto;
-    word-wrap: break-word;
-    float: right;
 }
 
 .grey-box p {
     color: white;
     margin-top: 1%;
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word;
     word-wrap: break-word;
     white-space: normal;
 }
@@ -401,6 +414,8 @@ button {
 
 .imagem-midia {
     order: 1; 
+    height: 15px;
+    width: 15px;
 }
 
 .input-escrever {
@@ -412,6 +427,8 @@ button {
 
 .enviar {
     order: 3;
+    height: 15px;
+    width: 15px;
 }
 /* Media Queries */
 @media (max-width: 768px) {
