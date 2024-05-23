@@ -138,13 +138,6 @@ EMAIL_HOST_PASSWORD = 'nsnm phof qyxz ksvo'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    }
-}
-
-
-ASGI_APPLICATION = 'ismart.routing.application'
+ASGI_APPLICATION = 'ismart.asgi.application'
 
 
