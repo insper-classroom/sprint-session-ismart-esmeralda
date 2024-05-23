@@ -74,12 +74,18 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function loadIt() { 
-        $('#conversa').load("../receberzap/", function(){
-            setTimeout(loadIt, 10000);
-        }); 
+    var requestCount = 0;  // Initialize a counter
+
+    function updateDiv() { 
+        $("#conversa").load(window.location.href + " #conversa");
+        requestCount++;  // Increment the counter
+        console.log("Number of requests made: " + requestCount);  // Log the current count
     }
-    $(document).ready(loadIt);  
+
+    $(document).ready(function() {
+        setInterval(updateDiv, 3500);  // Call updateDiv every 4 seconds
+    });  
 </script>
+</html>
 
 </html>
