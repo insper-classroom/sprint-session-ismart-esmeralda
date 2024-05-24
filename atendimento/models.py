@@ -6,6 +6,7 @@ import json
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 import uuid
+from django import forms
 
 
 class Conversa(models.Model):
@@ -70,6 +71,17 @@ class Stats(models.Model):
         if self.total_response_count == 0:
             return 0    
         return self.total_response_time / self.total_response_count
+    
+    
+class EmailForm(forms.Form):
+    subject = forms.CharField(max_length=100, label='Assunto')
+    message = forms.CharField(widget=forms.Textarea, label='Mensagem')
 
+class Mail(models.Model):
+    conversa = models.ForeignKey(Conversa, on_delete=models.CASCADE, related_name='mails')
+    content = models.TextField()
+    subject = models.TextField()
 
-
+    sender_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    sender_object_id = models.PositiveIntegerField()
+    sender = GenericForeignKey('sender_content_type', 'sender_object_id')

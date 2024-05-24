@@ -1,0 +1,24 @@
+<!-- templates/sendmailtest.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Enviar Email</title>
+</head>
+<body>
+    <h1>Enviar Email</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_subject">Assunto:</label>
+            <input type="text" name="subject" id="id_subject" maxlength="100" required>
+        </div>
+        <div>
+            <label for="id_message">Mensagem:</label>
+            <textarea name="message" id="id_message" rows="10" required></textarea>
+        </div>
+        <button type="submit">Enviar Email</button>
+    </form>
+</body>
+</html>

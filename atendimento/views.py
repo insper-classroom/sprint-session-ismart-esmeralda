@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from .models import Conversa, Mensagem, Stats
+from .models import Conversa, Mensagem, Stats, EmailForm, Mail
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
 from users.models import CustomUser
@@ -12,8 +12,14 @@ from chatbot.classificador import classifier
 from twilio.rest import Client
 import os
 import smtplib
-
-
+import imaplib
+from email.message import EmailMessage
+from django.core.mail import send_mail
+import mailparser
+import email
+from email.header import decode_header
+from ismart import settings
+import re
 
 
 # Create your views here.
@@ -134,7 +140,7 @@ def receber_zap(request):
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
 def chatbot(request, username, useruuid):
     
-    return redirect(f'http://localhost:8502/?username={username}&useruuid={useruuid}')
+    return redirect(f'http://localhost:8501/?username={username}&useruuid={useruuid}')
 
 
     
@@ -143,4 +149,86 @@ def chatbot(request, username, useruuid):
 
 def mandar_email(request):
     if request.method == "POST":
+        form = EmailForm(request.POST)
 
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            from_email = None
+            to_email = 'joaopedroamiguel@gmail.com'
+
+            send_mail(
+                subject,
+                message,
+                from_email,
+                [to_email],
+                fail_silently=False,
+            )
+            redirect ('enviar_email')
+    else:
+        form = EmailForm()
+
+    return render(request, 'atendimento/sendmailtest.html', {'form': form})
+
+def receive_email(request):
+    try:
+        # Conectar ao servidor de e-mail
+        mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
+        mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        mail.select("inbox")
+
+        # Buscar os e-mails não lidos
+        status, messages = mail.search(None, '(ALL)')
+
+        email_data = []
+        for num in messages[0].split():
+            status, msg_data = mail.fetch(num, '(RFC822)')
+            msg = email.message_from_bytes(msg_data[0][1])
+            mail_content = mailparser.parse_from_bytes(msg_data[0][1])
+            
+            # Decodificar o assunto
+            subject, encoding = decode_header(msg["Subject"])[0]
+            if isinstance(subject, bytes):
+                subject = subject.decode(encoding if encoding else "utf-8")
+            
+            # Decodificar o remetente
+            from_ = msg.get("From")
+            
+            # Processar o corpo da mensagem
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        body = part.get_payload(decode=True).decode()
+                        break
+            else:
+                body = msg.get_payload(decode=True).decode()
+            
+            email_data.append({
+                'from': from_,
+                'subject': subject,
+                'body': body,
+            })
+
+        user_mail = re.search(r'<(.*?)>', from_)
+
+        if CustomUser.objects.filter(email=user_mail).exists():
+            user = CustomUser.objects.get(email=user_mail)
+        else:
+            user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = 'dasdas')
+
+        c1 = Conversa.objects.filter(usuarios=user)
+
+        if c1 is None:
+            c1 = Conversa.objects.create(usuarios=user, tag='n sei')
+
+        Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+
+        # Desconectar do servidor de e-mail
+        mail.close()
+        mail.logout()
+
+        # Renderizar os dados no template
+        return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
+    
+    except Exception as e:
+        return HttpResponse(f"Ocorreu um erro: {e}")

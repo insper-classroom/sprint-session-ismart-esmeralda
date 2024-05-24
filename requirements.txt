@@ -9,3 +9,5 @@ faiss-cpu
 tiktoken
 markdown
 django-filter
+channels
+mail-parser
