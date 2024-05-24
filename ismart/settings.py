@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&wuvg9%#o(_%l@4@)swmehd4(f1hspn*d2$=8j%b4n0yd*o#(4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['80c4-186-232-61-4.ngrok-free.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -135,4 +136,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'guatavovictor22@gmail.com'
 EMAIL_HOST_PASSWORD = 'nsnm phof qyxz ksvo'
 AUTH_USER_MODEL = 'users.CustomUser'
+
+
+ASGI_APPLICATION = 'ismart.asgi.application'
+
 

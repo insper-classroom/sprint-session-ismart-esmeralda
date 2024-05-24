@@ -31,7 +31,6 @@ def aluno(request):
 
 
 #Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
-
 @csrf_exempt
 def mostra_conversas(request):
     colab = request.user.id
@@ -49,6 +48,7 @@ def assign_conversa(request, conversa_id):
     conversa.save()
     return redirect('tela_colaborador')
 
+#view pro colaborador enviar uma mensagem
 @csrf_exempt
 @staff_member_required
 def send_msg(request, telefone, conversa_id):
@@ -108,12 +108,7 @@ def resolve(request, conversa_id):
     return redirect('tela_colaborador')
 
 
-
-
 #recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
-
-
-
 @csrf_exempt
 def receber_zap(request):
     if request.method == 'POST':
@@ -131,14 +126,9 @@ def receber_zap(request):
             c1 = Conversa.objects.create(usuarios=user, tag='online')   
 
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
-        return JsonResponse({'status': 'ok', 'message': 'message received'})
+        return redirect('tela_colaborador')
     else:
         return redirect('tela_colaborador')
-
-
-@csrf_exempt
-def reloadview(request):
-    return redirect('tela_colaborador')
 
     
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
@@ -147,7 +137,7 @@ def chatbot(request, username, useruuid):
     return redirect(f'http://localhost:8502/?username={username}&useruuid={useruuid}')
 
 
-def criacvs(request, username, userid, tag):
+    
     print(f'olá. {username} tem dúvida sobre {tag}')
     return redirect('index')
 

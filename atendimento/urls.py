@@ -13,7 +13,4 @@ urlpatterns = [
     path('tela_colaborador/assign_conversa/<int:conversa_id>/', views.assign_conversa, name='assign_conversa'),
     path('tela_colaborador/sendmsg/<int:telefone>/<int:conversa_id>/', views.send_msg, name='send_msg'),
 
-    
-
-    
 ]
