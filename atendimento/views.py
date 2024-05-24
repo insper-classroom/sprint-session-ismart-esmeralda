@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from chatbot.classificador import classifier
 from twilio.rest import Client
+import os
+import smtplib
 
 
 
@@ -148,4 +150,7 @@ def chatbot(request, username, useruuid):
 def criacvs(request, username, userid, tag):
     print(f'olá. {username} tem dúvida sobre {tag}')
     return redirect('index')
-    
+
+def mandar_email(request):
+    if request.method == "POST":
+
