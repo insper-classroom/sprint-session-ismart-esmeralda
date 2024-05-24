@@ -14,6 +14,8 @@ class Conversa(models.Model):
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='colaborador')
     tag = models.TextField()
     resolved = models.BooleanField(default=False)
+    is_zap = models.BooleanField(default=False)
+    is_mail = models.BooleanField(default=False)
 
 
     def __str__(self):
