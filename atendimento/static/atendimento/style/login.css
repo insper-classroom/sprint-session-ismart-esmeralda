@@ -1,0 +1,147 @@
+
+/* FONTES */
+
+.montserrat-1 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .montserrat-2 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+  }
+  
+  .montserrat-3 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+  }
+  
+  .montserrat-4 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+  }
+  
+  .montserrat-5 {
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+  }
+  
+  /* COR FONTE */
+  
+  .text-ism-dark-blue {
+      --tw-text-opacity: 1;
+      color: rgba(0, 142, 212, var(--tw-text-opacity));
+  }
+  
+  .text-ism-darker-blue {
+      --tw-text-opacity: 1;
+      color: rgba(0, 37, 97, var(--tw-text-opacity));
+  }
+  
+  /* PRINCIPAL */
+
+  body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-container {
+    background: #fff;
+    padding: 2%;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 11%;
+    width: 17%;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 5%;
+    font-weight: 700;
+    color: rgba(0, 37, 97, 1);
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container form input[type="submit"] {
+    background-color: rgba(0, 189, 242, 1);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-size: 110%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container form input[type="submit"]:hover {
+    background-color: rgba(0, 165, 242, 1);
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+    border: 1px solid rgba(0, 189, 242, 1);
+    padding: 2.5%;
+    margin-left: 2%;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    font-size: 90%;
+}
+
+.login-container a {
+    color: rgba(0, 37, 97, 1);
+    text-decoration: none;
+    font-size: 100%;
+    margin-top: 10px;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+.logo-container {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.logo {
+    position: relative;
+    margin-top: -15%;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: auto;
+}
+
+.login-container .forgot-password {
+    color: rgba(0, 37, 97, 1);
+    text-decoration: none;
+    font-size: 100%;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.login-container .forgot-password:hover {
+    text-decoration: underline;
+}

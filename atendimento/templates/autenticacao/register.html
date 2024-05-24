@@ -1,0 +1,29 @@
+{% extends "atendimento/base.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/register.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+        </a>
+    </header>
+    <div class="register-container montserrat-2 text-ism-darker-blue">
+        <h2>Sign Up</h2>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}        
+            <input type="submit" class="montserrat-2" value="Register" />
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

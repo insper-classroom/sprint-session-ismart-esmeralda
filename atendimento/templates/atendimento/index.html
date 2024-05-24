@@ -6,38 +6,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Página Inicial</title>
-    <link rel="stylesheet" href="{% static 'atendimento/css/style.css' %}">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/style.css' %}">
 </head>
 <body>
     <header>
         <!-- Logo -->
-        <div class ='imagem'>
+        <div>
             <a href="/">
                 <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
             </a>
         </div>
-        <!-- Botão de acesso geral -->
+        <!-- Acessar -->
         <div class="botaoheader_acessar">
-            <button class="botao-tipo1 montserrat-3">Acessar</button>
+            <a href="{% url 'login' %}"><button class="botao-tipo1 montserrat-3">Acessar</button></a>
         </div>
     </header>
-    <!-- Texto 1 -->
-    <div class="texto1 montserrat-2 text-ism-dark-blue">
-        <p>O Ismart oferece acesso à educação de excelência em programas de modalidade presencial e online, que incluem bolsa de estudos e acompanhamento individual com foco em desenvolvimento acadêmico e pessoal.</p>
+    <!-- Background -->
+    <img src="{% static 'atendimento\img\esquerdaft.png' %}" class="backgroundindex1" alt="backgroundimage1">
+    <img src="{% static 'atendimento\img\direitaft.png' %}" class="backgroundindex2" alt="backgroundimage2">
+    <!-- Textos -->
+    <div class="textos">
+        <!-- Texto 1 -->
+        <div class="texto1 montserrat-2 text-ism-dark-blue">
+            <a>O Ismart oferece acesso à educação de excelência em programas de modalidade presencial e online, que incluem bolsa de estudos e acompanhamento individual com foco em desenvolvimento acadêmico e pessoal.</a>
+        </div>
+        <!-- Texto 2 -->
+        <div class="texto2 montserrat-3 text-ism-darker-blue">
+            <a>Você tem alguma dúvida sobre o processo seletivo? Faça login e entre em contato!</a>
+        </div>
     </div>
-    <!-- Texto 2 -->
-    <div class="texto2 montserrat-3 text-ism-darker-blue">
-        <p>Você é ou conhece um jovem de família baixa renda do 7º e 9º ano do ensino fundamental? Inscreva-se no Processo Seletivo Ismart através do acesso abaixo!</p>
-    </div>
+    <!-- Blocos -->
     <div class="blocos">
         <!-- Bloco 1 -->
-        <div class="bloco1">
+        <div class="bloco1 block">
             <div class="block">
                 <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
+                <p class="text-ism-darker-blue montserrat-4">Sou Candidato(a)</p>
                 <div class="button-container">
-                    <button class="botao-tipo1 montserrat-3">Acessar</button>
-                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                    <a href="{% url 'login' %}">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    </a>
+                    <a href="{% url 'register' %}">
+                        <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -45,9 +57,10 @@
         <div class="bloco2">
             <div class="block">
                 <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
+                <p class="text-ism-darker-blue montserrat-4">Sou Colaborador(a)</p>
                 <div class="button-container">
-                    <button class="botao-tipo1 montserrat-3">Acessar</button>
-                    <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
+                    <a href="{% url 'login' %}">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
                 </div>
             </div>
         </div>
@@ -55,4 +68,4 @@
 </body>
 </html>
 
-{% endblock %}
+{% endblock %} 

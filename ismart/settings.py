@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&wuvg9%#o(_%l@4@)swmehd4(f1hspn*d2$=8j%b4n0yd*o#(4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -117,11 +118,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / 'atendimento' 
 STATIC_URL = 'static/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = "users.CustomUser"
+LOGIN_URL = '/login'
+
+
+#configuracao do SMTP (Simple Mail Transfer Protocol)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'guatavovictor22@gmail.com'
+EMAIL_HOST_PASSWORD = 'nsnm phof qyxz ksvo'
+AUTH_USER_MODEL = 'users.CustomUser'
+
+
+ASGI_APPLICATION = 'ismart.asgi.application'
+
 

@@ -1,40 +1,66 @@
+from django.shortcuts import render
+
+# Create your views here.
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from .forms import CustomUserCreationForm
-from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from .forms import LoginForm, RegisterForm
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
-
-def signupview(request):
-    """View para registro de usuário"""
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            #aqui eh pra onde vai redirecionar o usuário depois de registrar
-            return redirect('login')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'users/signup.html', {'form': form})
-
-def loginview(request):
-    """View para login de usuário"""
+@csrf_exempt
+def sign_up(request):
+    #renderiza a pagina de registro se for um GET
     if request.method == 'GET':
-        return render(request, 'users/login.html')
+        form = RegisterForm()
+        return render(request, 'autenticacao/register.html', { 'form': form})   
 
-    elif request.method == 'POST':
-        email = request.POST.get('email', '')
-        password = request.POST.get('password', '')
-
-        user = authenticate(request, username = email, password = password)
-
-        if user is not None:
+    #se for um post ele vai validar o formulario e registrar o usuario no BD 
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        #se o formulario for valido ele salva o usuario no, loga, e volta pro index
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            messages.success(request, 'Usuário registrado com sucesso!')
             login(request, user)
-            if user.is_staff:
-                #se o usuario for colaborador, redireciona pra ca 
-                return HttpResponseRedirect('/admin')
-            else:
-                #caso contrario ele é aluno, e redireciona pra ca
-                return redirect('index')
+            return redirect('aluno')
+        #se o formulario for invalido ele volta pro formulario
         else:
-            return HttpResponse('deu ruim pae')
+            return render(request, 'autenticacao/register.html', {'form': form})
+
+@csrf_exempt
+def sign_in(request):
+    #se for um get renderiza o formulario
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'autenticacao/login.html', {'form': form})
+
+    #se for um post ele vai validar o formulario
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request, username = username, password = password)
+            if user:
+                login(request, user)
+                if user.is_staff:
+                    return redirect('tela_colaborador')
+                else:
+                    return redirect('aluno')
+            
+        #se o login der errado, faz isso
+        messages.error(request, f'usuario ou senhas invalidos')
+        return render(request,'autenticacao/login.html',{'form': form})
+
+@csrf_exempt
+def sign_out(request):
+    logout(request)
+    messages.success(request, 'Deslogado com sucesso')
+    return redirect('index')
+
+

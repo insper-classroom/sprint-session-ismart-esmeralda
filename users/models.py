@@ -1,23 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+import uuid
+from django.contrib.auth.models import AbstractUser
 
-from .managers import CustomUserManager
-
-
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_("email address"), unique=True)
-    name = models.CharField(_("name"), max_length=150, blank=True)
-    concurso = models.CharField(_("concurso"), max_length=150, blank=True)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name", "concurso"]
-
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.email
+class CustomUser(AbstractUser):
+    pass
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    is_colaborador = models.BooleanField(default=False)
+    telefone = models.CharField(max_length=20)
+    email = models.EmailField()
+# Create your models here.

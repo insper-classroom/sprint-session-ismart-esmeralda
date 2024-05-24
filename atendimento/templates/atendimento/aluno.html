@@ -1,0 +1,59 @@
+{% extends "atendimento/base.html" %}
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/aluno.css' %}">
+</head>
+<body>
+    <header>
+        <!-- Logo -->
+        <div class="logo-container">
+            <a href="/">
+                <img class="logo" src="{% static 'atendimento/img/LOGO-ismart.png' %}" alt="Logo da Empresa">
+            </a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            <img class="user" src="{% static 'atendimento/img/usuario.svg' %}" alt="Ícone do usuário">
+            <span>Olá, {{ request.user.username | title }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="botao-tipo1 montserrat-3">Sair</button>
+            </form>
+        </div>
+        {% endif %}
+    </header>
+    
+    <div class="blocos">
+        <!-- Bloco 1 -->
+        <div class="bloco1">
+            <div class="block">
+                <h1>Edital do processo seletivo</h1>
+                <div class="button-container">
+                    <a href="{% static 'atendimento/img/Regulamento_Processo-Seletivo_2024-2025_V2_0403.pdf' %}" target="_blank">
+                        <button class="botao-tipo1 montserrat-3">Abrir</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Bloco 2 -->
+        <div class="bloco2">
+            <div class="block">
+                <h1>Tirar dúvida</h1>
+                <div class="button-container">
+                    <a href="chatbot/{{user.username}}/{{user.uuid}}">
+                        <button class="botao-tipo1 montserrat-3">Ser atendido</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
