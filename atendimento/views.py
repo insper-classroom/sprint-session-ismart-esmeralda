@@ -136,3 +136,6 @@ def chatbot(request, username, useruuid):
 
 
     
+
+def chat_nao_atribuido(request):
+    return render(request, 'atendimento/chat_nao_atribuido.html')

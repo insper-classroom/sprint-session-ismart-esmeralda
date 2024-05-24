@@ -13,4 +13,7 @@ urlpatterns = [
     path('tela_colaborador/assign_conversa/<int:conversa_id>/', views.assign_conversa, name='assign_conversa'),
     path('tela_colaborador/sendmsg/<int:telefone>/<int:conversa_id>/', views.send_msg, name='send_msg'),
 
+    path('duvidas/', views.duvidas, name='duvidas'),
+    path('chat_nao_atribuido/', views.chat_nao_atribuido, name='chat_nao_atribuido')
+    
 ]
