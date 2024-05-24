@@ -39,26 +39,8 @@
                 </div>
                 <div class="img3">
                     <button>
-                        <img src="{% static 'atendimento/img/calendar-regular.svg' %}" alt="Logo 3">
+                        <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 3">
                     </button>
-                </div>
-                <div class="img4">
-                    <button>
-                        <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 4">
-                    </button>
-                </div>
-            </div>
-            <div class="img-baixo">
-                <div class="img5">
-                    <button>
-                        <img src="{% static 'atendimento/img/gear-solid.svg' %}" alt="Logo 5">
-                    </button>
-                </div>
-                <div class="img6">
-                    <button>
-                        <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Logo 6">
-                    </button>
-                </div>
             </div>
         </div>
     </header>
@@ -83,6 +65,7 @@
                 <button>
                     <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
                     <p>Não atribuido</p>
+                    <span class="notification">3</span>
                 </button>
             </div>
             <div class="minhas_conversas">
@@ -102,7 +85,7 @@
             <div class="colaboradores-header">
                 <button>
                     <p>Colaboradores</p>
-                    <img src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="colaboradores Icon 1" class="colaboradores-icon">
+                    <img id= "toggle-icon" src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="Toggle Icon" class="colaboradores-icon">
                 </button>
             </div>
             <div class="online">
@@ -117,14 +100,28 @@
 
 
     <div class="info-section">
-        <div class="info-item">
-            <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-            <img class="mensagem-img" src="{% static 'atendimento/img/message-regular.svg' %}" alt="Imagem 2">
-            <div class="texto">
-                <p class="user">Usuário</p>
-                <p class="mensagem">Mensagem...</p>
+        <button>
+            <div class="info-item">
+                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
+                <div class="texto">
+                    <p class="user">Usuário</p>
+                    <p class="mensagem">Mensagem...</p>
+                </div>
             </div>
-        </div>
+        </button>
+
+        <button>
+            <div class="info-wpp">
+                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
+                <div class="texto">
+                    <p class="user">Usuário</p>
+                    <p class="mensagem">Mensagem...</p>
+                </div>
+            </div>
+            
+        </button>
     </div>
     <div class="empty-section">
         <div class="header-empty">
@@ -154,4 +151,26 @@
     </div>
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".colaboradores-header button").click(function(){
+        $(".online").toggle(); 
+    });
+});
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".conversa-header button").click(function(){
+        $(".nao_atribuido, .minhas_conversas, .resolvidos").toggle();
+    });
+});
+</script>
+
+
+
+
 {% endblock %}

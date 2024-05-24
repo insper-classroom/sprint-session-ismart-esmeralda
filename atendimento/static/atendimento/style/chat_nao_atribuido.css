@@ -98,17 +98,6 @@ header {
     margin-bottom: 90%; 
 }
 
-.img4 {
-    margin-bottom: 90%; 
-}
-
-.img5 {
-    margin-bottom: 90%;
-}
-
-.img6 {
-    margin-top: 90%; 
-}
 .sidebar {
     width: 200px;
     background-color: #002561;
@@ -168,6 +157,19 @@ header {
     padding-left: 8%;
     margin-top: -5%;
     white-space: nowrap;
+}
+
+.notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    border-radius: 50%; 
+    background-color: red; 
+    color: white; 
+    font-size: 12px; 
+    margin-top: 57%;
+    margin-right: 10%;
 }
 
 .nao_atribuido-icon, .minhas_conversas-icon, .resolvidos-icon {
@@ -257,8 +259,25 @@ button {
     border: 1px solid #000;
     border-radius: 10px;
     padding: 2%;
-    width: 90%;
-    margin-top: 5%;
+    width: 160%;
+    margin-top: 10%;
+    height: auto;
+}
+.info-item p{
+    margin-top: 2%;
+}
+.info-wpp {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 2%;
+    width: 160%;
+    margin-top: 20%;
+    height: auto;
+}
+.info-wpp p{
+    margin-top: 2%;
 }
 
 .usuario {
@@ -356,9 +375,8 @@ button {
     margin-left: 2%;
     margin-bottom: 10%;
     width: 45%;
-    height: 1%;
-
-
+    height: 33vh;
+    overflow-y:auto;
 }
 
 .green-box {
@@ -429,6 +447,10 @@ button {
     order: 3;
     height: 15px;
     width: 15px;
+}
+
+.rotate {
+    transform: rotateY(90deg);
 }
 /* Media Queries */
 @media (max-width: 768px) {
