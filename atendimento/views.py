@@ -208,25 +208,22 @@ def receive_email(request):
             else:
                 body = msg.get_payload(decode=True).decode()
             
-            email_data.append({
-                'from': from_,
-                'subject': subject,
-                'body': body,
-            })
 
-        user_mail = re.search(r'<(.*?)>', from_)
+        user_mail = re.search(r'<(.*?)>', from_).group(1)
 
         if CustomUser.objects.filter(email=user_mail).exists():
             user = CustomUser.objects.get(email=user_mail)
         else:
             user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = 'dasdas')
 
-        c1 = Conversa.objects.filter(usuarios=user)
+        c1 = Conversa.objects.filter(usuarios=user).first()
 
         if c1 is None:
             c1 = Conversa.objects.create(usuarios=user, tag='n sei')
 
         Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+
+        email_data = Conversa.objects.all()
 
         # Desconectar do servidor de e-mail
         mail.close()

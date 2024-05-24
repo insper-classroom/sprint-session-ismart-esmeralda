@@ -7,17 +7,23 @@
 <body>
     <h1>Caixa de Entrada</h1>
     {% if emails %}
-        <ul>
-            {% for email in emails %}
-                <li>
-                    <strong>De:</strong> {{ email.from }}<br>
-                    <strong>Assunto:</strong> {{ email.subject }}<br>
-                    <strong>Mensagem:</strong> <pre>{{ email.body }}</pre><br>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Não há novos e-mails.</p>
-    {% endif %}
+    <ul>
+        {% for email in emails %}
+            <li>
+                <strong>De:</strong> {{ email.usuarios.username }}
+                <ul>
+                    {% for mensagem in email.mails.all %}
+                        <li>
+                            <strong>Assunto:</strong> {{ mensagem.subject }}<br>
+                            <strong>Mensagem:</strong> <pre>{{ mensagem.content }}</pre>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Não há novos e-mails.</p>
+{% endif %}
 </body>
 </html>
