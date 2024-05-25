@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Chat{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'atendimento/style/chat_nao_atribuido.css' %}">
+</head>
+<body>
+    <div class="top-header">
+        <div class="photo-container">
+            <img src="{% static 'atendimento/img/hand.png' %}" alt="Foto do Usuário" class="hand">
+        </div>
+        <div class="text-container">
+            <p>Não atribuido</p>
+        </div>
+        <div class="right-container">
+            <button class="button-container">
+                <img src="{% static 'atendimento/img/circle-check.svg' %}" alt="Descrição da imagem">
+                <p>Marcar como resolvido</p>
+            </button>
+        </div>
+    </div>
+    <header>
+        <div class="imagens-header">
+            <div class="img-cima">
+                <div class="img1">
+                    <button>
+                        <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
+                    </button>
+                </div>
+                <div class="img2">
+                    <button>
+                        <img src="{% static 'atendimento/img/house-solid.svg' %}" alt="Logo 2">
+                    </button>
+                </div>
+                <div class="img3">
+                    <button>
+                        <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 3">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="sidebar">
+            {% include 'atendimento/sidebar.html' %}
+        </div>
+
+        <div class="main-content" id="main-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        // Toggle sections
+        $(".colaboradores-header button").click(function(){
+            $(".online").toggle(); 
+        });
+
+        $(".conversa-header button").click(function(){
+            $(".nao_atribuido, .minhas_conversas, .resolvidos").toggle();
+        });
+
+        // Load chat content with AJAX
+        $(".info-item a").click(function(event){
+            event.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                success: function(data){
+                    $('#main-content').html(data);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

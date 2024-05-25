@@ -1,0 +1,55 @@
+{% load static %}
+
+<div class="sidebar">
+    <div class="inbox-header">
+        <p>Inbox</p>
+        <button>
+            <img src="{% static 'atendimento/img/search.svg' %}" alt="Inbox Icon 1" class="inbox-icon">
+        </button>
+        <button>
+            <img src="{% static 'atendimento/img/arrow-up-right-from-square-solid.svg' %}" alt="Inbox Icon 2" class="inbox-icon">
+        </button>
+    </div>
+    <div class="conversa">
+        <div class="conversa-header">
+            <button>
+                <p>Conversas</p>
+                <img src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="Conversa Icon 1" class="conversa-icon">
+            </button>
+        </div>
+        <div class="nao_atribuido">
+            <button onclick="location.href='{% url 'conversations' 'notassigned' %}'">
+                <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
+                <p>Não atribuido</p>
+                <span class="notification">3</span>
+            </button>
+        </div>
+        <div class="minhas_conversas">
+            <button onclick="location.href='{% url 'conversations' 'yours' %}'">
+                <img src="{% static 'atendimento/img/correio.png' %}" alt="Conversa Icon 1" class="minhas_conversas-icon">
+                <p>Minhas conversas</p>
+            </button>
+        </div>
+        <div class="resolvidos">
+            <button>
+                <img src="{% static 'atendimento/img/checkverde.png' %}" alt="Conversa Icon 1" class="resolvidos-icon">
+                <p>Resolvidos</p>
+            </button>
+        </div>
+    </div>
+    <div class="colaboradores">
+        <div class="colaboradores-header">
+            <button>
+                <p>Colaboradores</p>
+                <img id="toggle-icon" src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="Toggle Icon" class="colaboradores-icon">
+            </button>
+        </div>
+        <div class="online">
+            <p>Online</p>
+            <div class="users">
+                <img src="{% static 'atendimento/img/usuario.svg' %}" alt="colaboradores Icon 1" class="user-imagem">
+                <p>Nome do Usuário</p>
+            </div>
+        </div>
+    </div>
+</div>

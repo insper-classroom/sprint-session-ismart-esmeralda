@@ -1,0 +1,32 @@
+{% load static %}
+
+{% include 'atendimento/sidebar.html' %}
+
+<div class="info-section">
+    <div class="header-empty">
+        <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
+        <p class="nome-user">{{ conversa.usuarios.username }}</p>              
+    </div>
+    <div class="line"></div>
+    <div class="conversas">
+        {% for mensagem in mensagens %}
+            <div class="green-box">
+                <p>{{ mensagem.sender }}: {{ mensagem.content }}</p>
+            </div>
+        {% endfor %}
+        {% for mail in mails %}
+            <div class="grey-box">
+                <p><strong>Assunto: {{ mail.subject }}</strong><br>{{ mail.content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="escrever">
+        <form method="post" action = "sendmsg/{{ conversa.usuarios.telefone }}/{{ conversa.id }}/">
+            {% csrf_token %}
+            <input type="text" name="content" class="input-escrever" placeholder="Escreva uma mensagem...">
+            <button type="submit">
+                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Enviar">
+            </button>
+        </form>
+    </div>
+</div>

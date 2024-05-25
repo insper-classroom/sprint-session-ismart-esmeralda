@@ -1,0 +1,35 @@
+{% block content %}
+{% include 'atendimento/sidebar.html' %}
+{% load static %}
+
+<div class="info-section">
+    {% for conversa in notassigned %}
+        <a href="{% url 'conversation_detail' conversa.id %}" class="info-item">
+            <button>
+                <div class="info-item">
+                    <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                    <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
+                    <div class="texto">
+                        <p class="user">{{ conversa.usuarios.username }}</p>
+                        <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
+                    </div>
+                </div>
+            </button>
+        </a>
+    {% endfor %}
+    {% for conversa in yours %}
+        <a href="{% url 'conversation_detail' conversa.id %}" class="info-item">
+            <button>
+                <div class="info-item">
+                    <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                    <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
+                    <div class="texto">
+                        <p class="user">{{ conversa.usuarios.username }}</p>
+                        <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
+                    </div>
+                </div>
+            </button>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

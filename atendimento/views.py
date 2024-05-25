@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Conversa, Mensagem, Stats, EmailForm, Mail
@@ -36,14 +36,37 @@ def aluno(request):
     return render(request, 'atendimento/aluno.html')
 
 
-#Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
-@csrf_exempt
-def mostra_conversas(request):
+#assim q  o colaborador entrar na tela vai ver as nao atribuidas e o chat em branco
+@login_required
+def mostra_conversas_home(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
     notassigned = conversas.filter(assigned_to=None, resolved=False)
-    yours = conversas.filter(assigned_to=colab, resolved=False)
-    return render(request, 'atendimento/chat_nao_atribuido.html', {'notassigned': notassigned, 'yours': yours, 'resolved': conversas.filter(resolved=True), 'tudo': conversas})
+
+    return render(request, 'atendimento/info_section.html', {'notassigned': notassigned})
+
+#se clicar p ver as conversas em yours, carrega o template de yours e mostra as conversas tal 
+def mostra_conversas_yours(request):
+    colab = request.user.id
+    conversas = conversas.objects.filter(assigned_to = colab, resolved = False)
+    return render(request, 'atendimento/info_sectionyours.html', {'yours': yours})
+
+#extenda o tempalte do chat de acordo c o id do caht q ele requisitou na url 
+def mostra_chat(request, conversa_id):
+    colab = request.user.id
+    conversa = Conversa.objects.get(pk = conversa_id)
+
+    if conversa.assigned_to != request.user:
+        conversa.assigned_to = request.user
+    convesa.save()
+
+    if conversa.mensagens.exists():
+        mensagens = conversa.mensagens.all()    
+    elif conversa.mail.exists():
+        mensagens = conversa.mail.all()
+
+    return render(request, 'atendimento/chat.html', {'conversa': conversa, 'mensagens': mensagens})
+    
 
 #view pro colaborador atribuir uma nao atribuida a ele
 @csrf_exempt
@@ -56,7 +79,6 @@ def assign_conversa(request, conversa_id):
 
 #view pro colaborador enviar uma mensagem
 @csrf_exempt
-@staff_member_required
 def send_msg(request, telefone, conversa_id):
     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
