@@ -43,7 +43,7 @@ def mostra_conversas(request):
     conversas = Conversa.objects.all()
     notassigned = conversas.filter(assigned_to=None, resolved=False)
     yours = conversas.filter(assigned_to=colab, resolved=False)
-    return render(request, 'atendimento/tela_colaborador.html', {'notassigned': notassigned, 'yours': yours, 'resolved': conversas.filter(resolved=True)})
+    return render(request, 'atendimento/chat_nao_atribuido.html', {'notassigned': notassigned, 'yours': yours, 'resolved': conversas.filter(resolved=True), 'tudo': conversas})
 
 #view pro colaborador atribuir uma nao atribuida a ele
 @csrf_exempt
@@ -129,7 +129,7 @@ def receber_zap(request):
 
         # If it doesn't exist, create a new one
         if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='online')   
+            c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True)   
 
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
         return redirect('tela_colaborador')
@@ -219,7 +219,7 @@ def receive_email(request):
         c1 = Conversa.objects.filter(usuarios=user).first()
 
         if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='n sei')
+            c1 = Conversa.objects.create(usuarios=user, tag='n sei', is_mail=True)
 
         Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
 

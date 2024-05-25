@@ -100,28 +100,34 @@
 
 
     <div class="info-section">
-        <button>
-            <div class="info-item">
-                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-                <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
-                <div class="texto">
-                    <p class="user">Usuário</p>
-                    <p class="mensagem">Mensagem...</p>
-                </div>
-            </div>
-        </button>
+        {% for conversa in notassigned %}
+            {% if conversa.mensagens.exists %}
+                <button>
+                    <div class="info-item">
+                        <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                        <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
+                        <div class="texto">
+                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
+                        </div>
+                    </div>
+                </button>
 
-        <button>
-            <div class="info-wpp">
-                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-                <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
-                <div class="texto">
-                    <p class="user">Usuário</p>
-                    <p class="mensagem">Mensagem...</p>
-                </div>
-            </div>
-            
-        </button>
+            {% elif conversa.mails.exists %}
+                <button>
+                    <div class="info-item">
+                        <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                        <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
+                        <div class="texto">
+                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="mensagem">{{ conversa.mails.last.subject }}</p>
+                        </div>
+                    </div>
+                </button>
+            {% endif %}
+        {% endfor %}
+
+    
     </div>
     <div class="empty-section">
         <div class="header-empty">
