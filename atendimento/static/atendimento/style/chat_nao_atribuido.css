@@ -13,6 +13,35 @@ button {
     cursor: pointer;
 }
 
+.header-empty{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    
+}
+
+.imagem-user {
+    width: 40px;
+    height: auto;
+    margin-left: 10%;
+}
+
+.nome-user {
+    font-size: 30px;
+    margin-top: 8%;
+    margin-left: 10%;
+    color: #4091DC;
+    margin-bottom: auto;
+}
+
+.line{
+    border-bottom: 1px solid black;
+    width: 45%;
+    margin-top: 1%;
+}
+
+
 .empty-section {
     display: flex;
     align-items: start;
