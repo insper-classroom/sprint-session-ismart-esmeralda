@@ -14,19 +14,23 @@
     <div class="empty-section">
         <div class="header-empty">
             <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
-            <p class="nome-user">Usuário</p>              
+            <p class="nome-user">{{conversa.usuarios.username}}</p>              
         </div>
         <div class="line"></div>
         <div class="escrever">
             <button>
                 <img src="{% static 'atendimento/img/file-solid(1).svg' %}" alt="Imagem de Exemplo" class="imagem-midia">
             </button>
-            <div class="box-escrever">
-                <input type="text" class="input-escrever" placeholder="Escreva uma mensagem...">
-            </div>
-            <button>
-                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
-            </button>
+
+            <form method="post" action="/side_minhas_conversas/sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
+                <div class="box-escrever">
+                    <input type="text" class="input-escrever" placeholder="Escreva uma mensagem..." name="mensagem">
+                </div>
+                <button type="submit">
+                    <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
+                </button>
+            </form>
+
         </div>
     </div>
     <div class="conversas">

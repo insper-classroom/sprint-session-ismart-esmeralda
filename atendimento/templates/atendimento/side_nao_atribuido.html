@@ -65,11 +65,11 @@
                 <button>
                     <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
                     <p>Não atribuido</p>
-                    <span class="notification">3</span>
+                    <span class="notification">{{ notassigned|length }}</span>
                 </button>
             </div>
             <div class="minhas_conversas">
-                <button>
+                <button onclick="window.location.href='/side_minhas_conversas/'">
                     <img src="{% static 'atendimento/img/correio.png' %}" alt="Conversa Icon 1" class="minhas_conversas-icon">
                     <p>Minhas conversas</p>
                 </button>
@@ -100,28 +100,39 @@
 
 
     <div class="info-section">
-        <button>
-            <div class="info-item">
-                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-                <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
-                <div class="texto">
-                    <p class="user">Usuário</p>
-                    <p class="mensagem">Mensagem...</p>
-                </div>
-            </div>
-        </button>
-
-        <button>
-            <div class="info-wpp">
-                <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
-                <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
-                <div class="texto">
-                    <p class="user">Usuário</p>
-                    <p class="mensagem">Mensagem...</p>
-                </div>
-            </div>
-            
-        </button>
+        {% for conversa in notassigned %}
+            {% if conversa.mensagens.exists %}
+                <button onclick="window.location.href = 'assign_conversa/{{conversa.id}}/'">
+                    <div class="info-item">
+                        <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                        <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
+                        <div class="texto">
+                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
+                        </div>
+                    </div>
+                </button>
+            {% elif conversa.mails.exists %}
+                <button onclick="window.location.href = 'assign_conversa/{{conversa.id}}/'">
+                    <div class="info-item">
+                        <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                        <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
+                        <div class="texto">
+                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="mensagem">{{ conversa.mails.last.content }}</p>
+                        </div>
+                    </div>
+                </button>
+            {% else %}
+                <button>
+                    <div class="info-item">
+                        <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
+                        <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
+                        <div class="texto">
+                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="mensagem">
+            {% endif %}
+        {% endfor %}
     </div>
 
 </body>

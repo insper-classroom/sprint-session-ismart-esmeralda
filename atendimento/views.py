@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from .models import Conversa, Mensagem, Stats
+from .models import Conversa, Mensagem, Stats, EmailForm, Mail
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
 from users.models import CustomUser
@@ -10,6 +10,17 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from chatbot.classificador import classifier
 from twilio.rest import Client
+import smtplib
+import imaplib
+import os
+from email.message import EmailMessage
+from django.core.mail import send_mail
+import mailparser
+import email
+from email.header import decode_header
+from ismart import settings
+import re
+
 
 
 
@@ -39,12 +50,12 @@ def mostra_conversas(request):
 
 #view pro colaborador atribuir uma nao atribuida a ele
 @csrf_exempt
-@staff_member_required
+# @staff_member_required
 def assign_conversa(request, conversa_id):
     conversa = Conversa.objects.get(id = conversa_id)
     conversa.assigned_to = request.user
     conversa.save()
-    return redirect('tela_colaborador')
+    return redirect('side_nao_atribuido')
 
 #view pro colaborador enviar uma mensagem
 @csrf_exempt
@@ -52,6 +63,7 @@ def assign_conversa(request, conversa_id):
 def send_msg(request, telefone, conversa_id):
     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+
     client = Client(account_sid, auth_token)
 
     mensagem = request.POST['mensagem']
@@ -67,7 +79,7 @@ def send_msg(request, telefone, conversa_id):
     conversa = Conversa.objects.get(id = conversa_id)
 
     conversa.save()
-    return redirect('tela_colaborador')
+    return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
 
 #view pro colaborador marcar uma conversa como resolvida
 @csrf_exempt
@@ -121,7 +133,7 @@ def receber_zap(request):
 
         # If it doesn't exist, create a new one
         if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='online')   
+            c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True)   
 
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
         return redirect('tela_colaborador')
@@ -142,17 +154,117 @@ def colaborador(request):
 
 
 
+
 def side_nao_atribuido(request):
-    return render(request, 'atendimento/side_nao_atribuido.html')
+    colab = request.user.id
+    conversas = Conversa.objects.all()
+    notassigned = conversas.filter(assigned_to=None, resolved=False)
+
+    return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
+
 
 def side_minhas_conversas(request):
-    return render(request, 'atendimento/side_minhas_conversas.html')
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False)
+
+    return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
 def chat(request):
     return render(request, 'atendimento/chat.html')
 
-def chat_nao_atribuido(request):    
-    return render(request, 'atendimento/chat_nao_atribuido.html')
+def chat_nao_atribuido(request, conversa_id):
+    conversa = Conversa.objects.get(pk=conversa_id)   
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False) 
+    return render(request, 'atendimento/chat_nao_atribuido.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
-def chat_minhas_conversas(request):
-    return render(request, 'atendimento/chat_minhas_conversas.html')
+
+def chat_minhas_conversas(request, conversa_id):
+    conversa = Conversa.objects.get(pk=conversa_id)
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False) 
+    return render(request, 'atendimento/chat_minhas_conversas.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
+
+
+def mandar_email(request):
+    if request.method == "POST":
+        form = EmailForm(request.POST)
+
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            from_email = None
+            to_email = 'joaopedroamiguel@gmail.com'
+
+            send_mail(
+                subject,
+                message,
+                from_email,
+                [to_email],
+                fail_silently=False,
+            )
+            redirect ('enviar_email')
+    else:
+        form = EmailForm()
+
+    return render(request, 'atendimento/sendmailtest.html', {'form': form})
+
+def receive_email(request):
+        # Conectar ao servidor de e-mail
+        mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
+        mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        mail.select("inbox")
+
+        # Buscar os e-mails não lidos
+        status, messages = mail.search(None, '(ALL)')
+
+        email_data = []
+        for num in messages[0].split():
+            status, msg_data = mail.fetch(num, '(RFC822)')
+            msg = email.message_from_bytes(msg_data[0][1])
+            mail_content = mailparser.parse_from_bytes(msg_data[0][1])
+            
+            # Decodificar o assunto
+            subject, encoding = decode_header(msg["Subject"])[0]
+            if isinstance(subject, bytes):
+                subject = subject.decode(encoding if encoding else "latin-1")
+            
+            # Decodificar o remetente
+            from_ = msg.get("From")
+            
+            # Processar o corpo da mensagem
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        body = part.get_payload(decode=True).decode()
+                        break
+            else:
+                body = msg.get_payload(decode=True).decode(errors="ignore")
+            
+
+        user_mail = re.search(r'<(.*?)>', from_).group(1)
+
+        if CustomUser.objects.filter(email=user_mail).exists():
+            user = CustomUser.objects.get(email=user_mail)
+        else:
+            user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = 'dasdas')
+
+        c1 = Conversa.objects.filter(usuarios=user).first()
+
+        if c1 is None:
+            c1 = Conversa.objects.create(usuarios=user, tag='n sei', is_mail=True)
+
+        Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+
+        email_data = Conversa.objects.all()
+
+        # Desconectar do servidor de e-mail
+        mail.close()
+        mail.logout()
+
+        # Renderizar os dados no template
+        return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
+    
