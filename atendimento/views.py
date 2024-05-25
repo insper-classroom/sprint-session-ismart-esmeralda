@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from .models import Conversa, Mensagem, Stats
+from .models import Conversa, Mensagem, Stats, EmailForm, Mail
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
 from users.models import CustomUser
@@ -12,6 +12,7 @@ from chatbot.classificador import classifier
 from twilio.rest import Client
 import smtplib
 import imaplib
+import os
 from email.message import EmailMessage
 from django.core.mail import send_mail
 import mailparser
@@ -78,7 +79,7 @@ def send_msg(request, telefone, conversa_id):
     conversa = Conversa.objects.get(id = conversa_id)
 
     conversa.save()
-    return redirect('tela_colaborador')
+    return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
 
 #view pro colaborador marcar uma conversa como resolvida
 @csrf_exempt
@@ -165,16 +166,27 @@ def side_nao_atribuido(request):
 def side_minhas_conversas(request):
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
-    return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas})
+    notassigned = conversas.filter(assigned_to=None, resolved=False)
+
+    return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
 def chat(request):
     return render(request, 'atendimento/chat.html')
 
-def chat_nao_atribuido(request):    
-    return render(request, 'atendimento/chat_nao_atribuido.html')
+def chat_nao_atribuido(request, conversa_id):
+    conversa = Conversa.objects.get(pk=conversa_id)   
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False) 
+    return render(request, 'atendimento/chat_nao_atribuido.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
-def chat_minhas_conversas(request):
-    return render(request, 'atendimento/chat_minhas_conversas.html')
+
+def chat_minhas_conversas(request, conversa_id):
+    conversa = Conversa.objects.get(pk=conversa_id)
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False) 
+    return render(request, 'atendimento/chat_minhas_conversas.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
 
 def mandar_email(request):
@@ -201,7 +213,6 @@ def mandar_email(request):
     return render(request, 'atendimento/sendmailtest.html', {'form': form})
 
 def receive_email(request):
-    try:
         # Conectar ao servidor de e-mail
         mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
         mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
@@ -219,7 +230,7 @@ def receive_email(request):
             # Decodificar o assunto
             subject, encoding = decode_header(msg["Subject"])[0]
             if isinstance(subject, bytes):
-                subject = subject.decode(encoding if encoding else "utf-8")
+                subject = subject.decode(encoding if encoding else "latin-1")
             
             # Decodificar o remetente
             from_ = msg.get("From")
@@ -255,7 +266,5 @@ def receive_email(request):
         mail.logout()
 
         # Renderizar os dados no template
-        return HttpResponse(status=200, content=email_data)
+        return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
     
-    except Exception as e:
-        return HttpResponse(f"Ocorreu um erro: {e}")

@@ -65,7 +65,7 @@
                 <button>
                     <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
                     <p>Não atribuido</p>
-                    <span class="notification">3</span>
+                    <span class="notification">{{ notassigned|length }}</span>
                 </button>
             </div>
             <div class="minhas_conversas">
@@ -113,7 +113,7 @@
                     </div>
                 </button>
             {% elif conversa.mails.exists %}
-                <button>
+                <button onclick="window.location.href = 'assign_conversa/{{conversa.id}}/'">
                     <div class="info-item">
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">

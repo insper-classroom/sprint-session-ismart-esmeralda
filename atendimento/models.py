@@ -10,6 +10,7 @@ import uuid
 from django import forms
 
 
+
 class Conversa(models.Model):
     usuarios = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario')
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='colaborador')

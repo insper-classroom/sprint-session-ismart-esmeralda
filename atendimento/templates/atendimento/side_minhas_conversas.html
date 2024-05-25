@@ -62,10 +62,10 @@
                 </button>
             </div>
             <div class="nao_atribuido">
-                <button onclick="window.location.href='/side_nao_atribuido/'">
+                <button onclick="window.location.href='/side_nao_atribuido'">
                     <img src="{% static 'atendimento/img/hand.png' %}" alt="Conversa Icon 1" class="nao_atribuido-icon">
                     <p>Não atribuido</p>
-                    <span class="notification">3</span>
+                    <span class="notification">{{ notassigned|length }}</span>
                 </button>
             </div>
             <div class="minhas_conversas">
@@ -102,7 +102,7 @@
     <div class="info-section">
         {%for conversa in yours %}
             {% if conversa.mensagens.exists %}
-                <button>
+                <button onclick="window.location.href='/side_minhas_conversas/chat_minhas_conversas/{{conversa.id}}/'">
                     <div class="info-item">
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
@@ -113,7 +113,7 @@
                     </div>
                 </button>
             {% elif conversa.mails.exists %}
-                <button>
+                <button onclick="window.location.href='/side_minhas_conversas/chat_minhas_conversas/{{conversa.id}}/'">
                     <div class="info-item">
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
