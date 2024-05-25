@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Caixa de Entrada</title>
+</head>
+<body>
+    <h1>Caixa de Entrada</h1>
+    {% if emails %}
+    <ul>
+        {% for email in emails %}
+            <li>
+                <strong>De:</strong> {{ email.usuarios.username }}
+                <ul>
+                    {% for mensagem in email.mails.all %}
+                        <li>
+                            <strong>Assunto:</strong> {{ mensagem.subject }}<br>
+                            <strong>Mensagem:</strong> <pre>{{ mensagem.content }}</pre>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Não há novos e-mails.</p>
+{% endif %}
+</body>
+</html>

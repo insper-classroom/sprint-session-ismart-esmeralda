@@ -9,8 +9,14 @@ urlpatterns = [
     path('chatbot/<str:username>/<str:useruuid>', views.chatbot, name='chatbot'),
     path('tela_colaborador/', views.mostra_conversas, name='tela_colaborador'),
     path('receberzap/', views.receber_zap, name='receber_zap'),
-    path('tela_colaborador/resolve/<int:conversa_id>/', views.resolve, name='resolve'),
-    path('tela_colaborador/assign_conversa/<int:conversa_id>/', views.assign_conversa, name='assign_conversa'),
+
+    #mudar pro nome certo dps, ja q ta no NA, pode atribuir ou resolver a conversa
+    path('side_nao_atribuido/resolve/<int:conversa_id>/', views.resolve, name='resolve'),
+    path('side_nao_atribuido/assign_conversa/<int:conversa_id>/', views.assign_conversa, name='assign_conversa'),
+
+    #resolve na pagina do minhas conversas
+    path('side_minhas_conversas/resolve/<int:conversa_id>/', views.resolve, name='resolve'),
+
     path('tela_colaborador/sendmsg/<int:telefone>/<int:conversa_id>/', views.send_msg, name='send_msg'),
 
     path('duvidas/', views.duvidas, name='duvidas'),
@@ -20,5 +26,8 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('chat_nao_atribuido/', views.chat_nao_atribuido, name='chat_nao_atribuido'),
     path('chat_minhas_conversas/', views.chat_minhas_conversas, name='chat_minhas_conversas'),
+
+    path('mandar_email/', views.mandar_email, name='mandar_email'),
+    path('receive_email/', views.receive_email, name='receive_email'),
     
 ]
