@@ -137,5 +137,22 @@ def chatbot(request, username, useruuid):
 
     
 
-def chat_nao_atribuido(request):
+def colaborador(request):
+    return render(request, 'atendimento/colaborador.html')
+
+
+
+def side_nao_atribuido(request):
+    return render(request, 'atendimento/side_nao_atribuido.html')
+
+def side_minhas_conversas(request):
+    return render(request, 'atendimento/side_minhas_conversas.html')
+
+def chat(request):
+    return render(request, 'atendimento/chat.html')
+
+def chat_nao_atribuido(request):    
     return render(request, 'atendimento/chat_nao_atribuido.html')
+
+def chat_minhas_conversas(request):
+    return render(request, 'atendimento/chat_minhas_conversas.html')
