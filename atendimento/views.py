@@ -57,7 +57,7 @@ def assign_conversa(request, conversa_id):
     conversa.save()
     return redirect('side_nao_atribuido')
 
-#view pro colaborador enviar uma mensagem
+#view pro colaborador enviar uma mensagem via zap
 @csrf_exempt
 @staff_member_required
 def send_msg(request, telefone, conversa_id):
@@ -84,7 +84,8 @@ def send_msg(request, telefone, conversa_id):
 #view pro colaborador marcar uma conversa como resolvida
 @csrf_exempt
 @staff_member_required
-def resolve(request, conversa_id):
+#views para resolver uma duvida da side nao atribuido
+def resolveNA(request, conversa_id):
     msgs = ''
     conversa = Conversa.objects.get(pk=conversa_id)
     #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
@@ -115,7 +116,42 @@ def resolve(request, conversa_id):
     
     conversa.resolved = True
     conversa.delete()
-    return redirect('tela_colaborador')
+    return redirect('side_nao_atribuido')
+
+
+#view para resolver uma duvida da side minhas conversas
+def resolveYOURS(request, conversa_id):
+    msgs = ''
+    conversa = Conversa.objects.get(pk=conversa_id)
+    #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
+    mensagens = conversa.mensagens.all().order_by('id')[:3]
+    #concatena essas tres mensagens em uma string
+    for mensagem in mensagens:
+        msgs += mensagem.content
+
+    tag = classifier(msgs)
+    #atualiza as estatisticas
+    stats = Stats.objects.first()
+    if stats is None:
+        stats = Stats.objects.create()
+    else:
+        if tag == 'Sobre o Ismart':
+            stats.sobreosismart += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Ismart online':
+            stats.ismartonline += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Processo seletivo':
+            stats.processoseletivo += 1
+            stats.totalresolvidos += 1
+        elif tag == 'Bolsas de estudo':
+            stats.bolsasdeestudo += 1
+            stats.totalresolvidos += 1
+        stats.save()
+    
+    conversa.resolved = True
+    conversa.delete()
+    return redirect('side_minhas_conversas')
 
 
 #recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
@@ -148,13 +184,7 @@ def chatbot(request, username, useruuid):
 
 
     
-
-def colaborador(request):
-    return render(request, 'atendimento/colaborador.html')
-
-
-
-
+#views pra renderizar os sides de acordo com a classificacao
 def side_nao_atribuido(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
@@ -163,6 +193,7 @@ def side_nao_atribuido(request):
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
 
+#views pra renderizar os sides de acordo com a classificacao
 def side_minhas_conversas(request):
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
@@ -170,9 +201,13 @@ def side_minhas_conversas(request):
 
     return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
+
+#views pra abrir os chats
 def chat(request):
     return render(request, 'atendimento/chat.html')
 
+
+#views para abrir os chats a partir do side nao atribuido
 def chat_nao_atribuido(request, conversa_id):
     conversa = Conversa.objects.get(pk=conversa_id)   
     colab = request.user.id 
@@ -180,7 +215,7 @@ def chat_nao_atribuido(request, conversa_id):
     notassigned = conversas.filter(assigned_to=None, resolved=False) 
     return render(request, 'atendimento/chat_nao_atribuido.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
-
+#views para abrir os chats a partir da side minhas conversas
 def chat_minhas_conversas(request, conversa_id):
     conversa = Conversa.objects.get(pk=conversa_id)
     colab = request.user.id 
@@ -189,29 +224,38 @@ def chat_minhas_conversas(request, conversa_id):
     return render(request, 'atendimento/chat_minhas_conversas.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
 
-def mandar_email(request):
+#views para mandar emails
+def mandar_email(request, user_email, conversa_id):
+    user = request.user
     if request.method == "POST":
         form = EmailForm(request.POST)
 
         if form.is_valid():
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            from_email = None
-            to_email = 'joaopedroamiguel@gmail.com'
+            from_email = settings.EMAIL_HOST_USER
+            email_pass = settings.EMAIL_HOST_PASSWORD
+            to_email = user_email
 
-            send_mail(
-                subject,
-                message,
-                from_email,
-                [to_email],
-                fail_silently=False,
-            )
-            redirect ('enviar_email')
+            msg = EmailMessage()
+            msg['Subject'] = subject
+            msg['From'] = from_email
+            msg['To'] = to_email
+            msg.set_content(message)
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login(from_email, email_pass)
+                smtp.send_message(msg)
+
+            Mail.objects.create(conversa=Conversa.objects.get(pk = conversa_id), sender=user, subject = subject, content=message)
+            return redirect('side_minhas_conversas')
     else:
         form = EmailForm()
 
-    return render(request, 'atendimento/sendmailtest.html', {'form': form})
 
+
+
+#views para receber emails
 def receive_email(request):
         # Conectar ao servidor de e-mail
         mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
