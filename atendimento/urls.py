@@ -40,6 +40,9 @@ urlpatterns = [
     #view pra ficar periodicamente checando novos emails
     path('receive_email/', views.receive_email, name='receive_email'),
 
+    path('colaborador/', views.colaborador, name='colaborador'),
+    
+
     #estatisticas
     path('estatisticas/', views.estatisticas, name='estatisticas'),
 ]
