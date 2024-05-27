@@ -28,42 +28,46 @@
 
 <div class="main">
     <div class="top-header">
-        <p class="titulo-top">ESTATISTICAS</p>
+        <p class="titulo-top">ESTATÍSTICAS</p>
     </div>
 
     <div class="container">
         <div class="formacontainer">
-            <h2>Sumário da Atividade</h2>
+            <h2>Sumário da Atividade</h2><hr />
             <div class="itens">
-                <div class="container-item">
+                <div class="container-item item1">
                     <p>Na fila</p>
-                    <p class="valor">{{notassigned|length}}</p>
-                </div>
+                    <p class="valor">teste1h<!-- {notassigned|length} --></p>
+                </div><div class="vl"></div>
                 <div class="container-item">
                     <p>Tempo médio para resposta</p>
-                    <p class="valor">{{stats.average_response_time}}</p>
-                </div>
-                <div class="container-item">
+                    <p class="valor">teste1h{{stats.average_response_time}}</p><div class="hl"></div>
+                    <p class="obs">Nas últimas 24h</p>
+                </div><div class="vl"></div>
+                <div class="container-item item3">
                     <p>Casos resolvidos</p>
-                    <p class="valor">{{stats.total_resolvidos}}</p>
+                    <p class="valor">teste1h{{stats.total_resolvidos}}</p><div class="hl"></div>
+                    <p class="obs">Nas últimas 24h</p>
                 </div>
             </div>
         </div>
 
         <div class="formacontainer">
-            <h2>Atendimentos</h2>
+            <h2>Atendimentos</h2><hr />
             <div class="itens">
-                <div class="container-item">
+                <div class="container-item item1">
                     <p>Atendimentos automatizados</p>
                     <p class="valor">33%</p>
-                </div>
+                </div><div class="vl"></div>
                 <div class="container-item">
                     <p>Quantidade de atendimentos</p>
-                    <p class="valor">1h 45min</p>
-                </div>
-                <div class="container-item">
+                    <p class="valor">1h 45min</p><div class="hl"></div>
+                    <p class="obs">Nas últimas 24h</p>
+                </div><div class="vl"></div>
+                <div class="container-item item3">
                     <p>Usuários satisfeitos</p>
-                    <p class="valor">20 de 35</p>
+                    <p class="valor">20 de 35</p><div class="hl"></div>
+                    <p class="obs">Nas últimas 24h</p>
                 </div>
             </div>
         </div>
