@@ -1,4 +1,4 @@
-{% include "atendimento/side_minhas_conversas.html" %}
+{% include "atendimento/side_nao_atribuido.html" %}
 
 {% load static %}
 {% block content %}
@@ -11,89 +11,37 @@
     <link rel="stylesheet" href="{% static 'atendimento/style/chat_nao_atribuido.css' %}">
 </head>
 <body>
-
     <div class="empty-section">
         <div class="header-empty">
             <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
             <p class="nome-user">{{conversa.usuarios.username}}</p>              
-            <div class="right-container">
-                <button class="button-container" onclick= window.location.href="/side_minhas_conversas/resolve/{{conversa.id}}">
-                    <img src="{% static 'atendimento/img/circle-check.svg' %}" alt="Descrição da imagem">
-                    <p>Marcar como resolvido</p>
-                </button>
-            </div>
         </div>
+
         <div class="line"></div>
-
         <div class="escrever">
-            {% if conversa.is_mail %}
-                <form method="post" class="formulario" action="/side_minhas_conversas/mandar_email/{{conversa.usuarios.email}}/{{conversa.id}}/">
-                    {% csrf_token %}
-                    <div class="box-escrever">
-                        <input type="text" class="input-escrever" placeholder="Subject..." name="subject">
-                        <textarea class="input-escrever" placeholder="Write a message..." name="message"></textarea>
-                    </div>
-                    <button type="submit">
-                        <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
-                    </button>
-                </form>
-            {% else %}
-                <form method="post" class="formulario" action="/side_minhas_conversas/sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
-                    <div class="box-escrever">
-                        <input type="text" class="input-escrever" placeholder="Write a message..." name="mensagem">
-                    </div>
-                    <button type="submit">
-                        <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
-                    </button>
-                </form>
-            {% endif %}
+            <button>
+                <img src="{% static 'atendimento/img/file-solid(1).svg' %}" alt="Imagem de Exemplo" class="imagem-midia">
+            </button>
+            <div class="box-escrever">
+                <input type="text" class="input-escrever" placeholder="Escreva uma mensagem...">
+            </div>
+            <button>
+                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
+            </button>
         </div>
-        
     </div>
-
-
-
     <div class="conversas">
-        {% if conversa.mensagens.exists %}
-            {% for mensagem in conversa.mensagens.all %}
-                {% if mensagem.sender == conversa.usuarios %}
-                    <div class="green-box">
-                        <p>{{mensagem.content}}</p>
-                    </div>
-                {% else %}
-                    <div class="grey-box">
-                        <p>{{mensagem.content}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% elif conversa.mails.exists %}
-            {% for mail in conversa.mails.all %}
-                {% if mail.sender == conversa.usuarios %}
-                    <div class="green-box">
-                        <p><strong>Assunto:</strong> {{mail.subject}}</p>
-                        <p><strong>Conteúdo: </strong> {{mail.content}}</p>
-                    </div>
-                {% else %}
-                    <div class="grey-box">
-                        <p><strong>Assunto:</strong> {{mail.subject}}</p>
-                        <p><strong>Conteúdo:</strong> {{mail.content}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        
+        <div class="green-box">
+            <p>Mensagem...</p>
+        </div>
+        <div class="grey-box">
+            <p>Resposta...</p>
+        </div>
     </div>
 </body>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    setInterval(function() {
-        $(".conversas").load(location.href + " .conversas>*", "");
-    }, 10000);
-</script> -->
-
-
 </html>
+
+
 
 
 

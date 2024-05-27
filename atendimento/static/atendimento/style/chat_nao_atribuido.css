@@ -16,7 +16,7 @@ button {
 .header-empty{
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
     
 }
@@ -66,7 +66,6 @@ button {
     border: 1px solid #000; 
     border-radius: 10px; 
     padding: 10px; 
-    margin-left: 30%;
     margin-top: 5%;
 }
 .right-container p{
@@ -223,5 +222,4 @@ button {
         width: 100vw;
         height: auto;
         padding: 20px;
-    }
-}
+    }}
