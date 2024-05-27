@@ -42,4 +42,7 @@ urlpatterns = [
 
     path('colaborador/', views.colaborador, name='colaborador'),
     
+
+    #estatisticas
+    path('estatisticas/', views.estatisticas, name='estatisticas'),
 ]
