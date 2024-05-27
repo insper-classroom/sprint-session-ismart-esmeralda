@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{% static 'atendimento/style/chat_nao_atribuido.css' %}">
 </head>
 <body>
-    <div class="flex-container">
     <div class="empty-section">
         <div class="header-empty">
             <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
@@ -51,46 +50,17 @@
     </div>
 
     <div class="conversas">
-        {% if conversa.mensagens.exists %}
-            {% for mensagem in conversa.mensagens.all %}
-                {% if mensagem.sender == conversa.usuarios %}
-                    <div class="green-box">
-                        <p>{{mensagem.content}}</p>
-                    </div>
-                {% else %}
-                    <div class="grey-box">
-                        <p>{{mensagem.content}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% elif conversa.mails.exists %}
-            {% for mail in conversa.mails.all %}
-                {% if mail.sender == conversa.usuarios %}
-                    <div class="green-box">
-                        <p><strong>Assunto:</strong> {{mail.subject}}</p>
-                        <p><strong>Conteúdo: </strong> {{mail.content}}</p>
-                    </div>
-                {% else %}
-                    <div class="grey-box">
-                        <p><strong>Assunto:</strong> {{mail.subject}}</p>
-                        <p><strong>Conteúdo:</strong> {{mail.content}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        
+        <div class="green-box">
+            <p>Mensagem...</p>
+        </div>
+        <div class="grey-box">
+            <p>Resposta...</p>
+        </div>
     </div>
 </body>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    setInterval(function() {
-        $(".conversas").load(location.href + " .conversas>*", "");
-    }, 10000);
-</script> -->
-
-
 </html>
+
+
 
 
 

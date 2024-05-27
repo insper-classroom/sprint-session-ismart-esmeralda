@@ -75,6 +75,22 @@ button {
     font-weight: bold;
 }
 
+
+.right-container {
+    display: flex;
+    width: auto;
+    height: auto;
+    border: 1px solid #000; 
+    border-radius: 10px; 
+    padding: 10px; 
+    margin-top: 5%;
+}
+.right-container p{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .conversas {
     display: flex;
     flex-direction: column;
@@ -86,8 +102,10 @@ button {
     position: fixed;
     margin-left: 2%;
     margin-top: 2%;
+    margin-top: 2%;
     margin-bottom: 10%;
     width: 45%;
+    height: 45vh;
     height: 45vh;
     overflow-y:auto;
 }
@@ -135,6 +153,7 @@ button {
 
 .escrever {
     display: flex;
+    display: flex;
     position: fixed; 
     bottom: 0; 
     width: 45%; 
@@ -155,10 +174,26 @@ button {
 
 }
 
+.box-escrever {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.formulario {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
 
 .input-escrever {
     background-color: transparent;
+    background-color: transparent;
     color: white;
+    width: auto;
+    margin-right: 1%;
     width: auto;
     margin-right: 1%;
 }
@@ -166,6 +201,7 @@ button {
 .enviar {
     height: 15px;
     width: 15px;
+
 
 }
 
@@ -223,5 +259,4 @@ button {
         width: 100vw;
         height: auto;
         padding: 20px;
-    }
-}
+    }}

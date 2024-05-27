@@ -48,11 +48,6 @@ header {
     width: 20%;
 }
 
-.flex-container {
-    display: flex;
-    justify-content: space-between;
-}
-
 .button-container {
     display: flex;
     align-items: center;
@@ -318,6 +313,138 @@ button {
     text-align: left;
     margin-top: -9px;
     margin-left: 10px;
+}
+
+
+.header-empty{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    
+}
+
+.imagem-user {
+    width: 40px;
+    height: auto;
+    margin-left: 10%;
+}
+
+.nome-user {
+    font-size: 30px;
+    margin-top: 8%;
+    margin-left: 10%;
+    color: #4091DC;
+    margin-bottom: auto;
+}
+
+.line{
+    border-bottom: 1px solid black;
+    width: 45%;
+    margin-top: 1%;
+}
+
+
+
+
+.empty-section {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: start;
+    height: 100vh;
+    width: 100%;
+    border-bottom: 10%;
+    background-color: white;
+    margin-bottom: 10%;
+    top: 15%;
+    left: calc(280px + 28%);
+    position: fixed;
+    margin-left: 2%;
+    margin-top: 3%;
+}
+.conversas {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-bottom: 10%;
+    top: 40%;
+    left: calc(280px + 28%);
+    position: fixed;
+    margin-left: 2%;
+    width: 45%;
+    height: 33vh;
+    overflow-y:auto;
+}
+
+.green-box {
+    display: block;
+    justify-content: flex-start;
+    background-color: green;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 1%;
+    width: auto;
+    text-align: left;
+    height: auto;
+    margin-right: auto;
+}
+
+.green-box p {
+    color: white;
+    margin-top: 1%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.grey-box {
+    display: block;
+    justify-content: flex-end;
+    background-color: grey;
+    border-radius: 10px;
+    margin-top: 3%;
+    padding: 1%;
+    margin-left: auto;
+    width: auto;
+    height: auto;
+}
+
+.grey-box p {
+    color: white;
+    margin-top: 1%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.escrever {
+    position: fixed; 
+    bottom: 0; 
+    width: 45%; 
+    background-color: #002561;
+    display: flex; 
+    justify-content: space-between; 
+    padding: 1%; 
+}
+
+.imagem-midia {
+    order: 1; 
+    height: 15px;
+    width: 15px;
+}
+
+.input-escrever {
+    order: 2; 
+    background-color: #4091DC;
+    color: white;
+    width: 100%;
+}
+
+.enviar {
+    order: 3;
+    height: 15px;
+    width: 15px;
 }
 
 /* Media Queries */

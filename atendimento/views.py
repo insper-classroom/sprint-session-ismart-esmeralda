@@ -38,7 +38,6 @@ def aluno(request):
     print(request.user.uuid)
     return render(request, 'atendimento/aluno.html')
 
-
 #Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
 @csrf_exempt
 def mostra_conversas(request):
@@ -193,6 +192,12 @@ def side_nao_atribuido(request):
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
 
+def estatisticas(request):
+    stats = Stats.objects.first()
+    notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
+    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
+
+
 #views pra renderizar os sides de acordo com a classificacao
 def side_minhas_conversas(request):
     colab = request.user.id 
@@ -312,3 +317,6 @@ def receive_email(request):
         # Renderizar os dados no template
         return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
     
+
+def colaborador(request):
+    return render(request, 'atendimento/colaborador.html')

@@ -73,9 +73,14 @@ class Stats(models.Model):
     @property
     def average_response_time(self):
         if self.total_response_count == 0:
-            return 0    
-        return self.total_response_time / self.total_response_count
-    
+            return "0 segundos"
+        avg_response_time_seconds = self.total_response_time / self.total_response_count
+        if avg_response_time_seconds < 60:
+            return f"{avg_response_time_seconds:.2f} segundos"
+        elif avg_response_time_seconds < 3600:
+            return f"{avg_response_time_seconds / 60:.2f} minutos"
+        else:
+            return f"{avg_response_time_seconds / 3600:.2f} horas"
     
 class EmailForm(forms.Form):
     subject = forms.CharField(max_length=100, label='Assunto')
