@@ -8,7 +8,7 @@
     <div class="imagens-header">
         <div class="img-cima">
             <div class="img1">
-                <button>
+                <button onclick="window.location.href = '/side_nao_atribuido/'">
                     <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
                 </button>
             </div>
@@ -37,15 +37,15 @@
             <div class="itens">
                 <div class="container-item">
                     <p>Na fila</p>
-                    <p class="valor">10</p>
+                    <p class="valor">{{notassigned|length}}</p>
                 </div>
                 <div class="container-item">
                     <p>Tempo médio para resposta</p>
-                    <p class="valor">2h 30min</p>
+                    <p class="valor">{{stats.average_response_time}}</p>
                 </div>
                 <div class="container-item">
                     <p>Casos resolvidos</p>
-                    <p class="valor">50</p>
+                    <p class="valor">{{stats.total_resolvidos}}</p>
                 </div>
             </div>
         </div>

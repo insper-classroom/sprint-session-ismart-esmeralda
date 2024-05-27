@@ -193,7 +193,9 @@ def side_nao_atribuido(request):
 
 
 def estatisticas(request):
-    return render(request, 'atendimento/estatisticas.html')
+    stats = Stats.objects.first()
+    notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
+    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
 
 
 #views pra renderizar os sides de acordo com a classificacao
