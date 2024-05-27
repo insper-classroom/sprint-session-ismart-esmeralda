@@ -11,45 +11,47 @@
     <link rel="stylesheet" href="{% static 'atendimento/style/chat_nao_atribuido.css' %}">
 </head>
 <body>
-    <div class="flex-container">
+
     <div class="empty-section">
         <div class="header-empty">
             <img src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem de Exemplo" class="imagem-user">
             <p class="nome-user">{{conversa.usuarios.username}}</p>              
+            <div class="right-container">
+                <button class="button-container" onclick= window.location.href="/side_minhas_conversas/resolve/{{conversa.id}}">
+                    <img src="{% static 'atendimento/img/circle-check.svg' %}" alt="Descrição da imagem">
+                    <p>Marcar como resolvido</p>
+                </button>
+            </div>
         </div>
         <div class="line"></div>
-        <div class="right-container">
-            <button class="button-container" onclick= window.location.href="/side_minhas_conversas/resolve/{{conversa.id}}">
-                <img src="{% static 'atendimento/img/circle-check.svg' %}" alt="Descrição da imagem">
-                <p>Marcar como resolvido</p>
-            </button>
+
+        <div class="escrever">
+            {% if conversa.is_mail %}
+                <form method="post" class="formulario" action="/side_minhas_conversas/mandar_email/{{conversa.usuarios.email}}/{{conversa.id}}/">
+                    {% csrf_token %}
+                    <div class="box-escrever">
+                        <input type="text" class="input-escrever" placeholder="Subject..." name="subject">
+                        <textarea class="input-escrever" placeholder="Write a message..." name="message"></textarea>
+                    </div>
+                    <button type="submit">
+                        <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
+                    </button>
+                </form>
+            {% else %}
+                <form method="post" class="formulario" action="/side_minhas_conversas/sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
+                    <div class="box-escrever">
+                        <input type="text" class="input-escrever" placeholder="Write a message..." name="mensagem">
+                    </div>
+                    <button type="submit">
+                        <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
+                    </button>
+                </form>
+            {% endif %}
         </div>
+        
     </div>
 
-</div>
-<div class="escrever">
-    {% if conversa.is_mail %}
-        <form method="post" action="/side_minhas_conversas/mandar_email/{{conversa.usuarios.email}}/{{conversa.id}}/">
-            {% csrf_token %}
-            <div class="box-escrever">
-                <input type="text" class="input-escrever" placeholder="Subject..." name="subject">
-                <textarea class="input-escrever" placeholder="Write a message..." name="message"></textarea>
-            </div>
-            <button type="submit">
-                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
-            </button>
-        </form>
-    {% else %}
-        <form method="post" action="/side_minhas_conversas/sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
-            <div class="box-escrever">
-                <input type="text" class="input-escrever" placeholder="Write a message..." name="mensagem">
-            </div>
-            <button type="submit">
-                <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
-            </button>
-        </form>
-    {% endif %}
-</div>
+
 
     <div class="conversas">
         {% if conversa.mensagens.exists %}

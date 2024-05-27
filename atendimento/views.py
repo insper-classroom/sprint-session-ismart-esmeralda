@@ -312,3 +312,6 @@ def receive_email(request):
         # Renderizar os dados no template
         return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
     
+
+def colaborador(request):
+    return render(request, 'atendimento/colaborador.html')
