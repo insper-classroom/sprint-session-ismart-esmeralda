@@ -1,0 +1,72 @@
+{% extends "atendimento/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'atendimento/style/estatisticas.css' %}">
+
+<header>
+    <div class="imagens-header">
+        <div class="img-cima">
+            <div class="img1">
+                <button>
+                    <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
+                </button>
+            </div>
+            <div class="img2">
+                <a href="/side_nao_atribuido/">
+                    <img src="{% static 'atendimento/img/house-solid.svg' %}" alt="Logo 2">
+                </a>
+            </div>
+            <div class="img3">
+                <button>
+                    <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 3">
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="main">
+    <div class="top-header">
+        <p class="titulo-top">ESTATISTICAS</p>
+    </div>
+
+    <div class="container">
+        <div class="formacontainer">
+            <h2>Sumário da Atividade</h2>
+            <div class="itens">
+                <div class="container-item">
+                    <p>Na fila</p>
+                    <p class="valor">10</p>
+                </div>
+                <div class="container-item">
+                    <p>Tempo médio para resposta</p>
+                    <p class="valor">2h 30min</p>
+                </div>
+                <div class="container-item">
+                    <p>Casos resolvidos</p>
+                    <p class="valor">50</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="formacontainer">
+            <h2>Atendimentos</h2>
+            <div class="itens">
+                <div class="container-item">
+                    <p>Atendimentos automatizados</p>
+                    <p class="valor">33%</p>
+                </div>
+                <div class="container-item">
+                    <p>Quantidade de atendimentos</p>
+                    <p class="valor">1h 45min</p>
+                </div>
+                <div class="container-item">
+                    <p>Usuários satisfeitos</p>
+                    <p class="valor">20 de 35</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

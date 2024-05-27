@@ -38,7 +38,6 @@ def aluno(request):
     print(request.user.uuid)
     return render(request, 'atendimento/aluno.html')
 
-
 #Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
 @csrf_exempt
 def mostra_conversas(request):
@@ -191,6 +190,10 @@ def side_nao_atribuido(request):
     notassigned = conversas.filter(assigned_to=None, resolved=False)
 
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
+
+
+def estatisticas(request):
+    return render(request, 'atendimento/estatisticas.html')
 
 
 #views pra renderizar os sides de acordo com a classificacao
