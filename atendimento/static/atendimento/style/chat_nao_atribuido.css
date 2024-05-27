@@ -16,7 +16,7 @@ button {
 .header-empty{
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
     
 }
@@ -58,6 +58,22 @@ button {
     margin-left: 2%;
     margin-top: 3%;
 }
+
+.right-container {
+    display: flex;
+    width: auto;
+    height: auto;
+    border: 1px solid #000; 
+    border-radius: 10px; 
+    padding: 10px; 
+    margin-top: 5%;
+}
+.right-container p{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .conversas {
     display: flex;
     flex-direction: column;
@@ -68,9 +84,10 @@ button {
     left: calc(280px + 28%);
     position: fixed;
     margin-left: 2%;
+    margin-top: 2%;
     margin-bottom: 10%;
     width: 45%;
-    height: 33vh;
+    height: 45vh;
     overflow-y:auto;
 }
 
@@ -116,32 +133,39 @@ button {
 }
 
 .escrever {
+    display: flex;
     position: fixed; 
     bottom: 0; 
     width: 45%; 
     background-color: #002561;
-    display: flex; 
     justify-content: space-between; 
     padding: 1%; 
 }
-
-.imagem-midia {
-    order: 1; 
-    height: 15px;
-    width: 15px;
+.box-escrever {
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
-.input-escrever {
-    order: 2; 
-    background-color: #4091DC;
-    color: white;
+.formulario {
+    display: flex;
     width: 100%;
+    justify-content: space-between;
+
+}
+
+
+.input-escrever {
+    background-color: transparent;
+    color: white;
+    width: auto;
+    margin-right: 1%;
 }
 
 .enviar {
-    order: 3;
     height: 15px;
     width: 15px;
+
 }
 
 .rotate {
@@ -197,6 +221,6 @@ button {
     .empty-section {
         width: 100vw;
         height: auto;
-        padding: 20px;
+        padding:20px;
     }
 }
