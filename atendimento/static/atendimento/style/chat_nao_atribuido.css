@@ -17,6 +17,7 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    justify-content: space-between;
     align-items: center;
     
 }
@@ -221,6 +222,6 @@ button {
     .empty-section {
         width: 100vw;
         height: auto;
-        padding:20px;
+        padding: 20px;
     }
 }
