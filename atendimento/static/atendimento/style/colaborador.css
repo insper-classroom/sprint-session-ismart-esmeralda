@@ -37,13 +37,13 @@ header {
 }
 .right-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
     background-color: rgba(255, 255, 255, 0.326);
     border-radius: 10px;
     padding: 10px;
-    margin-left: auto; /* Ajuste de posicionamento */
-    margin-right: 10px; /* Espaçamento do lado direito */
+    margin-left: auto; 
+    margin-right: 10px; 
     height: 80%; 
     width: 20%;
 }
