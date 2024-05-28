@@ -5,7 +5,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 embeddings = OpenAIEmbeddings(openai_api_key = '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')
 
-vector_store = FAISS.load_local('C:\\Users\\gugu1\\Documents\\GitHub\\sprint-session-ismart-esmeralda\\atendimento\\faiss_index', embeddings, allow_dangerous_deserialization=True)
+vector_store = FAISS.load_local('atendimento/faiss_index', embeddings, allow_dangerous_deserialization=True)
 retriever = vector_store.as_retriever(search_k = 2)
 
 def junta_docs(docs):
