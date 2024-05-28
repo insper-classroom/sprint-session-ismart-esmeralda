@@ -9,9 +9,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
 import json
 from chatbot.classificador import classifier
+from .raglogic import get_prompt
 from twilio.rest import Client
 import smtplib
-import imaplib
+import imaplib 
 import os
 from email.message import EmailMessage
 from django.core.mail import send_mail
@@ -20,10 +21,14 @@ import email
 from email.header import decode_header
 from ismart import settings
 import re
+from dotenv import load_dotenv
+import openai
 
+load_dotenv()
 
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Create your views here.
 def index(request):
@@ -156,6 +161,12 @@ def resolveYOURS(request, conversa_id):
 #recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
 @csrf_exempt
 def receber_zap(request):
+    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
+    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+
+
+    client = Client(account_sid, auth_token)
+
     if request.method == 'POST':
         data = request.POST
         if CustomUser.objects.filter(telefone=data['From'][12:]).exists():
@@ -168,9 +179,52 @@ def receber_zap(request):
 
         # If it doesn't exist, create a new one
         if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True)   
+            c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True, is_gpt = True)
 
+        # Create a Mensagem instance for the user's message
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
+
+        if c1.bot_response_count == 2:
+            message = client.messages.create(
+            from_='whatsapp:+14155238886',
+            body='Se desejar falar com um atendente real, digite Sim, e se quiser continuar tirando dúvidas comigo, digite Não.',
+            to=f'whatsapp:+55{user.telefone}'
+        )
+            if data['Body'].lower() == 'sim' and c1.is_gpt:
+                c1.is_gpt = False
+                Mensagem.objects.filter(conversa = c1).delete()
+                c1.save()
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='olá! como posso te ajudar hoje?',
+                to=f'whatsapp:+55{user.telefone}'
+                )
+
+
+        # Define the OpenAI model
+        modelos = {'openai_model': 'gpt-3.5-turbo'}
+
+        messages = [{"role": "system", "content": "you are a helpful assistant"}, {'role': 'assistant', 'content': 'Sou a coruja, assistente virtual aqui do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'}]
+        # If is_gpt is True, send the user's message to the GPT model
+        if c1.is_gpt:
+            messages.append({'role': 'user', 'content': get_prompt(data['Body'])})
+            response = openai.chat.completions.create(
+                model=modelos['openai_model'],
+                messages=messages
+            )
+            # Send the model's response to the user via WhatsApp
+            message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body=response.choices[0].message.content,
+                to=f'whatsapp:+55{user.telefone}'
+            )
+            c1.bot_response_count += 1
+            c1.save()
+
+        
+            
+            
+
         return redirect('tela_colaborador')
     else:
         return redirect('tela_colaborador')
@@ -187,7 +241,7 @@ def chatbot(request, username, useruuid):
 def side_nao_atribuido(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
-    notassigned = conversas.filter(assigned_to=None, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
 
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
@@ -201,8 +255,8 @@ def estatisticas(request):
 #views pra renderizar os sides de acordo com a classificacao
 def side_minhas_conversas(request):
     colab = request.user.id 
-    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
-    notassigned = conversas.filter(assigned_to=None, resolved=False)
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
 
     return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
