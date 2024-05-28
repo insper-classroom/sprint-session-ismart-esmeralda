@@ -6,6 +6,7 @@ urlpatterns = [
     path('aluno', views.aluno, name='aluno'),
     path('', views.index, name='index'),
     path('duvidas/', views.duvidas, name='duvidas'),
+    path('pesquisa/', views.pesquisa, name='pesquisa'),
     path('chatbot/<str:username>/<str:useruuid>', views.chatbot, name='chatbot'),
     path('tela_colaborador/', views.mostra_conversas, name='tela_colaborador'),
 

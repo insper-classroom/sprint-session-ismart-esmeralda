@@ -192,12 +192,6 @@ def side_nao_atribuido(request):
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
 
-def estatisticas(request):
-    stats = Stats.objects.first()
-    notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
-    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
-
-
 #views pra renderizar os sides de acordo com a classificacao
 def side_minhas_conversas(request):
     colab = request.user.id 
@@ -320,3 +314,13 @@ def receive_email(request):
 
 def colaborador(request):
     return render(request, 'atendimento/colaborador.html')
+
+
+def pesquisa(request):
+    return render(request, 'atendimento/pesquisa.html')
+
+
+def estatisticas(request):
+    stats = Stats.objects.first()
+    notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
+    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
