@@ -49,7 +49,7 @@ def sign_in(request):
             if user:
                 login(request, user)
                 if user.is_staff:
-                    return redirect('tela_colaborador')
+                    return redirect('side_nao_atribuido')
                 else:
                     return redirect('aluno')
             
