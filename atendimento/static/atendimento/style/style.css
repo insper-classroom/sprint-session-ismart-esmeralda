@@ -94,6 +94,22 @@ header {
     
 }
 
+.user-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.user-info span {
+    margin-right: 10px;
+}
+
+.user {
+    max-width: 40px;
+    margin-right: 10px;
+}
+
 .textos {
     justify-content: center;
     align-items: center;

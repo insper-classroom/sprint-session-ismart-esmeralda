@@ -18,9 +18,22 @@
             </a>
         </div>
         <!-- Acessar -->
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            <img class="user" src="{% static 'atendimento/img/usuario.svg' %}" alt="Ícone do usuário">
+            <span>Olá, {{ request.user.username | title }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="botao-tipo1 montserrat-3">Sair</button>
+            </form>
+        </div>
+        
+        {% else %}
         <div class="botaoheader_acessar">
             <a href="{% url 'login' %}"><button class="botao-tipo1 montserrat-3">Acessar</button></a>
         </div>
+        {% endif %}
+    
     </header>
     <!-- Background -->
     <img src="{% static 'atendimento\img\esquerdaft.png' %}" class="backgroundindex1" alt="backgroundimage1">
@@ -44,12 +57,19 @@
                 <img src="{% static 'atendimento/img/graduation-pack.d677bbbb.svg' %}" alt="Imagem 1">
                 <p class="text-ism-darker-blue montserrat-4">Sou Candidato(a)</p>
                 <div class="button-container">
+                    {%if user.is_authenticated%}
+                    <a href="aluno">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    </a>
+                    {%else%}
                     <a href="{% url 'login' %}">
                         <button class="botao-tipo1 montserrat-3">Acessar</button>
                     </a>
+                    
                     <a href="{% url 'register' %}">
                         <button class="botao-tipo2 montserrat-3">INSCREVA-SE</button>
                     </a>
+                    {%endif%}
                 </div>
             </div>
         </div>
@@ -59,8 +79,16 @@
                 <img src="{% static 'atendimento/img/fingerprint.b56d9789.png' %}" alt="Imagem 2">
                 <p class="text-ism-darker-blue montserrat-4">Sou Colaborador(a)</p>
                 <div class="button-container">
+                    {%if user.is_authenticated and user.is_staff%}
+                    <a href="side_nao_atribuido">
+                        <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    </a>
+                    {%else%}
                     <a href="{% url 'login' %}">
                         <button class="botao-tipo1 montserrat-3">Acessar</button>
+                    </a>
+                    {%endif%}
+
                 </div>
             </div>
         </div>
