@@ -19,6 +19,8 @@ urlpatterns = [
     #redireciona de volta pro side minhas conversas qnd resolve uma duvida do minhas conversas
     path('side_minhas_conversas/resolve/<int:conversa_id>/', views.resolveYOURS, name='resolve'),
 
+    path('checar_tempo/', views.check_and_resolve_conversations, name='checar_tempo'),
+
     #mandar zap de conversa em nao atribuido
     path('side_nao_atribuido/sendmsg/<int:telefone>/<int:conversa_id>/', views.send_msg, name='send_msg_nao_atribuido'),
 

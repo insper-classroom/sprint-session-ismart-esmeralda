@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import Conversa, Mensagem, Stats, EmailForm, Mail
 from django.contrib.contenttypes.models import ContentType
 from chatbot.classificador import classifier
+from django.utils import timezone
 from users.models import CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
@@ -44,13 +45,20 @@ def aluno(request):
     return render(request, 'atendimento/aluno.html')
 
 #Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
-@csrf_exempt
-def mostra_conversas(request):
+def side_nao_atribuido(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
-    notassigned = conversas.filter(assigned_to=None, resolved=False)
-    yours = conversas.filter(assigned_to=colab, resolved=False)
-    return render(request, 'atendimento/tela_colaborador.html', {'notassigned': notassigned, 'yours': yours, 'resolved': conversas.filter(resolved=True)})
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
+
+    return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
+
+def side_minhas_conversas(request):
+    colab = request.user.id 
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
+
+    return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
+
 
 #view pro colaborador atribuir uma nao atribuida a ele
 @csrf_exempt
@@ -85,7 +93,6 @@ def send_msg(request, telefone, conversa_id):
     conversa.save()
     return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
 
-#view pro colaborador marcar uma conversa como resolvida
 @csrf_exempt
 @staff_member_required
 #views para resolver uma duvida da side nao atribuido
@@ -174,14 +181,14 @@ def receber_zap(request):
         else:
             user = CustomUser.objects.create(telefone=data['From'][12:], is_colaborador=False, username = data['ProfileName'])
 
-        # Check if a Conversa already exists for the user
+        # Checa se ja existe uma conversa com o usuario
         c1 = Conversa.objects.filter(usuarios=user, tag='online').first()
 
-        # If it doesn't exist, create a new one
+        # Se nao existe, cria uma, uma conversa recem criada eh mandada pro gpt
         if c1 is None:
             c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True, is_gpt = True)
 
-        # Create a Mensagem instance for the user's message
+        # Cria uma instancia de mensagem pro usuario
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
 
         if c1.bot_response_count == 2:
@@ -201,18 +208,18 @@ def receber_zap(request):
                 )
 
 
-        # Define the OpenAI model
+        # Definindo o modelo do OpenAI
         modelos = {'openai_model': 'gpt-3.5-turbo'}
 
         messages = [{"role": "system", "content": "you are a helpful assistant"}, {'role': 'assistant', 'content': 'Sou a coruja, assistente virtual aqui do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'}]
-        # If is_gpt is True, send the user's message to the GPT model
+        # se a flag da conversa is_gpt for true, manda a mensagem pro gpt
         if c1.is_gpt:
             messages.append({'role': 'user', 'content': get_prompt(data['Body'])})
             response = openai.chat.completions.create(
                 model=modelos['openai_model'],
                 messages=messages
             )
-            # Send the model's response to the user via WhatsApp
+            # manda a resposta do gpt pro usuario
             message = client.messages.create(
                 from_='whatsapp:+14155238886',
                 body=response.choices[0].message.content,
@@ -220,23 +227,17 @@ def receber_zap(request):
             )
             c1.bot_response_count += 1
             c1.save()
-
-        
-            
-            
-
-        return redirect('tela_colaborador')
+        return HttpResponse('200 OK')
     else:
-        return redirect('tela_colaborador')
+        return HttpResponse('404 Not Found')
 
     
 #views pra mandar pra url do chatbot c as informacoes do usuario na url
 def chatbot(request, username, useruuid):
     
-    return redirect(f'http://localhost:8502/?username={username}&useruuid={useruuid}')
+    return redirect(f'http://localhost:8501/?username={username}/')
 
 
-    
 #views pra renderizar os sides de acordo com a classificacao
 def side_nao_atribuido(request):
     colab = request.user.id
@@ -246,24 +247,33 @@ def side_nao_atribuido(request):
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
 
+#views pra tela de estatisticas
 def estatisticas(request):
     stats = Stats.objects.first()
     notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
     return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
 
 
-#views pra renderizar os sides de acordo com a classificacao
-def side_minhas_conversas(request):
-    colab = request.user.id 
-    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
-    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
+#views pra checar periodicamente se tem conversas q tao a mais de 12 horas sem nenhuma mensagem nova
+def check_and_resolve_conversations(request):
+    #pega a hora de agora
+    now = timezone.now()
 
-    return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
+    #pega as converas q tao como nao resolvidas e pelo bot
+    unresolved_converas = Conversa.objects.filter(resolved = False, is_gpt=True)
 
+    for conversa in unresolved_converas:
+        last_message = conversa.mensagens.order_by('-timestamp').first()
 
-#views pra abrir os chats
-def chat(request):
-    return render(request, 'atendimento/chat.html')
+        # se a ultima mensagem foi enviada a mais de um certo tempo
+        if now - last_message.timestamp > timezone.timedelta(minutes=600):
+            return HttpResponse('200 OK')
+
+        #se nao, so retorna qqr coisa 
+        else:
+            return HttpResponse('302 Found')
+
+    return HttpResponse('Sem conversas pra resolver do bot (nenhuma c tempo suficiente)')
 
 
 #views para abrir os chats a partir do side nao atribuido
@@ -353,14 +363,18 @@ def receive_email(request):
         if CustomUser.objects.filter(email=user_mail).exists():
             user = CustomUser.objects.get(email=user_mail)
         else:
-            user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = 'dasdas')
+            user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = user_mail)
 
         c1 = Conversa.objects.filter(usuarios=user).first()
 
         if c1 is None:
             c1 = Conversa.objects.create(usuarios=user, tag='n sei', is_mail=True)
 
-        Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+        #se essa msg ja existe na cvs ja retorna sem criar a mensagem
+        if Mail.objects.filter(conversa=c1, subject = subject, content=body).exists():
+            return HttpResponse('200 OK')
+        else:    
+            Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
 
         email_data = Conversa.objects.all()
 
@@ -368,9 +382,6 @@ def receive_email(request):
         mail.close()
         mail.logout()
 
-        # Renderizar os dados no template
-        return render(request, 'atendimento/receivemailtest.html', {'emails': email_data})
+        return HttpResponse('200 OK')
     
 
-def colaborador(request):
-    return render(request, 'atendimento/colaborador.html')

@@ -151,4 +151,34 @@ $(document).ready(function(){
 </script>
 
 
+<!-- checa periodicamente pra ver se tem alguma conversa esquecida no bot -->
+
+<script>
+    function checkMail(){
+        fetch('/receive_email/')
+            .then(response => response.json())
+            .then(
+                data => {console.log('email recebido')}
+            )
+            .catch(error => console.log('chegou nenhum email', error));
+    }
+
+    checkMail();
+    setInterval(checkMail, 15000);
+</script>
+<script>
+    function updateResolved(){
+        fetch('/checar_tempo/')
+            .then(response => response.json())
+            .then(
+                data => {console.log('tarefa resolvida')}
+            )
+            .catch(error => console.log('alguma coisa deu rum ai pae'))
+        }
+
+    updateResolved();
+    setInterval(updateResolved, 15000);
+</script>
+
+
 {% endblock %}
