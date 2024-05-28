@@ -184,22 +184,22 @@ def receber_zap(request):
         # Create a Mensagem instance for the user's message
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
 
-        if c1.bot_response_count == 4 and c1.is_gpt:
+        if c1.bot_response_count == 2:
             message = client.messages.create(
             from_='whatsapp:+14155238886',
             body='Se desejar falar com um atendente real, digite Sim, e se quiser continuar tirando dúvidas comigo, digite Não.',
             to=f'whatsapp:+55{user.telefone}'
         )
+            if data['Body'].lower() == 'sim' and c1.is_gpt:
+                c1.is_gpt = False
+                Mensagem.objects.filter(conversa = c1).delete()
+                c1.save()
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='olá! como posso te ajudar hoje?',
+                to=f'whatsapp:+55{user.telefone}'
+                )
 
-        if data['Body'].lower() == 'sim' and c1.is_gpt:
-            c1.is_gpt = False
-            Mensagem.objects.filter(conversa = c1).delete()
-            c1.save()
-            message = client.messages.create(
-            from_='whatsapp:+14155238886',
-            body='olá! como posso te ajudar hoje?',
-            to=f'whatsapp:+55{user.telefone}'
-            )
 
         # Define the OpenAI model
         modelos = {'openai_model': 'gpt-3.5-turbo'}
@@ -241,7 +241,7 @@ def chatbot(request, username, useruuid):
 def side_nao_atribuido(request):
     colab = request.user.id
     conversas = Conversa.objects.all()
-    notassigned = conversas.filter(assigned_to=None, resolved=False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
 
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
@@ -255,8 +255,8 @@ def estatisticas(request):
 #views pra renderizar os sides de acordo com a classificacao
 def side_minhas_conversas(request):
     colab = request.user.id 
-    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
-    notassigned = conversas.filter(assigned_to=None, resolved=False)
+    conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
 
     return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
