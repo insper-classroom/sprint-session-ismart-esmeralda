@@ -102,7 +102,7 @@
                         <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
                         <div class="texto">
                             <p class="user">{{conversa.usuarios.username}}</p>
-                            <p class="mensagem"><strong>{{conversa.usuarios.username}}</strong>: {{conversa.mensagens.last.content}}</p>
+                            <p class="mensagem"><strong>{{conversa.mensagens.last.sender.username}}</strong>: {{conversa.mensagens.last.content}}</p>
                         </div>
                     </div>
                 </button>
@@ -113,7 +113,7 @@
                         <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
                         <div class="texto">
                             <p class="user">{{conversa.usuarios.username}}</p>
-                            <p class="mensagem"><strong>{{conversa.usuarios.username}}: </strong>{{conversa.mails.last.content}}</p>
+                            <p class="mensagem"><strong>{{conversa.mails.last.sender.username}}: </strong>{{conversa.mails.last.content}}</p>
                         </div>
             {% endif %}
         {% endfor %}

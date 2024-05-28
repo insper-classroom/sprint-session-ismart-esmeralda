@@ -101,7 +101,7 @@
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
                         <div class="texto">
-                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="user">{{ conversa.mensagens.last.sender.username }}</p>
                             <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
                         <div class="texto">
-                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="user">{{ conversa.mails.last.sender.username }}</p>
                             <p class="mensagem">{{ conversa.mails.last.content }}</p>
                         </div>
                     </div>
