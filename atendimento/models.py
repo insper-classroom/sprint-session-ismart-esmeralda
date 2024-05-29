@@ -17,6 +17,8 @@ class Conversa(models.Model):
 
     resolved = models.BooleanField(default=False)
 
+    is_avaliada = models.BooleanField(default=False)
+    
     is_zap = models.BooleanField(default=False)
     is_mail = models.BooleanField(default=False)
 
@@ -72,6 +74,8 @@ class Stats(models.Model):
     bolsasdeestudo = models.IntegerField(default=0)
     totalresolvidos = models.IntegerField(default=0)
     totalresolvidosgpt = models.IntegerField(default = 0)
+
+    totalnaoresolvidos = models.IntegerField(default = 0)
 
     total_response_time = models.FloatField(default=0)
     total_response_count = models.IntegerField(default=0)
