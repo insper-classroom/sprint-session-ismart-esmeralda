@@ -190,9 +190,9 @@ def send_msg(request, telefone, conversa_id):
     conversa.save()
     return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
 
+
 @csrf_exempt
 @staff_member_required
-#views para resolver uma duvida da side nao atribuido
 @login_required
 def resolveNA(request, conversa_id):
     """
@@ -252,7 +252,6 @@ def resolveNA(request, conversa_id):
     return redirect('side_nao_atribuido')
 
 
-#view para resolver uma duvida da side minhas conversas
 @staff_member_required
 @login_required
 def resolveYOURS(request, conversa_id):
@@ -313,9 +312,7 @@ def resolveYOURS(request, conversa_id):
     return redirect('side_minhas_conversas')
 
 
-#recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
 @csrf_exempt
-
 def receber_zap(request):
     """
     Recebe um POST contendo dados sobre uma mensagem recebida pelo whatsapp, e processa essa mensagem.
@@ -516,7 +513,6 @@ def chat_minhas_conversas(request, conversa_id):
     return render(request, 'atendimento/chat_minhas_conversas.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
 
-#views para mandar emails
 @staff_member_required
 @login_required
 def mandar_email(request, user_email, conversa_id):
@@ -559,7 +555,6 @@ def mandar_email(request, user_email, conversa_id):
         form = EmailForm()
 
 
-#views para receber emails
 def receive_email(request):
     """
     Função responsável por receber e processar e-mails.
