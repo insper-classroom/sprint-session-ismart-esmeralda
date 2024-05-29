@@ -128,7 +128,7 @@ $(document).ready(function(){
 
 <!-- checa periodicamente pra ver se tem alguma conversa esquecida no bot -->
 
-<script>
+<!-- <script>
     function checkMail(){
         fetch('/receive_email/')
             .then(response => response.json())
@@ -139,7 +139,7 @@ $(document).ready(function(){
     }
 
     checkMail();
-    setInterval(checkMail, 15000);
+    setInterval(checkMail, 150000);
 </script>
 <script>
     function updateResolved(){
@@ -152,8 +152,8 @@ $(document).ready(function(){
         }
 
     updateResolved();
-    setInterval(updateResolved, 15000);
-</script>
+    setInterval(updateResolved, 18000);
+</script> -->
 
 
 {% endblock %}

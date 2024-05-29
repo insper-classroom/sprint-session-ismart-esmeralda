@@ -251,7 +251,16 @@ def side_nao_atribuido(request):
 def estatisticas(request):
     stats = Stats.objects.first()
     notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
-    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned})
+    
+    topicos = {
+        'Sobre o Ismart': stats.sobreosismart,
+        'Ismart Online': stats.ismartonline,
+        'Processo Seletivo': stats.processoseletivo,
+        'Bolsas de Estudo': stats.bolsasdeestudo,
+    }
+    
+    most_frequent_topic = max(topicos, key=topicos.get)
+    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned, 'mostfrequent': most_frequent_topic})
 
 
 #views pra checar periodicamente se tem conversas q tao a mais de 12 horas sem nenhuma mensagem nova
@@ -267,7 +276,8 @@ def check_and_resolve_conversations(request):
 
         # se a ultima mensagem foi enviada a mais de um certo tempo
         if now - last_message.timestamp > timezone.timedelta(minutes=600):
-            return HttpResponse('200 OK')
+            Stats.totalresolvidosgpt += 1
+            return redirect('resolve', conversa.id)
 
         #se nao, so retorna qqr coisa 
         else:

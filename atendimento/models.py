@@ -71,6 +71,8 @@ class Stats(models.Model):
     processoseletivo = models.IntegerField(default=0)
     bolsasdeestudo = models.IntegerField(default=0)
     totalresolvidos = models.IntegerField(default=0)
+    totalresolvidosgpt = models.IntegerField(default = 0)
+
     total_response_time = models.FloatField(default=0)
     total_response_count = models.IntegerField(default=0)
 
@@ -87,6 +89,12 @@ class Stats(models.Model):
             return f"{avg_response_time_seconds / 60:.2f} minutos"
         else:
             return f"{avg_response_time_seconds / 3600:.2f} horas"
+
+    @property
+    def automated_percentual(self):
+        if self.total_response_count == 0:
+            return "0%"
+        return f"{(self.totalresolvidosgpt / self.total_response_count) * 100:.2f}%"
     
 class EmailForm(forms.Form):
     subject = forms.CharField(max_length=100, label='Assunto')

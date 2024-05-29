@@ -52,11 +52,11 @@
             <div class="itens">
                 <div class="container-item item1">
                     <p>Atendimentos automatizados</p>
-                    <p class="valor">33%</p>
+                    <p class="valor">{{stats.automated_percentual}}</p>
                 </div><div class="vl"></div>
                 <div class="container-item">
-                    <p>Quantidade de atendimentos</p>
-                    <p class="valor">1h 45min</p><div class="hl"></div>
+                    <p>Tópico mais frequente</p>
+                    <p class="valor">{{mostfrequent}}</p><div class="hl"></div>
                     <p class="obs">Nas últimas 24h</p>
                 </div><div class="vl"></div>
                 <div class="container-item item3">
@@ -69,7 +69,7 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
     function checkMail(){
         fetch('/receive_email/')
             .then(response => response.json())
@@ -94,6 +94,6 @@
 
     updateResolved();
     setInterval(updateResolved, 15000);
-</script>
+</script> -->
 
 {% endblock %}
