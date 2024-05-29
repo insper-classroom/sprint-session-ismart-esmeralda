@@ -404,7 +404,7 @@ def receber_zap(request):
         return HttpResponse('404 Not Found')
 
     
-def chatbot(request, username, useruuid):
+def chatbot(request, username):
     """Manda o aluno para ser atendido pelo GPT dentro do ambiente web, enviando seu nome. 
         Parâmetros:
             request: Objeto da requisição HTTP
@@ -414,7 +414,7 @@ def chatbot(request, username, useruuid):
             Uma resposta de redirect para a URL em que está hospedado o chatbot. 
     """
 
-    return redirect(f'http://localhost:8501/?username={username}/')
+    return redirect(f'http://localhost:8501/?username={username}')
 
 
 @staff_member_required
