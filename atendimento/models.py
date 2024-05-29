@@ -95,6 +95,12 @@ class Stats(models.Model):
             return f"{avg_response_time_seconds / 3600:.2f} horas"
 
     @property
+    def satisfacao_users(self):
+        """Calcula a porcentagem de usuários que avaliaram o atendimento como satisfatório."""
+        if self.totalresolvidos == 0:
+            return "0%"
+        return f"{(self.totalresolvidos / (self.totalresolvidos + self.totalnaoresolvidos)) * 100:.2f}%"
+    @property
     def automated_percentual(self):
         """Calcula a porcentagem de respostas totalmente automatizadas."""
         if self.total_response_count == 0:

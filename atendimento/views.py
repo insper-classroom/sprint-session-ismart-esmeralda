@@ -433,6 +433,7 @@ def estatisticas(request):
     
     stats = Stats.objects.first()
     notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
+    satisfacao = stats.satisfacao_users
     
     topicos = {
         'Sobre o Ismart': stats.sobreosismart,
@@ -442,7 +443,7 @@ def estatisticas(request):
     }
     
     most_frequent_topic = max(topicos, key=topicos.get)
-    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned, 'mostfrequent': most_frequent_topic})
+    return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned, 'mostfrequent': most_frequent_topic, 'satisfacao': satisfacao})
 
 
 
