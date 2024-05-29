@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa satisfacao</title>
+</head>
+<body>
+ 
+    <!-- Fazer um formulario post c esse select -->
+    <form method="post" action="{% url 'satisfacao' usertel %}"> 
+    {% csrf_token %}
+    <input type="text" name="satisfacao" placeholder="sim ou n">
+    <input type="submit" value="Enviar">
+    </form>
+
+    {{conversa.mails.last.content}}
+</body>
+</html>

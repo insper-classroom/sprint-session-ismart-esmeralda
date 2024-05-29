@@ -235,16 +235,12 @@ def resolveNA(request, conversa_id):
     else:
         if tag == 'Sobre o Ismart':
             stats.sobreosismart += 1
-            stats.totalresolvidos += 1
         elif tag == 'Ismart online':
             stats.ismartonline += 1
-            stats.totalresolvidos += 1
         elif tag == 'Processo seletivo':
             stats.processoseletivo += 1
-            stats.totalresolvidos += 1
         elif tag == 'Bolsas de estudo':
             stats.bolsasdeestudo += 1
-            stats.totalresolvidos += 1
         stats.save()
     
     conversa.resolved = True
@@ -279,6 +275,11 @@ def resolveYOURS(request, conversa_id):
     - A função do classificador não está definida nesse arquivo, mas no arquivo 'classificador.py', dentro do diretório 'chatbot'.
     """
 
+    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
+    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+
+    client = Client(account_sid, auth_token)
+
     msgs = ''
     conversa = Conversa.objects.get(pk=conversa_id)
     #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
@@ -307,8 +308,19 @@ def resolveYOURS(request, conversa_id):
             stats.totalresolvidos += 1
         stats.save()
     
+    #qdo o colaborador marca a conversa como resolvida, manda uma msg pro usuario perguntando se a duvida foi resolvida ou nn 
     conversa.resolved = True
-    conversa.delete()
+
+    telefone = CustomUser.objects.get(id = conversa.usuarios.id).telefone
+
+    uuid = CustomUser.objects.get(id = conversa.usuarios.id).uuid
+    message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body=f'responda essa pesquisa de satisfacao para nos ajudar a melhorar nossos servicos: https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
+        to=f'whatsapp:+55{telefone}'
+    )
+    conversa.is_avaliada = False
+    conversa.save()
     return redirect('side_minhas_conversas')
 
 
@@ -343,8 +355,7 @@ def receber_zap(request):
         else:
             user = CustomUser.objects.create(telefone=data['From'][12:], is_colaborador=False, username = data['ProfileName'])
 
-        # Checa se ja existe uma conversa com o usuario
-        c1 = Conversa.objects.filter(usuarios=user).first()
+        c1 = Conversa.objects.filter(usuarios=user, resolved=False).first()
 
         # Se nao existe, cria uma, uma conversa recem criada eh mandada pro gpt
         if c1 is None:
@@ -359,7 +370,7 @@ def receber_zap(request):
             body='Se desejar falar com um atendente real, digite Sim, e se quiser continuar tirando dúvidas comigo, digite Não.',
             to=f'whatsapp:+55{user.telefone}'
         )
-            if data['Body'].lower() == 'sim' and c1.is_gpt:
+        if data['Body'].lower() == 'sim' and c1.is_gpt:
                 c1.is_gpt = False
                 Mensagem.objects.filter(conversa = c1).delete()
                 c1.save()
@@ -368,7 +379,6 @@ def receber_zap(request):
                 body='olá! como posso te ajudar hoje?',
                 to=f'whatsapp:+55{user.telefone}'
                 )
-
 
         # Definindo o modelo do OpenAI
         modelos = {'openai_model': 'gpt-3.5-turbo'}
@@ -624,4 +634,24 @@ def receive_email(request):
 
     return HttpResponse('200 OK')
     
+def satisfacaozap(request, user_uuid):
+    user = CustomUser.objects.get(uuid = user_uuid)
+    c1 = Conversa.objects.filter(usuarios = user, is_avaliada = False).last()
+    stats = Stats.objects.all().last()
 
+    if request.method == 'POST':
+        if 'satisfacao' in request.POST:
+            if request.POST['satisfacao'] == 'Sim':
+                c1.is_avaliada = True
+                stats.totalresolvidos += 1
+                c1.save()
+                stats.save()
+            if request.POST['satisfacao'] == 'Não':
+                c1.is_avaliada = True
+                stats.totalnaoresolvidos += 1
+                c1.save()
+                stats.save()
+            return redirect('index')
+        else:
+            return redirect('index')
+    return render(request, 'atendimento/satisfacao.html', {'usertel': user_uuid, 'conversa': c1})
