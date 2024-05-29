@@ -31,28 +31,83 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Create your views here.
+
 def index(request):
+    """
+    Essa função renderiza a primeira página de index do site.
+    
+    Parâmetros:
+        request (HttpRequest): O objeto da requisição HTTP.
+        
+    Retorno:
+        HttpResponse: O template renderizado.
+    """
     return render(request, 'atendimento/index.html')
+
 
 @login_required
 def duvidas(request):
+    """
+    Essa função renderiza a página de login.
+    
+    Parâmetros:
+        request (HttpRequest): O objeto da requisição HTTP.
+        
+    Retorno:
+        HttpResponse: O template renderizado.
+    """
     return render(request, 'atendimento/sobre_duvida.html')
+
 
 @login_required
 def aluno(request):
-    print(request.user.uuid)
+    """
+    Essa função renderiza a página principal do aluno.
+    
+    Parâmetros:
+        request (HttpRequest): O objeto da requisição HTTP.
+        
+    Retorno:
+        HttpResponse: O template renderizado.
+    """
     return render(request, 'atendimento/aluno.html')
 
-#Mostra as conversas daquele colaborador, filtrando por nao atribuidas e atribuidas
+
+@login_required
+@staff_member_required
 def side_nao_atribuido(request):
+    """
+    View para renderizar o template 'side_nao_atribuido.html' com uma lista de conversas sem colaboradores atribuídos
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+
+    Retorna:
+    - O template renderizado com a lista de conversas sem atribuídos.
+
+    """
+
     colab = request.user.id
     conversas = Conversa.objects.all()
-    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
+    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt=False)
 
     return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
 
+
+@login_required
+@staff_member_required
 def side_minhas_conversas(request):
+    """
+    View para renderizar o template 'minhas_conversas.html' com uma lista de conversas que o colaborador autenticado está atribuído.
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+
+    Retorna:
+    - O template renderizado com a lista de conversas atribuídas ao colaborador.
+
+    """
+
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
     notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
@@ -60,19 +115,61 @@ def side_minhas_conversas(request):
     return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
 
-#view pro colaborador atribuir uma nao atribuida a ele
 @csrf_exempt
-# @staff_member_required
+@staff_member_required
+@login_required
 def assign_conversa(request, conversa_id):
-    conversa = Conversa.objects.get(id = conversa_id)
+    """
+    View para atribuir uma conversa de id 'conversa_id' ao colaborador autenticado.
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+    - conversa_id: o ID da conversa a ser atribuída ao colaborador.
+
+    Returna:
+    - Uma resposta redirecionando o colaborador para a url 'side_nao_atribuido'.
+    """
+
+    conversa = Conversa.objects.get(id=conversa_id)
     conversa.assigned_to = request.user
     conversa.save()
     return redirect('side_nao_atribuido')
 
-#view pro colaborador enviar uma mensagem via zap
+
 @csrf_exempt
 @staff_member_required
+@login_required
 def send_msg(request, telefone, conversa_id):
+    """
+    View para enviar uma mensagem via WhatsApp.
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+    - telefone: O número de telefone para enviar a mensagem.
+    - conversa_id: O ID da conversa relacionada à mensagem.
+
+    Retorna:
+    - Uma resposta redirecionando para a página de chat da conversa.
+    """
+    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
+    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+
+    client = Client(account_sid, auth_token)
+
+    mensagem = request.POST['mensagem']
+
+    message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body=mensagem,
+        to=f'whatsapp:+55{telefone}'
+    )
+
+    Mensagem.objects.create(conversa=Conversa.objects.get(pk=conversa_id), sender=request.user, content=mensagem)
+
+    conversa = Conversa.objects.get(id=conversa_id)
+
+    conversa.save()
+    return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
 
@@ -96,7 +193,32 @@ def send_msg(request, telefone, conversa_id):
 @csrf_exempt
 @staff_member_required
 #views para resolver uma duvida da side nao atribuido
+@login_required
 def resolveNA(request, conversa_id):
+    """
+    Marca uma conversa como resolvida, atualizando a tabela de estatísticas e apagando a mesma conversa, logo em seguida.
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+    - conversa_id: O ID da conversa a ser marcada como resolvida.
+
+    Returns:
+    - Uma resposta de redirect para a URL 'side_nao_atribuido'.
+
+    Descrição:
+    - Para marcar uma conversa como resolvida:
+      1. Pega a conversa do banco de dados pelo 'conversa_ID'.
+      2. Recupera as três últimas mensagens enviadas pelo usuário na conversa.
+      3. Concatena essas três mensagens em uma única string.
+      4. Classifica o conteúdo da conversa de acordo com tags definidas pelo classificador.
+      5. Atualiza a tabela de estatísticas.
+      7. Deletes the conversation object.
+      8. Redireciona para a URL 'side_nao_atribuido'.
+
+    Observação:
+    - A função do classificador não está definida nesse arquivo, mas no arquivo 'classificador.py', dentro do diretório 'chatbot'.
+    """
+
     msgs = ''
     conversa = Conversa.objects.get(pk=conversa_id)
     #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
@@ -131,7 +253,33 @@ def resolveNA(request, conversa_id):
 
 
 #view para resolver uma duvida da side minhas conversas
+@staff_member_required
+@login_required
 def resolveYOURS(request, conversa_id):
+    """
+    Marca uma conversa como resolvida, atualizando a tabela de estatísticas e apagando a mesma conversa, logo em seguida.
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+    - conversa_id: O ID da conversa a ser marcada como resolvida.
+
+    Returns:
+    - Uma resposta de redirect para a URL 'side_nao_atribuido'.
+
+    Descrição:
+    - Para marcar uma conversa como resolvida:
+      1. Pega a conversa do banco de dados pelo 'conversa_ID'.
+      2. Recupera as três últimas mensagens enviadas pelo usuário na conversa.
+      3. Concatena essas três mensagens em uma única string.
+      4. Classifica o conteúdo da conversa de acordo com tags definidas pelo classificador.
+      5. Atualiza a tabela de estatísticas.
+      7. Deletes the conversation object.
+      8. Redireciona para a URL 'side_minhas_converas'.
+
+    Observação:
+    - A função do classificador não está definida nesse arquivo, mas no arquivo 'classificador.py', dentro do diretório 'chatbot'.
+    """
+
     msgs = ''
     conversa = Conversa.objects.get(pk=conversa_id)
     #pega as tres primeiras mensagens enviadas pelo usuario nessa conversa
@@ -167,10 +315,27 @@ def resolveYOURS(request, conversa_id):
 
 #recebe o id do twilio e cria uma cvs c as tag q veio do twilio, DPS Pega essa conversa q criou e usa a receber_zap pra criar mesagens naquela instancia da cvs
 @csrf_exempt
+
 def receber_zap(request):
+    """
+    Recebe um POST contendo dados sobre uma mensagem recebida pelo whatsapp, e processa essa mensagem.
+
+    Parâmetros:
+        request: O objeto da requisição HTTP contendo os dados do POST.
+
+    Retorna:
+        HttpResponse: A resposta HTTP indicando o status da requisição.
+
+    Descrição:
+        Essa função processa o recebimento de mensagens do whatsapp. Aqui, é utilizada a API do Twilio para receber os dados do usuário que está enviando a mensagem. A função checa se existe algum usuário cadastrado no banco de dados com o telefone do whatsapp que enviou a mensagem, se sim atribui a conversa àquele usuário, caso contrário, é criado um novo usuário. Assim que criada, a conversa é encaminhada para ser respondida pelo gpt-3.5, sendo alimentado por um sistema de RAG(Retrieval Augmented Generation). A função também faz com que as repostas do GPT cheguem ao usuário pelo whatsapp. Após uma certa quantidade de respostas do GPT, o usuário é perguntado se gostaria de ser atendido por um atendente real, se sim, é redirecionado.
+
+    Observação:
+        A função que define o sistema de RAG não está definida nesse arquivo, mas sim, no arquivo 'raglogic.py', presente no diretório 'chatbot'.
+        
+    """
+
     account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
     auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
-
 
     client = Client(account_sid, auth_token)
 
@@ -182,11 +347,11 @@ def receber_zap(request):
             user = CustomUser.objects.create(telefone=data['From'][12:], is_colaborador=False, username = data['ProfileName'])
 
         # Checa se ja existe uma conversa com o usuario
-        c1 = Conversa.objects.filter(usuarios=user, tag='online').first()
+        c1 = Conversa.objects.filter(usuarios=user).first()
 
         # Se nao existe, cria uma, uma conversa recem criada eh mandada pro gpt
         if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='online', is_zap=True, is_gpt = True)
+            c1 = Conversa.objects.create(usuarios=user, is_zap=True, is_gpt = True)
 
         # Cria uma instancia de mensagem pro usuario
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
@@ -232,23 +397,33 @@ def receber_zap(request):
         return HttpResponse('404 Not Found')
 
     
-#views pra mandar pra url do chatbot c as informacoes do usuario na url
 def chatbot(request, username, useruuid):
-    
+    """Manda o aluno para ser atendido pelo GPT dentro do ambiente web, enviando seu nome. 
+        Parâmetros:
+            request: Objeto da requisição HTTP
+            username: Nome de usuário do aluno que será atendido pelo chatbot
+        
+        Retorna:
+            Uma resposta de redirect para a URL em que está hospedado o chatbot. 
+    """
+
     return redirect(f'http://localhost:8501/?username={username}/')
 
 
-#views pra renderizar os sides de acordo com a classificacao
-def side_nao_atribuido(request):
-    colab = request.user.id
-    conversas = Conversa.objects.all()
-    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
-
-    return render(request, 'atendimento/side_nao_atribuido.html', {'notassigned': notassigned})
-
-
-#views pra tela de estatisticas
+@staff_member_required
+@login_required
 def estatisticas(request):
+    """
+    View para renderizar a página de estatísticas
+
+    Parâmetros:
+    - request: O objeto da requisição HTTP.
+
+    Retorna:
+    - O template renderizado com os dados da tela de estatísticas.
+
+    """
+    
     stats = Stats.objects.first()
     notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
     
@@ -263,8 +438,19 @@ def estatisticas(request):
     return render(request, 'atendimento/estatisticas.html', {'stats': stats, 'notassigned': notassigned, 'mostfrequent': most_frequent_topic})
 
 
-#views pra checar periodicamente se tem conversas q tao a mais de 12 horas sem nenhuma mensagem nova
+
 def check_and_resolve_conversations(request):
+    """
+    Verifica e resolve as conversas que estão pendentes de resolução pelo bot. Conversas que estão a mais de 12 horas sem interação alguma no whatsapp sao marcadas como resolvidas.
+
+    Parâmetros:
+        request: O objeto de requisição HTTP.
+
+    Retorna:
+        Uma resposta HTTP indicando o resultado da verificação e resolução das conversas.
+
+    """
+
     #pega a hora de agora
     now = timezone.now()
 
@@ -286,16 +472,43 @@ def check_and_resolve_conversations(request):
     return HttpResponse('Sem conversas pra resolver do bot (nenhuma c tempo suficiente)')
 
 
-#views para abrir os chats a partir do side nao atribuido
+@staff_member_required
+@login_required
 def chat_nao_atribuido(request, conversa_id):
+    """
+    Renderiza a página de chat não atribuído, junto às mensagens enviadas nessa mesma conversa.
+
+    Parâmetros:
+    - request: O objeto HttpRequest contendo os dados da requisição HTTP.
+    - conversa_id: O ID da conversa a ser exibida.
+
+    Retorno:
+    - Um objeto HttpResponse contendo a página renderizada.
+
+    """
+
     conversa = Conversa.objects.get(pk=conversa_id)   
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
     notassigned = conversas.filter(assigned_to=None, resolved=False) 
     return render(request, 'atendimento/chat_nao_atribuido.html', {'conversa': conversa, 'notassigned': notassigned, 'yours': conversas})
 
-#views para abrir os chats a partir da side minhas conversas
+
+@staff_member_required
+@login_required
 def chat_minhas_conversas(request, conversa_id):
+    """
+    Renderiza a página de chat atribuído ao colaborador autenticado, junto às mensagens enviadas nessa mesma conversa.
+
+    Parâmetros:
+    - request: O objeto HttpRequest contendo os dados da requisição HTTP.
+    - conversa_id: O ID da conversa a ser exibida.
+
+    Retorno:
+    - Um objeto HttpResponse contendo a página renderizada.
+
+    """
+
     conversa = Conversa.objects.get(pk=conversa_id)
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False)
@@ -304,11 +517,25 @@ def chat_minhas_conversas(request, conversa_id):
 
 
 #views para mandar emails
+@staff_member_required
+@login_required
 def mandar_email(request, user_email, conversa_id):
+    """
+    Envia um email para o usuário que entrou em contato com o colaborador.
+
+    Parâmetros:
+        request (HttpRequest): O objeto HttpRequest que representa a requisição HTTP.
+        user_email (str): O endereço de email do destinatário.
+        conversa_id (int): O ID da conversa.
+
+    Retorna:
+        HttpResponseRedirect: Redireciona para a página 'side_minhas_conversas' após o envio do email.
+
+    """
+
     user = request.user
     if request.method == "POST":
         form = EmailForm(request.POST)
-
         if form.is_valid():
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
@@ -326,72 +553,80 @@ def mandar_email(request, user_email, conversa_id):
                 smtp.login(from_email, email_pass)
                 smtp.send_message(msg)
 
-            Mail.objects.create(conversa=Conversa.objects.get(pk = conversa_id), sender=user, subject = subject, content=message)
+            Mail.objects.create(conversa=Conversa.objects.get(pk=conversa_id), sender=user, subject=subject, content=message)
             return redirect('side_minhas_conversas')
     else:
         form = EmailForm()
 
 
-
-
 #views para receber emails
 def receive_email(request):
-        # Conectar ao servidor de e-mail
-        mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
-        mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-        mail.select("inbox")
+    """
+    Função responsável por receber e processar e-mails.
 
-        # Buscar os e-mails não lidos
-        status, messages = mail.search(None, '(ALL)')
+    Parâmetros:
+        request: O objeto de requisição HTTP.
 
-        email_data = []
-        for num in messages[0].split():
-            status, msg_data = mail.fetch(num, '(RFC822)')
-            msg = email.message_from_bytes(msg_data[0][1])
-            mail_content = mailparser.parse_from_bytes(msg_data[0][1])
-            
-            # Decodificar o assunto
-            subject, encoding = decode_header(msg["Subject"])[0]
-            if isinstance(subject, bytes):
-                subject = subject.decode(encoding if encoding else "latin-1")
-            
-            # Decodificar o remetente
-            from_ = msg.get("From")
-            
-            # Processar o corpo da mensagem
-            if msg.is_multipart():
-                for part in msg.walk():
-                    if part.get_content_type() == "text/plain":
-                        body = part.get_payload(decode=True).decode()
-                        break
-            else:
-                body = msg.get_payload(decode=True).decode(errors="ignore")
-            
+    Retorna:
+        Uma resposta HTTP com o status '200 OK'.
+    """
+    
+    # Conectar ao servidor de e-mail
+    mail = imaplib.IMAP4_SSL(settings.EMAIL_HOST)
+    mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+    mail.select("inbox")
 
-        user_mail = re.search(r'<(.*?)>', from_).group(1)
+    # Buscar os e-mails não lidos
+    status, messages = mail.search(None, '(ALL)')
 
-        if CustomUser.objects.filter(email=user_mail).exists():
-            user = CustomUser.objects.get(email=user_mail)
+    email_data = []
+    for num in messages[0].split():
+        status, msg_data = mail.fetch(num, '(RFC822)')
+        msg = email.message_from_bytes(msg_data[0][1])
+        mail_content = mailparser.parse_from_bytes(msg_data[0][1])
+        
+        # Decodificar o assunto
+        subject, encoding = decode_header(msg["Subject"])[0]
+        if isinstance(subject, bytes):
+            subject = subject.decode(encoding if encoding else "latin-1")
+        
+        # Decodificar o remetente
+        from_ = msg.get("From")
+        
+        # Processar o corpo da mensagem
+        if msg.is_multipart():
+            for part in msg.walk():
+                if part.get_content_type() == "text/plain":
+                    body = part.get_payload(decode=True).decode()
+                    break
         else:
-            user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = user_mail)
+            body = msg.get_payload(decode=True).decode(errors="ignore")
+        
 
-        c1 = Conversa.objects.filter(usuarios=user).first()
+    user_mail = re.search(r'<(.*?)>', from_).group(1)
 
-        if c1 is None:
-            c1 = Conversa.objects.create(usuarios=user, tag='n sei', is_mail=True)
+    if CustomUser.objects.filter(email=user_mail).exists():
+        user = CustomUser.objects.get(email=user_mail)
+    else:
+        user = CustomUser.objects.create(email=user_mail, is_colaborador=False, username = user_mail)
 
-        #se essa msg ja existe na cvs ja retorna sem criar a mensagem
-        if Mail.objects.filter(conversa=c1, subject = subject, content=body).exists():
-            return HttpResponse('200 OK')
-        else:    
-            Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+    c1 = Conversa.objects.filter(usuarios=user).first()
 
-        email_data = Conversa.objects.all()
+    if c1 is None:
+        c1 = Conversa.objects.create(usuarios=user, is_mail=True)
 
-        # Desconectar do servidor de e-mail
-        mail.close()
-        mail.logout()
-
+    #se essa msg ja existe na cvs ja retorna sem criar a mensagem
+    if Mail.objects.filter(conversa=c1, subject = subject, content=body).exists():
         return HttpResponse('200 OK')
+    else:    
+        Mail.objects.create(conversa=c1, sender=user, subject = subject, content=body)
+
+    email_data = Conversa.objects.all()
+
+    # Desconectar do servidor de e-mail
+    mail.close()
+    mail.logout()
+
+    return HttpResponse('200 OK')
     
 
