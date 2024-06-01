@@ -30,8 +30,8 @@
                 <form method="post" class="formulario" action="/side_minhas_conversas/mandar_email/{{conversa.usuarios.email}}/{{conversa.id}}/">
                     {% csrf_token %}
                     <div class="box-escrever">
-                        <input type="text" class="input-escrever" placeholder="Subject..." name="subject">
-                        <textarea class="input-escrever" placeholder="Write a message..." name="message"></textarea>
+                        <input type="text" class="input-escrever" placeholder="Assunto" name="subject">
+                        <textarea class="input-escrever" placeholder="Escreva sua mensagem" name="message"></textarea>
                     </div>
                     <button type="submit">
                         <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
@@ -40,7 +40,7 @@
             {% else %}
                 <form method="post" class="formulario" action="/side_minhas_conversas/sendmsg/{{conversa.usuarios.telefone}}/{{conversa.id}}/">
                     <div class="box-escrever">
-                        <input type="text" class="input-escrever" placeholder="Write a message..." name="mensagem">
+                        <input type="text" class="input-escrever" placeholder="Escreva sua mensagem" name="mensagem">
                     </div>
                     <button type="submit">
                         <img src="{% static 'atendimento/img/circle-arrow-right-solid.svg' %}" alt="Imagem de Exemplo" class="enviar">
