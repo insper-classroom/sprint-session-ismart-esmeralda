@@ -110,7 +110,8 @@ def side_minhas_conversas(request):
 
     colab = request.user.id 
     conversas = Conversa.objects.filter(assigned_to=colab, resolved=False, is_gpt= False)
-    notassigned = conversas.filter(assigned_to=None, resolved=False, is_gpt= False)
+    tudo = Conversa.objects.all()
+    notassigned = tudo.filter(assigned_to=None, resolved=False, is_gpt= False)
 
     return render(request, 'atendimento/side_minhas_conversas.html', {'yours': conversas, 'notassigned': notassigned})
 
