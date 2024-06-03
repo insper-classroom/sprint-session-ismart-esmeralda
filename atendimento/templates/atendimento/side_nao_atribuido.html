@@ -17,12 +17,12 @@
         <div class="text-container">
             <p>Não atribuido</p>
         </div>
-        <div class="right-container">
+        <!-- <div class="right-container">
             <botton class="button-container">
                 <img src="{% static 'atendimento/img/circle-check.svg' %}" alt="Descrição da imagem">
                 <p>Marcar como resolvido</p>
             </botton>
-        </div>
+        </div> -->
     </div>
     <header>
         <div class="imagens-header">
@@ -32,13 +32,8 @@
                         <img src="{% static 'atendimento/img/inbox-solid.svg' %}" alt="Logo 1">
                     </button>
                 </div>
-                <div class="img2">
-                    <button>
-                        <img src="{% static 'atendimento/img/house-solid.svg' %}" alt="Logo 2">
-                    </button>
-                </div>
                 <div class="img3">
-                    <button>
+                    <button onclick="window.location.href = '/estatisticas/'">
                         <img src="{% static 'atendimento/img/chart.svg' %}" alt="Logo 3">
                     </button>
             </div>
@@ -47,12 +42,6 @@
     <div class="sidebar">
         <div class="inbox-header">
             <p>Inbox</p>
-            <button>
-                <img src="{% static 'atendimento/img/search.svg' %}" alt="Inbox Icon 1" class="inbox-icon">
-            </button>
-            <button>
-                <img src="{% static 'atendimento/img/arrow-up-right-from-square-solid.svg' %}" alt="Inbox Icon 2" class="inbox-icon">
-            </button>
         </div>
         <div class="conversa">
             <div class="conversa-header">
@@ -74,28 +63,8 @@
                     <p>Minhas conversas</p>
                 </button>
             </div>
-            <div class="resolvidos">
-                <button>
-                    <img src="{% static 'atendimento/img/checkverde.png' %}" alt="Conversa Icon 1" class="resolvidos-icon">
-                    <p>Resolvidos</p>
-                </button>
-            </div>
         </div>
-        <div class="colaboradores">
-            <div class="colaboradores-header">
-                <button>
-                    <p>Colaboradores</p>
-                    <img id= "toggle-icon" src="{% static 'atendimento/img/angle-up-solid.svg' %}" alt="Toggle Icon" class="colaboradores-icon">
-                </button>
-            </div>
-            <div class="online">
-                <p>Online</p>
-                <div class="users">
-                    <img src="{% static 'atendimento/img/usuario.svg' %}" alt="colaboradores Icon 1" class="user-imagem">
-                    <p> Nome do Usuário</p>
-                </div>
-            </div>
-        </div>
+    
     </div>
 
 
@@ -107,7 +76,7 @@
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/whatsapp.svg' %}" alt="Imagem 2">
                         <div class="texto">
-                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="user">{{ conversa.mensagens.last.sender.username }}</p>
                             <p class="mensagem">{{ conversa.mensagens.last.content }}</p>
                         </div>
                     </div>
@@ -118,7 +87,7 @@
                         <img class="usuario" src="{% static 'atendimento/img/usuario.svg' %}" alt="Imagem 1">
                         <img class="mensagem-img" src="{% static 'atendimento/img/email.svg' %}" alt="Imagem 2">
                         <div class="texto">
-                            <p class="user">{{ conversa.usuarios.username }}</p>
+                            <p class="user">{{ conversa.mails.last.sender.username }}</p>
                             <p class="mensagem">{{ conversa.mails.last.content }}</p>
                         </div>
                     </div>
@@ -155,6 +124,36 @@ $(document).ready(function(){
     });
 });
 </script>
+
+
+<!-- checa periodicamente pra ver se tem alguma conversa esquecida no bot -->
+
+<!-- <script>
+    function checkMail(){
+        fetch('/receive_email/')
+            .then(response => response.json())
+            .then(
+                data => {console.log('email recebido')}
+            )
+            .catch(error => console.log('chegou nenhum email', error));
+    }
+
+    checkMail();
+    setInterval(checkMail, 150000);
+</script>
+<script>
+    function updateResolved(){
+        fetch('/checar_tempo/')
+            .then(response => response.json())
+            .then(
+                data => {console.log('tarefa resolvida')}
+            )
+            .catch(error => console.log('alguma coisa deu rum ai pae'))
+        }
+
+    updateResolved();
+    setInterval(updateResolved, 18000);
+</script> -->
 
 
 {% endblock %}

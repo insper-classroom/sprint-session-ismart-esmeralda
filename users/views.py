@@ -23,7 +23,6 @@ def sign_up(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
-            messages.success(request, 'Usuário registrado com sucesso!')
             login(request, user)
             return redirect('aluno')
         #se o formulario for invalido ele volta pro formulario
@@ -49,12 +48,11 @@ def sign_in(request):
             if user:
                 login(request, user)
                 if user.is_staff:
-                    return redirect('tela_colaborador')
+                    return redirect('side_nao_atribuido')
                 else:
                     return redirect('aluno')
             
         #se o login der errado, faz isso
-        messages.error(request, f'usuario ou senhas invalidos')
         return render(request,'autenticacao/login.html',{'form': form})
 
 @csrf_exempt

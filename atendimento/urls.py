@@ -6,8 +6,7 @@ urlpatterns = [
     path('aluno', views.aluno, name='aluno'),
     path('', views.index, name='index'),
     path('duvidas/', views.duvidas, name='duvidas'),
-    path('chatbot/<str:username>/<str:useruuid>', views.chatbot, name='chatbot'),
-    path('tela_colaborador/', views.mostra_conversas, name='tela_colaborador'),
+    path('chatbot/<str:username>/', views.chatbot, name='chatbot'),
 
     #views que fica recebendo POST quando um zap novo chega
     path('receberzap/', views.receber_zap, name='receber_zap'),
@@ -18,6 +17,8 @@ urlpatterns = [
 
     #redireciona de volta pro side minhas conversas qnd resolve uma duvida do minhas conversas
     path('side_minhas_conversas/resolve/<int:conversa_id>/', views.resolveYOURS, name='resolve'),
+
+    path('checar_tempo/', views.check_and_resolve_conversations, name='checar_tempo'),
 
     #mandar zap de conversa em nao atribuido
     path('side_nao_atribuido/sendmsg/<int:telefone>/<int:conversa_id>/', views.send_msg, name='send_msg_nao_atribuido'),
@@ -38,6 +39,10 @@ urlpatterns = [
     path('side_minhas_conversas/mandar_email/<str:user_email>/<int:conversa_id>/', views.mandar_email, name='mandar_email'),
     
     #view pra ficar periodicamente checando novos emails
-    path('receive_email/', views.receive_email, name='receive_email')
-    
+    path('receive_email/', views.receive_email, name='receive_email'),    
+
+    #estatisticas
+    path('estatisticas/', views.estatisticas, name='estatisticas'),
+
+    path('satisfacao/<str:user_uuid>/', views.satisfacaozap, name='satisfacao'),
 ]

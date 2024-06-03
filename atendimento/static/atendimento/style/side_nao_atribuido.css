@@ -259,7 +259,7 @@ button {
     border: 1px solid #000;
     border-radius: 10px;
     padding: 2%;
-    width: 160%;
+    /* width: 100%; */
     margin-top: 10%;
     height: auto;
 }
@@ -284,13 +284,14 @@ button {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+    margin-top: 25px;
 }
 
 .mensagem-img {
     width: 15px;
     height: 15px;
     margin-right: 10px;
-    margin-top: 12px;
+    margin-top: 45px;
 }
 
 .texto {
@@ -303,8 +304,8 @@ button {
     color: #4091DC;
     font-size: 17px;
     text-align: left;
-    margin-top: -5px;
-    margin-left: 10px;
+    /* margin-top: -2px; */
+    margin-left: 1px;
 }
 
 .mensagem {
