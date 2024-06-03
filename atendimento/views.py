@@ -46,20 +46,6 @@ def index(request):
 
 
 @login_required
-def duvidas(request):
-    """
-    Essa função renderiza a página de login.
-    
-    Parâmetros:
-        request (HttpRequest): O objeto da requisição HTTP.
-        
-    Retorno:
-        HttpResponse: O template renderizado.
-    """
-    return render(request, 'atendimento/sobre_duvida.html')
-
-
-@login_required
 def aluno(request):
     """
     Essa função renderiza a página principal do aluno.
@@ -635,6 +621,9 @@ def receive_email(request):
     mail.logout()
 
     return HttpResponse('200 OK')
+
+def pesquisa(request):
+    return render(request, 'atendimento/pesquisa.html')
     
 def satisfacaozap(request, user_uuid):
     user = CustomUser.objects.get(uuid = user_uuid)

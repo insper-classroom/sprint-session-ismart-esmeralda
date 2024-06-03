@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path('aluno', views.aluno, name='aluno'),
     path('', views.index, name='index'),
-    path('duvidas/', views.duvidas, name='duvidas'),
     path('chatbot/<str:username>/', views.chatbot, name='chatbot'),
+    path('pesquisa/', views.pesquisa, name='pesquisa'),
 
     #views que fica recebendo POST quando um zap novo chega
     path('receberzap/', views.receber_zap, name='receber_zap'),
