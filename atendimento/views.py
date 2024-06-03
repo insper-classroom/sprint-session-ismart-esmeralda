@@ -46,20 +46,6 @@ def index(request):
 
 
 @login_required
-def duvidas(request):
-    """
-    Essa função renderiza a página de login.
-    
-    Parâmetros:
-        request (HttpRequest): O objeto da requisição HTTP.
-        
-    Retorno:
-        HttpResponse: O template renderizado.
-    """
-    return render(request, 'atendimento/sobre_duvida.html')
-
-
-@login_required
 def aluno(request):
     """
     Essa função renderiza a página principal do aluno.
@@ -315,11 +301,14 @@ def resolveYOURS(request, conversa_id):
     telefone = CustomUser.objects.get(id = conversa.usuarios.id).telefone
 
     uuid = CustomUser.objects.get(id = conversa.usuarios.id).uuid
-    message = client.messages.create(
-        from_='whatsapp:+14155238886',
-        body=f'responda essa pesquisa de satisfacao para nos ajudar a melhorar nossos servicos: https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
-        to=f'whatsapp:+55{telefone}'
-    )
+
+    if conversa.is_zap:
+        message = client.messages.create(
+            from_='whatsapp:+14155238886',
+            body=f'responda essa pesquisa de satisfacao para nos ajudar a melhorar nossos servicos: https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
+            to=f'whatsapp:+55{telefone}'
+        )
+    
     conversa.is_avaliada = False
     conversa.save()
     return redirect('side_minhas_conversas')
@@ -431,8 +420,12 @@ def estatisticas(request):
     - O template renderizado com os dados da tela de estatísticas.
 
     """
+
+    now = timezone.now()
+
+    twentyfour = now - timezone.timedelta(hours=24)
     
-    stats = Stats.objects.first()
+    stats = Stats.objects.filter(timewindow__gte=twentyfour).last()
     notassigned = Conversa.objects.filter(assigned_to=None, resolved=False)
     satisfacao = stats.satisfacao_users
     
@@ -635,6 +628,9 @@ def receive_email(request):
     mail.logout()
 
     return HttpResponse('200 OK')
+
+def pesquisa(request):
+    return render(request, 'atendimento/pesquisa.html')
     
 def satisfacaozap(request, user_uuid):
     user = CustomUser.objects.get(uuid = user_uuid)
