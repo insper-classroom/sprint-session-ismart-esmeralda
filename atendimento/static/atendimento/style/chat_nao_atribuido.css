@@ -94,7 +94,7 @@ button {
 .green-box {
     display: block;
     justify-content: flex-start;
-    background-color: green;
+    background-color: grey;
     border-radius: 10px;
     padding: 1%;
     margin-top: 1%;
@@ -115,7 +115,7 @@ button {
 .grey-box {
     display: block;
     justify-content: flex-end;
-    background-color: grey;
+    background-color: green;
     border-radius: 10px;
     margin-top: 3%;
     padding: 1%;
