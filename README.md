@@ -52,7 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre a plataforma
 
-[![Product Name Screen Shot][product-screenshot]]()
+ <img src="atendimento\static\atendimento\img\printplataforma.png" alt="Logo" >
 
 Nosso projeto é focado na otimização do atendimento aos candidatos do Ismart. Nosso objetivo é reduzir o tempo de atendimento individualizado, mantendo a personalização necessária para atender um público com variados níveis de conhecimento tecnológico. 
 
