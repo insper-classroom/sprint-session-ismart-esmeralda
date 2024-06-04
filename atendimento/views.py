@@ -28,8 +28,10 @@ import openai
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
+ACCOUNT_SID = os.getenv('ACCOUNT_SID')
+AUTH_TOKEN = os.getenv('AUTH_TOKEN')
 
 
 def index(request):
@@ -138,8 +140,8 @@ def send_msg(request, telefone, conversa_id):
     Retorna:
     - Uma resposta redirecionando para a página de chat da conversa.
     """
-    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
-    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
 
     client = Client(account_sid, auth_token)
 
@@ -157,8 +159,8 @@ def send_msg(request, telefone, conversa_id):
 
     conversa.save()
     return redirect(f'/side_minhas_conversas/chat_minhas_conversas/{conversa_id}/')
-    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
-    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
 
     client = Client(account_sid, auth_token)
 
@@ -262,8 +264,8 @@ def resolveYOURS(request, conversa_id):
     - A função do classificador não está definida nesse arquivo, mas no arquivo 'classificador.py', dentro do diretório 'chatbot'.
     """
 
-    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
-    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
 
     client = Client(account_sid, auth_token)
 
@@ -305,7 +307,7 @@ def resolveYOURS(request, conversa_id):
     if conversa.is_zap:
         message = client.messages.create(
             from_='whatsapp:+14155238886',
-            body=f'responda essa pesquisa de satisfacao para nos ajudar a melhorar nossos servicos: https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
+            body=f'Por favor, responda essa pesquisa de satisfação para nos ajudar a melhorar nosso serviços. É só uma pergunta :) : https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
             to=f'whatsapp:+55{telefone}'
         )
     
@@ -333,8 +335,8 @@ def receber_zap(request):
         
     """
 
-    account_sid = 'AC4001f4f9199704babdc1297dfffeabda'
-    auth_token = '7f9724a8f537cec4e85ac1d86c50b660'
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
 
     client = Client(account_sid, auth_token)
 
