@@ -1,0 +1,243 @@
+/* FONTES */
+
+.montserrat-1 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.montserrat-2 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.montserrat-3 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.montserrat-4 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.montserrat-5 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* COR FONTE */
+
+.text-ism-dark-blue {
+    --tw-text-opacity: 1;
+    color: rgba(0, 142, 212, var(--tw-text-opacity));
+}
+
+.text-ism-darker-blue {
+    --tw-text-opacity: 1;
+    color: rgba(0, 37, 97, var(--tw-text-opacity));
+}
+
+/* IMAGENS */
+
+.logo {
+    width: 25%; 
+    height: auto;
+    margin-left: 30%;
+}
+
+.feedbackimg {
+    width: 50px; 
+    height: auto;
+    margin-top: 4%;
+    margin-left: 1%;
+}
+
+/* PRINCIPAL */
+
+body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0%;
+    padding: 0%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+    padding: 1%;
+    background-color: #ffffff;
+}
+
+.botaoheader_menu {
+    text-align: right;
+    margin-right: 10%;
+}
+
+.botao_enviar {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10%;
+}
+
+.botao-tipo1 {
+    background-color: white;
+    color: rgb(0, 189, 242);
+    border: 2px solid rgb(0, 189, 242);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.botao-tipo1:hover {
+    background-color: rgb(0, 189, 242);
+    color: white;
+}
+
+.btn-submit {
+    margin-top: 20px;
+    background-color: rgb(0, 189, 242);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* FORMS */
+
+::selection {
+  background: #00BDF2;
+}
+.container {
+  max-width: 500px;
+  width: 100%;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.container .pergunta {
+  font-size: 22px;
+  font-weight: 600;
+  color: #282828;
+  text-align: center;
+  margin-bottom: 10px;
+  height: 32px;
+}
+.container .afirmacao {
+    font-size: 20px;
+    font-weight: 500;
+    color: #282828;
+    text-align: center;
+    color: #3b3b3b;
+  }
+.container .content {
+  margin-top: 20px; 
+}
+.container label.box {
+  background: #ddd;
+  margin-top: 20px;
+  padding: 16px;
+  display: flex;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.container label.box .circle {
+  height: 22px;
+  width: 22px;
+  background: #ccc;
+  border: 5px solid transparent;
+  display: inline-block;
+  margin-right: 15px;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+  box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.2);
+}
+.container label.box .opcao {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 450;
+}
+.container label.box {
+    width: 80%;
+}
+.divhr{
+    display:flex; flex-direction: row; justify-content: left; align-items: center; flex-wrap: wrap;
+}
+.desc {
+  font-size: 20px;
+  font-weight: 500;
+}
+.container input[type="radio"] {
+  display: none;
+}
+.container label.box:hover {
+    background: #8fd0db;
+  }
+
+
+/* Botão Form */
+
+#one:checked ~ label.first{
+    border-color: #429300;
+    background: #57c100;
+
+}
+#two:checked ~ label.second{
+    border-color: #5bcb00;
+    background: #6bee00;
+}
+#three:checked ~ label.third{
+    border-color: #fffb29;
+    background: #fffd82;
+}
+#four:checked ~ label.fourth{
+    border-color: #d20000;
+    background: #f80202;
+}
+#five:checked ~ label.fifth {
+    border-color: #940000;
+    background: #bb0000;
+}
+/* Bolinha */
+#one:checked ~ label.first .circle{
+    border-color: #5bcb00;
+    background: #fff;
+}
+#two:checked ~ label.second .circle{
+    border-color: #5bcb00;
+    background: #fff;
+}
+#three:checked ~ label.third .circle{
+    border-color: #fffb29;
+    background: #fff;
+}
+#four:checked ~ label.fourth .circle{
+    border-color: #d20000;
+    background: #fff;
+}
+#five:checked ~ label.fifth .circle {
+    border-color: #940000;
+    background: #fff;
+}

@@ -176,7 +176,7 @@ header {
     color: rgb(0, 189, 242);
     border: 2px solid rgb(0, 189, 242);
     border-radius: 20px;
-    padding: 8px 18px;
+    padding: 8px 40px;
     font-size: 100%;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;

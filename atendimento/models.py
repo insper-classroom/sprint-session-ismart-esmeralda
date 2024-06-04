@@ -81,6 +81,7 @@ class Stats(models.Model):
     total_response_time = models.FloatField(default=0)
     total_response_count = models.IntegerField(default=0)
 
+    timewindow = models.DateField(auto_now = True)
     #propriedade pra calcular a media de tempo de resposta
     @property
     def average_response_time(self):
