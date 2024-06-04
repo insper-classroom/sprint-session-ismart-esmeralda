@@ -147,7 +147,7 @@ E forneça as credenciais desejadas para esse usuário. Esse usuário criado ter
 
 
 <!-- USAGE EXAMPLES -->
-## Inforamções Importantes
+## Informações Importantes
 
 * Na versão Gratuita do Twillio é preciso que o usuário mande uma mensagem pré-definida para o número do colaborador antes de enviar qualquer dúvida. Essa mensagem é gerada aleatoriamente de conta para conta, e é uma limitação da versão gratuita do Twilio. No nosso caso, antes de mandar algo, o usuário deve mandar a seguinte mensagem para o número:
 ```bash
