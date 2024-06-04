@@ -310,7 +310,7 @@ def resolveYOURS(request, conversa_id):
     if conversa.is_zap:
         message = client.messages.create(
             from_='whatsapp:+14155238886',
-            body=f'Por favor, responda essa pesquisa de satisfação para nos ajudar a melhorar nosso serviços. É só uma pergunta :) : https://z6n5drvz-8000.brs.devtunnels.ms/satisfacao/{uuid}/',
+            body=f'Por favor, responda essa pesquisa de satisfação para nos ajudar a melhorar nosso serviços. É só uma pergunta :) : https://z6n5drvz-8000.brs.devtunnels.ms/pesquisa/{uuid}/',
             to=f'whatsapp:+55{telefone}'
         )
     
@@ -657,4 +657,4 @@ def satisfacaozap(request, user_uuid):
             return redirect('index')
         else:
             return redirect('index')
-    return render(request, 'atendimento/satisfacao.html', {'usertel': user_uuid, 'conversa': c1})
+    return render(request, 'atendimento/pesquisa.html', {'usertel': user_uuid, 'conversa': c1})

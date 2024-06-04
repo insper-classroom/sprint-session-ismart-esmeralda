@@ -44,5 +44,5 @@ urlpatterns = [
     #estatisticas
     path('estatisticas/', views.estatisticas, name='estatisticas'),
 
-    path('satisfacao/<str:user_uuid>/', views.satisfacaozap, name='satisfacao'),
+    path('pesquisa/<str:user_uuid>/', views.satisfacaozap, name='satisfacao'),
 ]

@@ -25,37 +25,40 @@
         </div>
     </header>
     <div>
-        <div class="container">
-            <!-- Pergunta para feedback -->
-            <div class="pergunta">Como foi a sua experiência?</div>
-            <div class="afirmacao">Minha experiência resolvendo minha dúvida foi...</div>
-            <div class="content divhr">
-                <!-- inputs -->
-                <input type="radio" name="rd" id="one" />
-                <input type="radio" name="rd" id="five" />
-                <!-- Botões dos inputs -->
-                <label for="one" class="box first">
-                    <div class="opcao">
-                    <span class="circle"></span>
-                    <span>Boa</span>
-                    </div>
-                    <span class="desc">5</span>
-                </label>
-                <img class="feedbackimg" src="{% static 'atendimento\img\feedback5.png' %}" alt="feedback5">
-                <label for="five" class="box fifth">
-                    <div class="opcao">
-                    <span class="circle"></span>
-                    <span>Ruim</span>
-                    </div>
-                    <span class="desc">1</span>
-                </label>
-                <img class="feedbackimg" src="{% static 'atendimento\img\feedback1.png' %}" alt="feedback1">
+        <form action="{% url 'satisfacao' usertel %}" method="post" name="satisfacao">
+            {% csrf_token %}
+            <div class="container">
+                <!-- Pergunta para feedback -->
+                <div class="pergunta">Como foi a sua experiência?</div>
+                <div class="afirmacao">Minha experiência resolvendo minha dúvida foi...</div>
+                <div class="content divhr">
+                    <!-- inputs -->
+                    <input type="radio" name="rd" id="one" value="boa" />
+                    <input type="radio" name="rd" id="five" value="ruim" />
+                    <!-- Botões dos inputs -->
+                    <label for="one" class="box first">
+                        <div class="opcao">
+                            <span class="circle"></span>
+                            <span>Boa</span>
+                        </div>
+                        <span class="desc">5</span>
+                    </label>
+                    <img class="feedbackimg" src="{% static 'atendimento\img\feedback5.png' %}" alt="feedback5">
+                    <label for="five" class="box fifth">
+                        <div class="opcao">
+                            <span class="circle"></span>
+                            <span>Ruim</span>
+                        </div>
+                        <span class="desc">1</span>
+                    </label>
+                    <img class="feedbackimg" src="{% static 'atendimento\img\feedback1.png' %}" alt="feedback1">
+                </div>
             </div>
             <!-- Enviar feedback -->
             <div class="botao_enviar">
-                <button class="btn-submit">Enviar feedback</button>
+                <button class="btn-submit" type="submit">Enviar feedback</button>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 {% endblock %} 

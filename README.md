@@ -47,8 +47,6 @@
 
 
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## Sobre a plataforma
 
@@ -62,6 +60,7 @@ Nosso projeto é focado na otimização do atendimento aos candidatos do Ismart.
 * **Chatbot Personalizado**: Implementamos um chatbot com conhecimentos sobre o processo seletivo do Ismart, disponível no ambiente web do cliente e no WhatsApp da Ismart. O cliente pode optar falar com um atendente real se a sua dúvida não for resolvida.
 * **Classificação Automática de Dúvidas**: Para evitar questionários sobre o assunto da dúvida para o cliente, desenvolvendo uma rede neural que classifica textos vetorizados para determinar o assunto da dúvida tratada pelo colaborador após o atendimento. Isso permite uma análise mais precisa sobre atendimentos passados.
 
+* **Sistema de Feedback do Candidato**: Após a dúvida se dar como resolvida, o candidato responderá um formulário sobre a satisfação com o atendimento recebido. 
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
@@ -85,7 +84,7 @@ Nosso projeto é focado na otimização do atendimento aos candidatos do Ismart.
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Como utilizar?
 
 Para rodar o projeto de forma local em seu computador, siga os seguintes passos
 
