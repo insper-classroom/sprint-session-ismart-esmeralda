@@ -36,7 +36,7 @@
   <p align="center">
     Centralização do serviço de atendimento ao cliente em uma única plataforma.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore nosso projeto »</strong></a>
     <br />
     <br />
     
