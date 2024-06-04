@@ -72,11 +72,11 @@
 
 .register-container {
     background: #fff;
-    margin-top: 3%;
+    margin-top: 5%;
     padding: 1%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    width: 22%;
+    width: 450px;
 }
 
 .register-container h2 {
