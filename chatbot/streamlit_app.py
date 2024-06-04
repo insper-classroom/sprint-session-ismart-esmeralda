@@ -6,11 +6,16 @@ from classificador import classifier
 import urllib.parse
 import webbrowser
 from streamlit.web.server.websocket_headers import _get_websocket_headers
+from dotenv import load_dotenv
+import os 
 
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 st.title('Chatbot basico')
 
-openai.api_key = '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'
+openai.api_key = OPENAI_API_KEY
 
 
 # Get the user's name from the URL
