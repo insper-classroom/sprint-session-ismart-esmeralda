@@ -233,6 +233,8 @@ def resolveNA(request, conversa_id):
         stats.save()
     
     conversa.resolved = True
+    stats.first().totalresolvidos += 1
+
     conversa.delete()
     return redirect('side_nao_atribuido')
 
@@ -299,6 +301,7 @@ def resolveYOURS(request, conversa_id):
     
     #qdo o colaborador marca a conversa como resolvida, manda uma msg pro usuario perguntando se a duvida foi resolvida ou nn 
     conversa.resolved = True
+    Stats.objects.all().first().totalresolvidos += 1
 
     telefone = CustomUser.objects.get(id = conversa.usuarios.id).telefone
 
@@ -466,7 +469,7 @@ def check_and_resolve_conversations(request):
 
         # se a ultima mensagem foi enviada a mais de um certo tempo
         if now - last_message.timestamp > timezone.timedelta(minutes=600):
-            Stats.totalresolvidosgpt += 1
+            Stats.objects.all().first().totalresolvidosgpt += 1
             return redirect('resolve', conversa.id)
 
         #se nao, so retorna qqr coisa 
