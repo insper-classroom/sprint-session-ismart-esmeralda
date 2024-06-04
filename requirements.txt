@@ -10,6 +10,5 @@ tiktoken
 markdown
 django-filter
 python-dotenv
-
 channels
 mail-parser
