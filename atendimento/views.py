@@ -378,7 +378,7 @@ def receber_zap(request):
         # Definindo o modelo do OpenAI
         modelos = {'openai_model': 'gpt-3.5-turbo'}
 
-        messages = [{"role": "system", "content": "you are a helpful assistant"}, {'role': 'assistant', 'content': 'Sou a coruja, assistente virtual aqui do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'}]
+        messages = [{"role": "system", "content": "Você é um assistente virtual especializado em responder dúvidas sobre um processo seletivo. Seu público-alvo são pessoas de baixa renda, com diversos níveis de conhecimento tecnológico. As respostas devem ser claras, acessíveis e compreensíveis(fácil linguagem e entendimento para pessoas de baixa renda). Se a pergunta não estiver relacionada ao processo seletivo, informe educadamente que você é um assistente para dúvidas sobre o processo seletivo, e de uma resposta rápida e simples para a pergunta alheia. Sua principal missão é fornecer informações úteis e fáceis de entender sobre o processo seletivo, ajudando os usuários de forma eficiente e amigável."}, {'role': 'assistant', 'content': 'Sou a coruja, assistente virtual aqui do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'}]
         # se a flag da conversa is_gpt for true, manda a mensagem pro gpt
         if c1.is_gpt:
             messages.append({'role': 'user', 'content': get_prompt(data['Body'])})
