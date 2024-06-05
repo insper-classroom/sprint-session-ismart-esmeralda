@@ -359,19 +359,21 @@ def receber_zap(request):
         # Cria uma instancia de mensagem pro usuario
         Mensagem.objects.create(conversa=c1, sender=user, content=data['Body'])
 
-        if c1.bot_response_count == 2:
+        if c1.bot_response_count == 0:
             message = client.messages.create(
             from_='whatsapp:+14155238886',
-            body='Se desejar falar com um atendente real, digite Sim, e se quiser continuar tirando dúvidas comigo, digite Não.',
+            body='Olá! Eu sou o assistente virtual da Ismart. Como posso ajudar você hoje? Se precisar falar com um atendente humano a qualquer momento, digite "atendente".',
             to=f'whatsapp:+55{user.telefone}'
         )
-        if data['Body'].lower() == 'sim' and c1.is_gpt:
+        
+        if data['Body'].lower() == 'atendente' and c1.is_gpt:
                 c1.is_gpt = False
                 Mensagem.objects.filter(conversa = c1).delete()
                 c1.save()
+                c1.bot_response_count = 0
                 message = client.messages.create(
                 from_='whatsapp:+14155238886',
-                body='olá! como posso te ajudar hoje?',
+                body='Olá! Seja bem-vindo ao atendimento humano do Ismart. Em que posso ajudar você hoje?',
                 to=f'whatsapp:+55{user.telefone}'
                 )
 
@@ -393,6 +395,14 @@ def receber_zap(request):
                 to=f'whatsapp:+55{user.telefone}'
             )
             c1.bot_response_count += 1
+            c1.save()
+
+        if c1.bot_response_count >=3 and c1.is_gpt == True:
+            message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='Se precisar de mais ajuda, posso transferir você para um atendente humano. Basta digitar "atendente".',
+                to=f'whatsapp:+55{user.telefone}'
+            )
             c1.save()
         return HttpResponse('200 OK')
     else:
