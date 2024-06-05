@@ -27,8 +27,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/insper-classroom/sprint-session-ismart-esmeralda">
     <img src="atendimento\static\atendimento\img\LOGO-ismart.png" alt="Logo" width="80" height="80">
+
   </a>
 
   <h3 align="center">Plataforma de atendimento ao candidato ISMART</h3>
@@ -51,7 +52,7 @@
 ## Sobre a plataforma
 
  <img src="atendimento\static\atendimento\img\printplataforma.png" alt="Logo" >
-
+ <img src="atendimento\static\atendimento\img\fluxouser.gif">
 Nosso projeto é focado na otimização do atendimento aos candidatos do Ismart. Nosso objetivo é reduzir o tempo de atendimento individualizado, mantendo a personalização necessária para atender um público com variados níveis de conhecimento tecnológico. 
 
 ### Funcionalidades:
