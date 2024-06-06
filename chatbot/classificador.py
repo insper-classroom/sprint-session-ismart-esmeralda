@@ -1,10 +1,15 @@
 import tensorflow as tf
 from langchain.embeddings import OpenAIEmbeddings 
 import numpy as np
+from dotenv import load_dotenv
+import os
 
-embeddings = OpenAIEmbeddings(openai_api_key = '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')
+load_dotenv()
 
-model = tf.keras.models.load_model('classificacao.keras')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+embeddings = OpenAIEmbeddings(openai_api_key = OPENAI_API_KEY)
+
+model = tf.keras.models.load_model('chatbot\classificacao.keras')
 
 tags = {
     0: 'Sobre-o-Ismart',
