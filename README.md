@@ -63,6 +63,8 @@ Nosso projeto é focado na otimização do atendimento aos candidatos do Ismart.
 
 * **Sistema de Feedback do Candidato**: Após a dúvida se dar como resolvida, o candidato responderá um formulário sobre a satisfação com o atendimento recebido. 
 
+<img src="atendimento\static\atendimento\img\chatbotzap.gif">
+
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
 
