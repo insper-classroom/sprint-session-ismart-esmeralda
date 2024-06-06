@@ -3,3 +3,4 @@ base="light"
 primaryColor="#4091dc"
 secondaryBackgroundColor="#4091dc"
 textColor="#002561"
+enableStaticServing=true
