@@ -307,9 +307,11 @@ def resolveYOURS(request, conversa_id):
 
     uuid = CustomUser.objects.get(id = conversa.usuarios.id).uuid
 
+
     if conversa.is_zap:
         message = client.messages.create(
             from_='whatsapp:+14155238886',
+            #TROCAR ESSE LINK PARA O LINK DO SERVIDOR QUE A APLICAÇÃO ESTÁ RODANDO!!!!!!!!!
             body=f'Por favor, responda essa pesquisa de satisfação para nos ajudar a melhorar nosso serviços. É só uma pergunta :) : https://z6n5drvz-8000.brs.devtunnels.ms/pesquisa/{uuid}/',
             to=f'whatsapp:+55{telefone}'
         )
