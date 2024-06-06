@@ -163,6 +163,41 @@ join century-anyway
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
 
+## Histórias de usuário implementadas
+
+### Nível Básico
+
+- [x] 1. Eu, COMO colaborador da iSMART, quero efetuar login PARA ver o painel inicial com as dúvidas.
+- [x] 2. Eu COMO usuário quero recuperar a senha do sistema PARA conseguir acessar o mesmo.
+- [x] 3. Eu, COMO colaborador da iSMART, quero visualizar na tela de atendimento aos usuários, as
+dúvidas por plataforma (Whats, email e site), por usuário e por tema, PARA responder às 
+dúvidas dos alunos.
+- [x] 4. Eu COMO colaborador preciso ver quantos usuários estão na fila,
+PARA saber se devo acionar outro colaborador para auxiliar nas respostas. 
+- [x] 5. Eu COMO aluno(a) quero acessar uma área de atendimento
+PARA sanar dúvidas sobre o iSMART via what’s direto.
+- [x] 6. Eu COMO cliente quero saber o tempo médio de resposta,
+PARA saber quanto tempo levarei para sanar todas as dúvidas.
+
+### Nível Proficiente
+
+- [x] 7. Eu COMO colaborador do iSmart, quero ver o nível de satisfação dos usuários
+PARA entender a avaliação de atendimento.
+- [x] 8. Eu, COMO colaborador da iSMART, quero ver as dúvidas que vêm por WhatsApp, email e
+canal de atendimento do site e que estas estejam todas integradas à plataforma, mas que eu
+saiba por qual canal veio aquela dúvida, PARA que seja possível responder em um único lugar.
+- [x] 9. Eu, COMO cliente, gostaria de gerar um relatório com análises prévias das dúvidas sobre o
+processo seletivo PARA conseguir prever quais as dúvidas terão a chance de ser mais frequentes no próximo
+vestibular.
+
+### Nível Avançado
+
+- [x] 10. Eu COMO cliente quero disponibilizar um BOT de atendimento automatizado, com respostas
+para as perguntas mais frequentes elaboradas a partir da base de respostas anteriores,
+PARA que o usuário seja atendido de forma mais rápida.
+- [x] 11. Eu COMO cliente quero conseguir ajustar quais serão as perguntas com resposta
+automatizada para cada etapa do processo seletivo, PARA reduzir o esforço de ter um 
+atendente humano.
 
 <!-- ROADMAP -->
 ## Próximos passos
