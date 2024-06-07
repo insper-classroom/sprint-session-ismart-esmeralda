@@ -28,11 +28,12 @@ button {
 }
 
 .nome-user {
-    font-size: 15px;
+    font-size: auto;
     margin-top: 8%;
     margin-left: 10%;
     color: #4091DC;
     margin-bottom: auto;
+    margin-right: 50%;
 }
 
 .line{
