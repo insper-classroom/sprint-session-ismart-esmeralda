@@ -19,23 +19,18 @@ st.header('Tire suas dúvidas com seu assistente pessoal!')
 openai.api_key = OPENAI_API_KEY
 
 
-# Get the user's name from the URL
+# Pega o nome do usuário da URL
 username = st.query_params.get('username', [''])
 
-# Get the user's uuID from the URL
-useruuid = st.query_params.get('useruuid', [''])
-
-
-
-#se o modelo ainda n foi definido na sessao atual, cria uma chave no dicionario p ele
+# Se o modelo ainda não tiver sido definido, define o modelo como gpt-3.5-turbo
 if "openai_model" not in st.session_state:
     st.session_state['openai_model'] = "gpt-3.5-turbo"
 
-#se ainda n tiver nenhuma msg na sessao atual, cria uma lista vazia pguardar elas
+#Se a variavel state messages nao existir, cria ela
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-    #mensagem inicial do bot, c o nome do usuario
+    # Se o nome do usuário não estiver vazio, adiciona uma mensagem de boas-vindas
     st.session_state.messages.append({'role': 'assistant', 'content': f'Olá, {username}! Sou a coruja, assistente virtual do Ismart. Como posso te ajudar hoje? Pode perguntar qualquer coisa! 🦉'})
 
 # Faz com que apareça os botões que encaminham o usuário para o whatsapp ou email
@@ -46,14 +41,13 @@ if st.button('Ser atendido'):
    
 
 
-
-#mostra as mensagens guardadas na variavel state messages
+#mostra as mensagens
 for message in st.session_state.messages:
     with st.chat_message(message['role']):
         st.markdown(message['content'])
 
 prompt = st.chat_input('Digite sua dúvida...')
-#se o prompt nao estiver vazio, mostra a mensagem dele e puxa o rag
+# Se o usuário digitar algo, envia a mensagem para o modelo
 if prompt:
     with st.chat_message('user'):
         st.markdown(prompt)
@@ -61,7 +55,7 @@ if prompt:
 
     augmentedprompt = get_prompt(prompt)
 
-    # cria uma copia pra mandar pro modelo c o prompt do rag, p n mostrar o prompt do rag pro usuario
+    # Adiciona a mensagem do usuário à lista de mensagens
     messages_copy = st.session_state.messages.copy()
     messages_copy.append({'role': 'user', 'content': augmentedprompt})
 
